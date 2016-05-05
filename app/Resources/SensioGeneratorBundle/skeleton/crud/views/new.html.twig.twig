@@ -1,0 +1,31 @@
+{% block extends %}
+{{ "{% extends 'base.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+
+{{  "{% set __title = 'Nuevo " ~  entity   ~ "' %}" }}
+
+{{ "{% block content %}" }}
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- form start -->
+                    {{ '{{ form_start(form) }}' }}
+                    {{ '{{ form_widget(form) }}' }}
+                    <div class="box-footer">
+                        <input class="btn btn-primary" type="submit" value="Crear"/>
+                        <a class="btn btn-default" href="{{ "{{ path('" ~  route_name_prefix   ~ "_index') }}" }}"> Volver al Listado</a>
+                    </div>
+
+                    {{ '{{ form_end(form) }}' }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ "{% endblock %}" }}
+{% endblock body %}
+
+

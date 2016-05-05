@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{%  set __title = 'Estadísticas del equipo' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
+    <script src="{{ asset('socket.io/socket.io-1.4.5.js') }}"></script>
+
+    <script type="application/javascript" language="JavaScript">
+        $(document).ready(function(){
+
+            $('#historico').highcharts({
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: [{
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    crosshair: true
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[2]
+                        }
+                    },
+                    title: {
+                        text: 'Aparejo (klb)',
+                        style: {
+                            color: Highcharts.getOptions().colors[2]
+                        }
+                    }
+
+                }, { // Secondary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Anemómetro (km/h)',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    }
+
+                }, { // Tertiary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Presión (psi)',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                /*legend: {
+                 layout: 'vertical',
+                 align: 'left',
+                 x: 80,
+                 verticalAlign: 'top',
+                 y: 0,
+                 floating: true,
+                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                 },*/
+                series: [{
+                    name: 'Anemómetro',
+                    type: 'spline',
+                    yAxis: 1,
+                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+
+                }, {
+                    name: 'Llave',
+                    type: 'spline',
+                    yAxis: 2,
+                    data: [1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2, 1013.1, 1016.9, 1018.2, 1016.7],
+                    marker: {
+                        enabled: false
+                    },
+                    dashStyle: 'spline',
+                    tooltip: {
+                        valueSuffix: ' psi'
+                    }
+
+                }, {
+                    name: 'Aparejo',
+                    type: 'spline',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+                    tooltip: {
+                        valueSuffix: ' klb'
+                    }
+                }, {
+                    name: 'Boca Pozo',
+                    type: 'spline',
+                    data: [3.0, 3.9, 19.5, 7.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+                    tooltip: {
+                        valueSuffix: ' psi'
+                    }
+                }]
+            });
+        });
+
+    </script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Histórico del Pozo</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="historico" style="width:100%; height:300px;"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.row -->
+
+
+        <div class="col-md-6">
+            <!-- LINE CHART -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tiempo Real</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <div id="en-vivo" style="width:100%; height:400px;"></div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:  /admin
+
+usuario:
+    resource: "@UsuarioBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+

@@ -1,0 +1,7 @@
+usuario_rol:
+    resource: "@UsuarioBundle/Resources/config/routing/rol.yml"
+    prefix:   /roles
+
+usuario_homepage:
+    path:     /
+    defaults: { _controller: UsuarioBundle:Default:index }

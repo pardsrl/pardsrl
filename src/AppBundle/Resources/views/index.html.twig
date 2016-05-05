@@ -1,0 +1,137 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
+    <script src="{{ asset('socket.io/socket.io-1.4.5.js') }}"></script>
+
+    <script type="application/javascript" language="JavaScript">
+
+        var chart; // global
+
+        /**
+         * Request data from the server and add it to the graph
+         */
+        function requestData() {
+
+
+            var socket = io('10.0.0.2:5140');
+
+            socket.on('csvOutput', function (point) {
+
+                console.log('asdf');
+                var series = chart.series[0], shift = series.data.length > 20; // shift if the series is longer than 20
+
+                // add the point
+                chart.series[0].addPoint(eval(point), true, shift);
+
+            });
+
+        }
+
+
+        $(document).ready(function () {
+
+            $('#historico').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Fruit Consumption'
+                },
+                xAxis: {
+                    categories: ['Apples', 'Bananas', 'Oranges']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Fruit eaten'
+                    }
+                },
+                series: [{
+                    name: 'Jane',
+                    data: [1, 0, 4]
+                }, {
+                    name: 'John',
+                    data: [5, 7, 3]
+                }]
+            });
+
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'en-vivo',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData
+                    }
+                },
+                title: {
+                    text: 'Live random data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    //tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value'
+                    }
+                },
+                series: [{
+                    name: 'Random data',
+                    data: []
+                }]
+            });
+
+        });
+    </script>
+
+{% endblock %}
+
+{%  set __title = 'Mi Dashboard' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Area Chart</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="historico" style="width:100%; height:400px;"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.row -->
+
+
+        <div class="col-md-6">
+            <!-- LINE CHART -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Line Chart</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <div id="en-vivo" style="width:100%; height:400px;"></div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+{% endblock %}

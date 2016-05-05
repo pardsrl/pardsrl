@@ -1,0 +1,554 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
+    <script src="{{ asset('highcharts.4.2.4/js/highcharts-more.src.js') }}"></script>
+    <script src="{{ asset('highcharts.4.2.4/js/modules/solid-gauge.js') }}"></script>
+
+    <script type="application/javascript" language="JavaScript">
+        $(document).ready(function () {
+
+            $('#llave').highcharts({
+
+                        chart: {
+                            type: 'gauge',
+                            plotBackgroundColor: null,
+                            plotBackgroundImage: null,
+                            plotBorderWidth: 0,
+                            plotShadow: false
+                        },
+
+                        credits: {
+                            enabled: false
+                        },
+
+                        title: {
+                            text: 'Llave'
+                        },
+
+                        pane: {
+                            startAngle: -150,
+                            endAngle: 150,
+                            background: [{
+                                backgroundColor: {
+                                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+                                    stops: [
+                                        [0, '#FFF'],
+                                        [1, '#333']
+                                    ]
+                                },
+                                borderWidth: 0,
+                                outerRadius: '109%'
+                            }, {
+                                backgroundColor: {
+                                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+                                    stops: [
+                                        [0, '#333'],
+                                        [1, '#FFF']
+                                    ]
+                                },
+                                borderWidth: 1,
+                                outerRadius: '107%'
+                            }, {
+                                // default background
+                            }, {
+                                backgroundColor: '#DDD',
+                                borderWidth: 0,
+                                outerRadius: '105%',
+                                innerRadius: '103%'
+                            }]
+                        },
+
+                        // the value axis
+                        yAxis: {
+                            min: 0,
+                            max: 3000,
+
+                            minorTickInterval: 'auto',
+                            minorTickWidth: 1,
+                            minorTickLength: 10,
+                            minorTickPosition: 'inside',
+                            minorTickColor: '#666',
+
+                            tickPixelInterval: 30,
+                            tickWidth: 2,
+                            tickPosition: 'inside',
+                            tickLength: 10,
+                            tickColor: '#666',
+                            labels: {
+                                step: 2,
+                                rotation: 'auto'
+                            },
+                            title: {
+                                text: 'psi'
+                            },
+                            plotBands: [{
+                                from: 0,
+                                to: 2000,
+                                color: '#55BF3B' // green
+                            }, {
+                                from: 2000,
+                                to: 2500,
+                                color: '#DDDF0D' // yellow
+                            }, {
+                                from: 2500,
+                                to: 3000,
+                                color: '#DF5353' // red
+                            }]
+                        },
+
+                        series: [{
+                            name: 'Presion',
+                            data: [80],
+                            tooltip: {
+                                valueSuffix: ' psi'
+                            }
+                        }]
+
+                    },
+                    // Add some life
+                    function (chart) {
+
+                        if (!chart.renderer.forExport) {
+                            setInterval(function () {
+                                var point = chart.series[0].points[0],
+                                        newVal,
+                                        inc = Math.round((Math.random() - 0.5) * 1500);
+
+                                newVal = point.y + inc;
+                                if (newVal < 0 || newVal > 3000) {
+                                    newVal = point.y - inc;
+                                }
+
+                                point.update(newVal);
+
+                            }, 1000);
+                        }
+                    });
+
+
+            $('#boca-de-pozo').highcharts({
+
+                        chart: {
+                            type: 'gauge',
+                            plotBackgroundColor: null,
+                            plotBackgroundImage: null,
+                            plotBorderWidth: 0,
+                            plotShadow: false
+                        },
+
+                        credits: {
+                            enabled: false
+                        },
+
+                        title: {
+                            text: 'Boca de Pozo'
+                        },
+
+                        pane: {
+                            startAngle: -150,
+                            endAngle: 150,
+                            background: [{
+                                backgroundColor: {
+                                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+                                    stops: [
+                                        [0, '#FFF'],
+                                        [1, '#333']
+                                    ]
+                                },
+                                borderWidth: 0,
+                                outerRadius: '109%'
+                            }, {
+                                backgroundColor: {
+                                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+                                    stops: [
+                                        [0, '#333'],
+                                        [1, '#FFF']
+                                    ]
+                                },
+                                borderWidth: 1,
+                                outerRadius: '107%'
+                            }, {
+                                // default background
+                            }, {
+                                backgroundColor: '#DDD',
+                                borderWidth: 0,
+                                outerRadius: '105%',
+                                innerRadius: '103%'
+                            }]
+                        },
+
+                        // the value axis
+                        yAxis: {
+                            min: 0,
+                            max: 3000,
+
+                            minorTickInterval: 'auto',
+                            minorTickWidth: 1,
+                            minorTickLength: 10,
+                            minorTickPosition: 'inside',
+                            minorTickColor: '#666',
+
+                            tickPixelInterval: 30,
+                            tickWidth: 2,
+                            tickPosition: 'inside',
+                            tickLength: 10,
+                            tickColor: '#666',
+                            labels: {
+                                step: 2,
+                                rotation: 'auto'
+                            },
+                            title: {
+                                text: 'psi'
+                            },
+                            plotBands: [{
+                                from: 0,
+                                to: 2000,
+                                color: '#55BF3B' // green
+                            }, {
+                                from: 2000,
+                                to: 2500,
+                                color: '#DDDF0D' // yellow
+                            }, {
+                                from: 2500,
+                                to: 3000,
+                                color: '#DF5353' // red
+                            }]
+                        },
+
+                        series: [{
+                            name: 'Presion',
+                            data: [80],
+                            tooltip: {
+                                valueSuffix: ' km/h'
+                            }
+                        }]
+
+                    },
+                    // Add some life
+                    function (chart) {
+
+                        if (!chart.renderer.forExport) {
+                            setInterval(function () {
+                                var point = chart.series[0].points[0],
+                                        newVal,
+                                        inc = Math.round((Math.random() - 0.5) * 1500);
+
+                                newVal = point.y + inc;
+                                if (newVal < 0 || newVal > 3000) {
+                                    newVal = point.y - inc;
+                                }
+
+                                point.update(newVal);
+
+                            }, 1000);
+                        }
+                    });
+
+
+            var gaugeOptions = {
+
+                chart: {
+                    type: 'solidgauge'
+                },
+
+                title: null,
+
+                credits: {
+                    enabled: false
+                },
+
+                pane: {
+                    center: ['50%', '85%'],
+                    size: '140%',
+                    startAngle: -90,
+                    endAngle: 90,
+                    background: {
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                        innerRadius: '60%',
+                        outerRadius: '100%',
+                        shape: 'arc'
+                    }
+                },
+
+                tooltip: {
+                    enabled: false
+                },
+
+                // the value axis
+                yAxis: {
+                    stops: [
+                        [0.1, '#55BF3B'], // green
+                        [0.5, '#DDDF0D'], // yellow
+                        [0.9, '#DF5353'] // red
+                    ],
+                    lineWidth: 0,
+                    minorTickInterval: null,
+                    tickPixelInterval: 400,
+                    tickWidth: 0,
+                    title: {
+                        y: -70
+                    },
+                    labels: {
+                        y: 16
+                    }
+                },
+
+                plotOptions: {
+                    solidgauge: {
+                        dataLabels: {
+                            y: 5,
+                            borderWidth: 0,
+                            useHTML: true
+                        }
+                    }
+                }
+            };
+
+            $('#anemometro').highcharts(Highcharts.merge(gaugeOptions, {
+                yAxis: {
+                    min: 0,
+                    max: 200,
+                    title: {
+                        text: 'Velocidad'
+                    }
+                },
+
+                credits: {
+                    enabled: false
+                },
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                        ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                        '<span style="font-size:12px;color:silver">km/h</span></div>'
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            }));
+
+
+            setTimeout(function () {
+                // Speed
+                var chart = $('#anemometro').highcharts(),
+                        point,
+                        newVal,
+                        inc;
+
+                if (chart) {
+                    point = chart.series[0].points[0];
+                    inc = Math.round((Math.random() - 0.5) * 100);
+                    newVal = point.y + inc;
+
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+                }
+
+            }, 1000);
+
+
+            $('#aparejo').highcharts({
+
+                        chart: {
+                            type: 'gauge',
+                            alignTicks: false,
+                            plotBackgroundColor: null,
+                            plotBackgroundImage: null,
+                            plotBorderWidth: 0,
+                            plotShadow: false
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        title: {
+                            text: 'Aparejo'
+                        },
+                        pane: {
+                            startAngle: -150,
+                            endAngle: 150
+                        },
+                        yAxis: [{
+                            min: 0,
+                            max: 1000,
+                            lineColor: '#339',
+                            tickColor: '#339',
+                            minorTickColor: '#339',
+                            offset: -50,
+                            lineWidth: 2,
+                            labels: {
+                                distance: -20,
+                                rotation: 'auto'
+                            },
+                            tickLength: 5,
+                            minorTickLength: 5,
+                            endOnTick: false
+                        }, {
+                            min: 0,
+                            max: 180,
+                            tickPosition: 'outside',
+                            lineColor: '#933',
+                            lineWidth: 2,
+                            minorTickPosition: 'outside',
+                            tickColor: '#933',
+                            minorTickColor: '#933',
+                            tickLength: 5,
+                            minorTickLength: 5,
+                            labels: {
+                                distance: 12,
+                                rotation: 'auto'
+                            },
+                            offset: -20,
+                            endOnTick: false
+                        }],
+
+                        series: [
+                            {
+                                name: 'Red Bull',
+                                data: [600],
+                                color: '#933',
+
+                                dial: {
+                                    backgroundColor: "#933",
+
+                                },
+                                dataLabels: {
+                                    formatter: function () {
+                                        var kmh = this.y,
+                                                mph = Math.round(kmh * 1.21);
+                                        //return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
+                                        //    '<span style="color:#933">' + mph + ' mph</span>';
+                                    },
+                                    backgroundColor: {
+                                        linearGradient: {
+                                            x1: 0,
+                                            y1: 0,
+                                            x2: 0,
+                                            y2: 1
+                                        },
+                                        stops: [
+                                            [0, '#DDD'],
+                                            [1, '#FFF']
+                                        ]
+                                    }
+                                },
+                                tooltip: {
+                                    valueSuffix: ' millas/h'
+                                }
+                            },
+                            {
+                            name: 'Speed',
+                            data: [80],
+                            dial: {
+                                radius: "60%",
+                                backgroundColor: "#339",
+
+                            },
+
+                            dataLabels: {
+                                formatter: function () {
+                                    var kmh = this.y,
+                                            mph = Math.round(kmh * 0.621);
+                                    // return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
+                                    //    '<span style="color:#933">' + mph + ' mph</span>';
+                                },
+                                backgroundColor: {
+                                    linearGradient: {
+                                        x1: 0,
+                                        y1: 0,
+                                        x2: 0,
+                                        y2: 1
+                                    },
+                                    stops: [
+                                        [0, '#DDD'],
+                                        [1, '#FFF']
+                                    ]
+                                }
+                            },
+                            tooltip: {
+                                valueSuffix: ' km/h'
+                            }
+                        }
+                        ]
+
+                    },
+                    // Add some life
+                    function (chart) {
+                        setInterval(function () {
+                            var point = chart.series[0].points[0],
+                                    newVal,
+                                    inc = Math.round((Math.random() - 0.5) * 20);
+
+                            newVal = point.y + inc;
+                            if (newVal < 0 || newVal > 200) {
+                                newVal = point.y - inc;
+                            }
+
+                            //var point = chart.series[0].points[0].update($valor)
+                            point.update(newVal);
+
+                            var point = chart.series[1].points[0],
+                                    newVal,
+                                    inc = Math.round((Math.random()) * 100);
+
+                            newVal = point.y + inc;
+                            if (newVal < 0 || newVal > 1000) {
+                                newVal = point.y - inc;
+                            }
+
+                            //console.log(newVal);
+
+                            //var point = chart.series[1].points[0].update($valor)
+                            point.update(newVal);
+
+                        }, 1000);
+
+                    });
+
+
+        });
+    </script>
+{% endblock %}
+
+{% set __title = 'Panel de Instrumentos' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- AREA CHART -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ equipo.nombre }} - Modelo: {{ equipo.modelo }}</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="col-md-3">
+                        <div id="llave" style="height:250px;"></div>
+                        <div id="anemometro" style="height: 165px;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="aparejo" style="height:400px;"></div>
+                    </div>
+                    <div class="col-md-3" style="">
+                        <div id="boca-de-pozo" style="height:250px;"></div>
+                    </div>
+
+
+                </div>
+                <!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.row -->
+    </div>
+{% endblock %}

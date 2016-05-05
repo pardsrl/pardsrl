@@ -1,0 +1,24 @@
+compania_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Compania:index" }
+    methods:  GET
+
+compania_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Compania:show" }
+    methods:  GET
+
+compania_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Compania:new" }
+    methods:  [GET, POST]
+
+compania_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Compania:edit" }
+    methods:  [GET, POST]
+
+compania_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Compania:delete" }
+    methods:  DELETE

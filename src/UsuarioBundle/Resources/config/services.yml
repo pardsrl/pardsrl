@@ -1,0 +1,7 @@
+services:
+  usuario.form.usuario:
+      class: UsuarioBundle\Form\UsuarioType
+      tags:
+          - { name: form.type }
+      arguments:
+          - "@doctrine.orm.entity_manager"

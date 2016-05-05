@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Listado de Compañias' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Activo</th>
+                                <th>Fechacreacion</th>
+                                <th>Fechaactualizacion</th>
+                                <th>Creadopor</th>
+                                <th>Actualizadopor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for companium in companias %}
+                            <tr>
+                                <td><a href="{{ path('compania_show', { 'id': companium.id }) }}">{{ companium.id }}</a></td>
+                                <td>{{ companium.nombre }}</td>
+                                <td>{{ companium.descripcion }}</td>
+                                <td>{% if companium.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                                <td>{% if companium.fechaCreacion %}{{ companium.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>{% if companium.fechaActualizacion %}{{ companium.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>{{ companium.creadoPor }}</td>
+                                <td>{{ companium.actualizadoPor }}</td>                                <td>
+                                    <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('compania_edit', { 'id': companium.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm" href="{{ path('compania_delete', { 'id': companium.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            {{ knp_pagination_render(companias) }}
+
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('compania_new') }}">Nueva Compañía</a>
+
+{% endblock %}
+

@@ -1,0 +1,380 @@
+{#<!DOCTYPE html>#}
+{#<html lang="es">#}
+{#<head>#}
+    {#<meta charset="utf-8">#}
+    {#<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+    {#<meta name="viewport" content="width=device-width, initial-scale=1">#}
+    {#<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->#}
+    {#<meta name="description" content="">#}
+    {#<meta name="author" content="">#}
+    {#<link rel="icon" href="../../favicon.ico">#}
+
+    {#<title>{% block title %}{% if __title is defined %} {{ __title }} - {% endif %}Panel de Control{% endblock %}</title>#}
+
+    {#<!-- Bootstrap core CSS -->#}
+    {#<link href="{{ asset('bootstrap-3.3.6-dist/css/bootstrap.min.css') }}" rel="stylesheet" >#}
+
+    {#<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
+    {#<link href="{{ asset('dashboard/ie10/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">#}
+
+    {#<!-- Custom styles for this template -->#}
+    {#<link href="{{ asset('dashboard/dashboard.css') }}" rel="stylesheet">#}
+
+
+    {#<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->#}
+    {#<!--[if lt IE 9]>#}
+    {#<script src="{{ asset('dashboard/ie8/html5shiv.min.js') }}"></script>#}
+    {#<script src="{{ asset('dashboard/ie8/respond.min.js') }}"></script>#}
+    {#<![endif]-->#}
+    {#{% block stylesheets %}{% endblock %}#}
+{#</head>#}
+
+{#<body>#}
+
+{#<nav class="navbar navbar-inverse navbar-fixed-top">#}
+    {#<div class="container-fluid">#}
+        {#<div class="navbar-header">#}
+            {#<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">#}
+                {#<span class="sr-only">Toggle navigation</span>#}
+                {#<span class="icon-bar"></span>#}
+                {#<span class="icon-bar"></span>#}
+                {#<span class="icon-bar"></span>#}
+            {#</button>#}
+            {#<a class="navbar-brand" href="#">Project name</a>#}
+        {#</div>#}
+        {#<div id="navbar" class="navbar-collapse collapse">#}
+
+            {#<ul class="nav navbar-nav navbar-right">#}
+                {#<li><a href="#">Dashboard</a></li>#}
+                {#<li><a href="#">Settings</a></li>#}
+                {#<li><a>Usted se encuentra logueado como: {{ app.user.username }}</a></li>#}
+                {#<li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>#}
+                {#<li><a href="#">Help</a></li>#}
+            {#</ul>#}
+            {#<form class="navbar-form navbar-right">#}
+                {#<input type="text" class="form-control" placeholder="Search...">#}
+            {#</form>#}
+        {#</div>#}
+    {#</div>#}
+{#</nav>#}
+
+{#<div class="container-fluid">#}
+    {#<div class="row">#}
+        {#<div class="col-sm-3 col-md-2 sidebar">#}
+            {#<ul class="nav nav-sidebar">#}
+                {#<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>#}
+                {#<li><a href="#">Reports</a></li>#}
+                {#<li><a href="#">Analytics</a></li>#}
+                {#<li><a href="#">Export</a></li>#}
+            {#</ul>#}
+            {#<ul class="nav nav-sidebar">#}
+                {#<li><a href="">Usuarios</a></li>#}
+                {#<li><a href="">Nav item again</a></li>#}
+                {#<li><a href="">One more nav</a></li>#}
+                {#<li><a href="">Another nav item</a></li>#}
+                {#<li><a href="">More navigation</a></li>#}
+            {#</ul>#}
+            {#<ul class="nav nav-sidebar">#}
+                {#<li><a href="">Nav item again</a></li>#}
+                {#<li><a href="">One more nav</a></li>#}
+                {#<li><a href="">Another nav item</a></li>#}
+            {#</ul>#}
+        {#</div>#}
+        {#<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">#}
+            {#{% if __title is defined %}<h1 class="page-header">{{ __title }}</h1>{% endif %}#}
+
+            {#{% include 'flash_messages.html.twig' %}#}
+
+            {#{% block content %}#}
+
+            {#{% endblock %}#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}
+
+{#<!-- Bootstrap core JavaScript#}
+{#================================================== -->#}
+{#<!-- Placed at the end of the document so the pages load faster -->#}
+{#<script src="{{ asset('jquery/jquery-1.12.3.min.js') }}"></script>#}
+{#<script src="{{ asset('bootstrap-3.3.6-dist/js/bootstrap.min.js') }}"></script>#}
+{#<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
+{#<script src="{{ asset('dashboard/ie10/ie10-viewport-bug-workaround.js') }}"></script>#}
+{#{% block javascripts %}{% endblock %}#}
+{#</body>#}
+{#</html>#}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% if __title is defined %} {{ __title }} - {% endif %}Panel de Control{% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/bootstrap/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/font-awesome/css/font-awesome.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/ionicons/css/ionicons.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/dist/css/AdminLTE.min.css') }}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/dist/css/skins/skin-black.min.css') }}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('dashboard/ie8/html5shiv.min.js') }}"></script>
+    <script src="{{ asset('dashboard/ie8/respond.min.js') }}"></script>
+    <![endif]-->
+    {% block stylesheets %}{% endblock %}
+</head>
+
+
+<body class="hold-transition skin-black sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>P</b>&P</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Pard</b>SRL</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <li class="dropdown messages-menu">
+                        <!-- Menu toggle button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="label label-success">4</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 4 messages</li>
+                            <li>
+                                <!-- inner menu: contains the messages -->
+                                <ul class="menu">
+                                    <li><!-- start message -->
+                                        <a href="#">
+                                            <div class="pull-left">
+                                                <!-- User Image -->
+                                                <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                            </div>
+                                            <!-- Message title and timestamp -->
+                                            <h4>
+                                                Support Team
+                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            </h4>
+                                            <!-- The message -->
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li><!-- end message -->
+                                </ul><!-- /.menu -->
+                            </li>
+                            <li class="footer"><a href="#">See All Messages</a></li>
+                        </ul>
+                    </li><!-- /.messages-menu -->
+
+                    <!-- Notifications Menu -->
+                    <li class="dropdown notifications-menu">
+                        <!-- Menu toggle button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- Inner Menu: contains the notifications -->
+                                <ul class="menu">
+                                    <li><!-- start notification -->
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li><!-- end notification -->
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+                    <!-- Tasks Menu -->
+                    <li class="dropdown tasks-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-flag-o"></i>
+                            <span class="label label-danger">9</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 9 tasks</li>
+                            <li>
+                                <!-- Inner menu: contains the tasks -->
+                                <ul class="menu">
+                                    <li><!-- Task item -->
+                                        <a href="#">
+                                            <!-- Task title and progress text -->
+                                            <h3>
+                                                Design some buttons
+                                                <small class="pull-right">20%</small>
+                                            </h3>
+                                            <!-- The progress bar -->
+                                            <div class="progress xs">
+                                                <!-- Change the css width attribute to simulate progress -->
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">20% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li><!-- end task item -->
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="#">View all tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">{{ app.user.persona.nombreCompleto }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                <p>
+                                    {{ app.user.persona.nombreCompleto }} - {{ app.user.persona.cargo }}
+                                    <small>Miembro de {{ app.user.persona.compania }}</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            {#<li class="user-body">#}
+                                {#<div class="col-xs-4 text-center">#}
+                                    {#<a href="#">Followers</a>#}
+                                {#</div>#}
+                                {#<div class="col-xs-4 text-center">#}
+                                    {#<a href="#">Sales</a>#}
+                                {#</div>#}
+                                {#<div class="col-xs-4 text-center">#}
+                                    {#<a href="#">Friends</a>#}
+                                {#</div>#}
+                            {#</li>#}
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Mi Perfil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>{{ app.user.persona.nombreCompleto }}</p>
+                    <!-- Status -->
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <!-- search form (Optional) -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Buscar...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+
+            <!-- Sidebar Menu -->
+            {{ knp_menu_render('AppBundle:Builder:mainMenu', {'currentClass': 'active', 'ancestorClass':'active','template': 'AppBundle:Menu:knp_menu.html.twig'}) }}
+
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            {% if __title is defined %}
+                <h1 class="page-header">
+                    {{ __title }} {% if __descripcion_opcional is defined %}<small>{{ __descripcion_opcional }}</small>{%  endif %}
+                </h1>
+            {% endif %}
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            {%  include 'flash_messages.html.twig' %}
+
+            {% block content %}{% endblock %}
+
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {#Anything you want#}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2016 <a href="#">PardSRL</a>.</strong> Todos los derechos reservados.
+    </footer>
+
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.4 -->
+<script src="{{ asset('dashboard_v2/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="{{ asset('dashboard_v2/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dashboard_v2/dist/js/app.min.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

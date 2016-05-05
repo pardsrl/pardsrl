@@ -1,0 +1,34 @@
+equipo_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Equipo:index" }
+    methods:  GET
+
+equipo_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Equipo:show" }
+    methods:  GET
+
+equipo_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Equipo:new" }
+    methods:  [GET, POST]
+
+equipo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Equipo:edit" }
+    methods:  [GET, POST]
+
+equipo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Equipo:delete" }
+    methods:  DELETE
+
+equipo_estadisticas:
+    path: /{id}/estadisticas
+    defaults: { _controller: "AppBundle:Equipo:estadisticas"}
+    methods: [GET, POST]
+
+equipo_instrumentos:
+    path: /{id}/instrumentos
+    defaults: { _controller: "AppBundle:Equipo:instrumentos"}
+    methods: [GET, POST]
