@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{%  set __title = 'Estadísticas del equipo' %}
+{% set __title = 'Estadísticas del equipo' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -8,7 +8,46 @@
     <script src="{{ asset('socket.io/socket.io-1.4.5.js') }}"></script>
 
     <script type="application/javascript" language="JavaScript">
-        $(document).ready(function(){
+
+        var chart;
+
+        function cargarDatos(){
+
+            var socket = io('10.0.0.2:5140');
+
+            socket.on('equipo', function (data){
+
+//                var series = chart.series[0], shift = series.data.length > 20; // shift if the series is longer than 20
+                var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 20;  // shift if the series is longer than 20
+                var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 20;  // shift if the series is longer than 20
+                var llave_serie      = chart.series[2], shift_llave = llave_serie.data.length > 20; // shift if the series is longer than 20
+                var boca_pozo_serie  = chart.series[3], shift_bp    = boca_pozo_serie.data.length > 20; // shift if the series is longer than 20
+
+                var tiempo     = data[0];
+                var anemometro = data[1];
+                var aparejo    = data[2];
+                var llave      = data[3];
+                var boca_pozo  = data[4];
+
+                anemometro_serie.addPoint([tiempo, anemometro], true, shift_anm);
+                aparejo_serie.addPoint([tiempo, aparejo],true, shift_apa);
+                llave_serie.addPoint([tiempo, llave],true,shift_llave);
+                boca_pozo_serie.addPoint([tiempo, boca_pozo],true,shift_bp);
+
+            });
+
+
+        }
+
+
+
+        $(document).ready(function () {
+
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
 
             $('#historico').highcharts({
                 chart: {
@@ -24,55 +63,57 @@
                     enabled: false
                 },
                 xAxis: [{
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+//                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+//                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     crosshair: true
                 }],
-                yAxis: [{ // Primary yAxis
-                    labels: {
-                        format: '{value}',
-                        style: {
-                            color: Highcharts.getOptions().colors[2]
+                yAxis: [
+                    { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Anemómetro (km/h)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
                         }
-                    },
-                    title: {
-                        text: 'Aparejo (klb)',
-                        style: {
-                            color: Highcharts.getOptions().colors[2]
-                        }
-                    }
 
-                }, { // Secondary yAxis
-                    gridLineWidth: 0,
-                    title: {
-                        text: 'Anemómetro (km/h)',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
+                    }, { // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: 'Aparejo (klb)',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
                         }
-                    },
-                    labels: {
-                        format: '{value}',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    }
 
-                }, { // Tertiary yAxis
-                    gridLineWidth: 0,
-                    title: {
-                        text: 'Presión (psi)',
-                        style: {
-                            color: Highcharts.getOptions().colors[1]
-                        }
-                    },
-                    labels: {
-                        format: '{value}',
-                        style: {
-                            color: Highcharts.getOptions().colors[1]
-                        }
-                    },
-                    opposite: true
-                }],
+                    }, { // Tertiary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Presión (psi)',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        opposite: true
+                    }
+                ],
                 tooltip: {
                     shared: true
                 },
@@ -85,43 +126,183 @@
                  floating: true,
                  backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                  },*/
-                series: [{
-                    name: 'Anemómetro',
-                    type: 'spline',
-                    yAxis: 1,
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                    tooltip: {
-                        valueSuffix: ' km/h'
-                    }
+                series: [
+                    {
+                        name: 'Anemómetro',
+                        type: 'spline',
+                        yAxis: 0,
+                        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                        tooltip: {
+                            valueSuffix: ' km/h'
+                        }
+                    }, {
+                        name: 'Aparejo',
+                        type: 'spline',
+                        yAxis: 1,
+                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],
+                        tooltip: {
+                            valueSuffix: ' klb'
+                        }
+                    }, {
 
-                }, {
-                    name: 'Llave',
-                    type: 'spline',
-                    yAxis: 2,
-                    data: [1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2, 1013.1, 1016.9, 1018.2, 1016.7],
-                    marker: {
-                        enabled: false
+                        name: 'Llave',
+                        type: 'spline',
+                        yAxis: 2,
+                        data: [1416, 1216, 915.9, 1015.5, 812.3, 1309.5, 1109.6, 1910.2, 1013.1, 1616.9, 1218.2, 1016.7],
+                        marker: {
+                            enabled: false
+                        },
+                        dashStyle: 'spline',
+                        tooltip: {
+                            valueSuffix: ' psi'
+                        }
+
+                    }, {
+                        name: 'Boca Pozo',
+                        type: 'spline',
+                        yAxis: 2,
+                        data: [1400.0, 1000.9, 1900.5, 1750.5, 1800.2, 900.5, 784.2, 1260.5, 1736.3, 1000.3, 1350.9, 920.6],
+                        tooltip: {
+                            valueSuffix: ' psi'
+                        }
+                    }
+                ]
+            });
+
+            chart = new Highcharts.Chart({
+                chart: {
+                    zoomType: 'xy',
+                    renderTo: 'en-vivo',
+                    events: {
+                        load: cargarDatos
+                    }
+                },
+                plotOptions: {
+                    series: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: [{
+//                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+//                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    crosshair: true,
+                    labels: {
+                        rotation: -45
                     },
-                    dashStyle: 'spline',
-                    tooltip: {
-                        valueSuffix: ' psi'
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000,
+                    type: 'datetime',
+                    dateTimeLabelFormats : {
+                        day: '%S:%M:%H'
                     }
+                }],
+                yAxis: [
+                    { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Anemómetro (km/h)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
 
-                }, {
-                    name: 'Aparejo',
-                    type: 'spline',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                    tooltip: {
-                        valueSuffix: ' klb'
+                    }, { // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: 'Aparejo (klb)',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        }
+
+                    }, { // Tertiary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Presión (psi)',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        opposite: true
                     }
-                }, {
-                    name: 'Boca Pozo',
-                    type: 'spline',
-                    data: [3.0, 3.9, 19.5, 7.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                    tooltip: {
-                        valueSuffix: ' psi'
+                ],
+                tooltip: {
+                    shared: true
+                },
+                /*legend: {
+                 layout: 'vertical',
+                 align: 'left',
+                 x: 80,
+                 verticalAlign: 'top',
+                 y: 0,
+                 floating: true,
+                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                 },*/
+                series: [
+                    {
+                        name: 'Anemómetro',
+                        type: 'spline',
+                        yAxis: 0,
+//                        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                        tooltip: {
+                            valueSuffix: ' km/h'
+                        }
+                    }, {
+                        name: 'Aparejo',
+                        type: 'spline',
+                        yAxis: 1,
+//                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],
+                        tooltip: {
+                            valueSuffix: ' klb'
+                        }
+                    }, {
+
+                        name: 'Llave',
+                        type: 'spline',
+                        yAxis: 2,
+//                        data: [1416, 1216, 915.9, 1015.5, 812.3, 1309.5, 1109.6, 1910.2, 1013.1, 1616.9, 1218.2, 1016.7],
+                        tooltip: {
+                            valueSuffix: ' psi'
+                        }
+
+                    }, {
+                        name: 'Boca Pozo',
+                        type: 'spline',
+                        yAxis: 2,
+//                        data: [1400.0, 1000.9, 1900.5, 1750.5, 1800.2, 900.5, 784.2, 1260.5, 1736.3, 1000.3, 1350.9, 920.6],
+                        tooltip: {
+                            valueSuffix: ' psi'
+                        }
                     }
-                }]
+                ]
             });
         });
 
@@ -149,7 +330,7 @@
         </div><!-- /.row -->
 
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- LINE CHART -->
             <div class="box box-info">
                 <div class="box-header with-border">

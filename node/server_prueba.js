@@ -5,16 +5,20 @@ var io     = require('socket.io')(server);
 function pushCsv() {
     var x = (new Date).getTime();
 
-    var y = Math.floor((Math.random() * ((200 + 1) - 1)) + 1);
+    var aparejo    = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
+
+    var anemometro = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
+
+    var llave      = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
+
+    var boca_pozo  = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
 
     var coord = new Array();
 
-    coord.push(x, y);
+    coord.push(x, aparejo, anemometro, llave, boca_pozo);
 
-    io.emit('csvOutput', coord);
-    // io.emit('llave', coord);
-    // io.emit('bocadepozo', coord);
-    // io.emit('bocadepozo', coord);
+    io.emit('equipo', coord);
+
 
     //console.log('enviando - ');
 
@@ -42,7 +46,7 @@ setInterval(function () {
       //  console.log('enviando');
     //}
 
-}, 500);
+}, 1000);
 
 
 // Activa el server en el puerto 1337
