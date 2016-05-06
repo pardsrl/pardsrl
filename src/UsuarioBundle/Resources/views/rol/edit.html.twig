@@ -1,24 +1,27 @@
 {% extends 'base.html.twig' %}
 
+
+{% set __title = 'Editar Rol' %}
+
 {% block content %}
-    <div class="row">
-        <h1 class="page-header">Editar Rol</h1>
-
-        <div class="col-lg-6">
-
-
-            {{ form_start(edit_form) }}
-            {{ form_widget(edit_form) }}
-            <div class="form-group">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10">
-                    <input class="btn btn-primary" type="submit" value="Editar" />
-                    <a class="btn btn-default" href="{{ path('rol_index') }}">Volver al Listado</a>
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- form start -->
+                {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <div class="box-footer">
+                    <input class="btn btn-primary" type="submit" value="Editar"/>
+                    <a class="btn btn-default" href="{{ path('rol_index') }}"> Volver al Listado</a>
                 </div>
+
+                {{ form_end(edit_form) }}
             </div>
-
-            {{ form_end(edit_form) }}
-
         </div>
     </div>
+</div>
+
 {% endblock %}
+
+

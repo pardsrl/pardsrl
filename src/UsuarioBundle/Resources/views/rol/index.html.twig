@@ -1,44 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% set __title = 'Listado de roles' %}
+
 {% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Slug</th>
+                                <th>Activo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for rol in rols %}
+                            <tr>
+                                <td><a href="{{ path('rol_show', { 'id': rol.id }) }}">{{ rol.id }}</a></td>
+                                <td>{{ rol.nombre }}</td>
+                                <td>{{ rol.slug }}</td>
+                                <td>{% if rol.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>                                <td>
+                                    <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('rol_edit', { 'id': rol.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm" href="{{ path('rol_delete', { 'id': rol.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            {{ knp_pagination_render(rols) }}
 
+        </div>
+    </div>
 
-    <h1 class="page-header">Roles</h1>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Slug</th>
-            <th>Activo</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for rol in rols %}
-            <tr>
-                <td><a href="{{ path('rol_show', { 'id': rol.id }) }}">{{ rol.id }}</a></td>
-                <td>{{ rol.nombre }}</td>
-                <td>{{ rol.slug }}</td>
-                <td>{% if rol.activo %}
-                        <span class="glyphicon glyphicon-ok"></span>
-                    {% else %}
-                        <i class="glyphicon glyphicon-remove"></i>
-                    {% endif %}</td>
-                <td>
-                    <a title="Editar" class="btn btn-default btn-sm"
-                       href="{{ path('rol_edit', { 'id': rol.id }) }}"><i
-                                class="glyphicon glyphicon-pencil"></i></a>
-                    <a title="Eliminar" class="btn btn-default btn-sm"
-                       href="{{ path('rol_delete', { 'id': rol.id }) }}">
-                        <i class="glyphicon glyphicon-remove-circle"></i></a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a class="btn btn-primary" href="{{ path('rol_new') }}">Nuevo Rol</a>
+    <a class="btn btn-primary" href="{{ path('rol_new') }}">Nuevo rol</a>
 
 {% endblock %}
+

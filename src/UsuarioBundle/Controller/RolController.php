@@ -18,11 +18,19 @@ class RolController extends Controller
      * Lists all Rol entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $rols = $em->getRepository('UsuarioBundle:Rol')->findAll();
+
+        $paginator = $this->get('knp_paginator');
+
+        $rols = $paginator->paginate(
+            $rols,
+            $request->query->get('page', 1)/* page number */,
+            10/* limit per page */
+        );
 
         return $this->render('UsuarioBundle:rol:index.html.twig', array(
             'rols' => $rols,
@@ -44,7 +52,11 @@ class RolController extends Controller
             $em->persist($rol);
             $em->flush();
 
-            return $this->redirectToRoute('rol_show', array('id' => $rol->getId()));
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardaro satisfactoriamente.');
+
+            return $this->redirectToRoute('rol_index');
+
         }
 
         return $this->render('UsuarioBundle:rol:new.html.twig', array(
@@ -81,6 +93,9 @@ class RolController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($rol);
             $em->flush();
+
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha actualizado satisfactoriamente.');
 
             return $this->redirectToRoute('rol_edit', array('id' => $rol->getId()));
         }
