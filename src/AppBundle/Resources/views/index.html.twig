@@ -1,40 +1,40 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+{#{% endblock %}#}
 
 {#{% block javascripts %}#}
     {#{{ parent() }}#}
     {#<script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>#}
     {#<script src="{{ asset('socket.io/socket.io-1.4.5.js') }}"></script>#}
 
-    <script type="application/javascript" language="JavaScript">
+    {#<script type="application/javascript" language="JavaScript">#}
 
-        var chart; // global
+        {#var chart; // global#}
 
-        /**
-         * Request data from the server and add it to the graph
-         */
-        function requestData() {
-
-
-            var socket = io('10.0.0.2:5140');
-
-            socket.on('csvOutput', function (point) {
-
-                console.log('asdf');
-                var series = chart.series[0], shift = series.data.length > 20; // shift if the series is longer than 20
-
-                // add the point
-                chart.series[0].addPoint(eval(point), true, shift);
-
-            });
-
-        }
+        {#/**#}
+         {#* Request data from the server and add it to the graph#}
+         {#*/#}
+        {#function requestData() {#}
 
 
-        $(document).ready(function () {
+            {#var socket = io('10.0.0.2:5140');#}
+
+            {#socket.on('csvOutput', function (point) {#}
+
+                {#console.log('asdf');#}
+                {#var series = chart.series[0], shift = series.data.length > 20; // shift if the series is longer than 20#}
+
+                {#// add the point#}
+                {#chart.series[0].addPoint(eval(point), true, shift);#}
+
+            {#});#}
+
+        {#}#}
+
+
+        {#$(document).ready(function () {#}
 
             {#$('#historico').highcharts({#}
                 {#chart: {#}
@@ -60,37 +60,37 @@
                 {#}]#}
             {#});#}
 
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'en-vivo',
-                    defaultSeriesType: 'spline',
-                    events: {
-                        load: requestData
-                    }
-                },
-                title: {
-                    text: 'Live random data'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    //tickPixelInterval: 150,
-                    maxZoom: 20 * 1000
-                },
-                yAxis: {
-                    minPadding: 0.2,
-                    maxPadding: 0.2,
-                    title: {
-                        text: 'Value'
-                    }
-                },
-                series: [{
-                    name: 'Random data',
-                    data: []
-                }]
-            });
+            {#chart = new Highcharts.Chart({#}
+                {#chart: {#}
+                    {#renderTo: 'en-vivo',#}
+                    {#defaultSeriesType: 'spline',#}
+                    {#events: {#}
+                        {#load: requestData#}
+                    {#}#}
+                {#},#}
+                {#title: {#}
+                    {#text: 'Live random data'#}
+                {#},#}
+                {#xAxis: {#}
+                    {#type: 'datetime',#}
+                    {#//tickPixelInterval: 150,#}
+                    {#maxZoom: 20 * 1000#}
+                {#},#}
+                {#yAxis: {#}
+                    {#minPadding: 0.2,#}
+                    {#maxPadding: 0.2,#}
+                    {#title: {#}
+                        {#text: 'Value'#}
+                    {#}#}
+                {#},#}
+                {#series: [{#}
+                    {#name: 'Random data',#}
+                    {#data: []#}
+                {#}]#}
+            {#});#}
 
-        });
-    </script>
+        {#});#}
+    {#</script>#}
 
 {#{% endblock %}#}
 
