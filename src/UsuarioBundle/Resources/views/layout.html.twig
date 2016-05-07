@@ -145,6 +145,13 @@
                 <input type="password" id="password" name="_password" class="form-control" placeholder="Contraseña" required>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+            {% if error %}
+            <div class="row">
+                <div class="col-xs-12" style="color: #dd4b39;">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            </div>
+            {% endif %}
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
