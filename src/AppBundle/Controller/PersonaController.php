@@ -55,6 +55,10 @@ class PersonaController extends Controller
 
             $persona->getUsuario()->addRole($rol);
 
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El usuario se ha creado satisfactoriamente.');
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
@@ -93,6 +97,18 @@ class PersonaController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $nuevoRol = $editForm->get('usuario')->get('roles')->getData();
+
+            //limpio los roles anteriores
+            $persona->getUsuario()->setRoles(array());
+
+            $persona->getUsuario()->addRole($nuevoRol);
+
+
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El usuario se ha actualizado satisfactoriamente. Para que los cambios de ROLES surgan efectos se debe volver a iniciar sesión');
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
