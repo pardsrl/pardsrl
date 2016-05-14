@@ -38,3 +38,6 @@
 
 # Composer PHAR
 /composer.phar
+
+#custom node
+/node/node_modules/
