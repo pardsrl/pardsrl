@@ -22,10 +22,10 @@
 
                     var punto = data[clave].field1.split(" ");
 
-                    var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 20000;  // shift if the series is longer than 20
-                    var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 20000;  // shift if the series is longer than 20
-                    var llave_serie      = chart.series[2], shift_llave = llave_serie.data.length > 20000; // shift if the series is longer than 20
-                    var boca_pozo_serie  = chart.series[3], shift_bp    = boca_pozo_serie.data.length > 20000; // shift if the series is longer than 20
+                    var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 10000;  // shift if the series is longer than 20
+                    var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 10000;  // shift if the series is longer than 20
+                    var llave_serie      = chart.series[2], shift_llave = llave_serie.data.length > 10000; // shift if the series is longer than 20
+                    var boca_pozo_serie  = chart.series[3], shift_bp    = boca_pozo_serie.data.length > 10000; // shift if the series is longer than 20
 
                     //hay que multiplicar por 1000 el unixtimestamp
                     var tiempo     = parseFloat(punto[0])*1000;
@@ -208,8 +208,6 @@
                     enabled: false
                 },
                 xAxis: [{
-//                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-//                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     crosshair: true,
                     labels: {
                         rotation: -45
