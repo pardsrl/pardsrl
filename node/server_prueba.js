@@ -3,6 +3,9 @@ var io        = require('socket.io')(server);
 var Converter = require("csvtojson").Converter;
 var watch     = require('node-watch');
 
+const fs = require('fs');
+
+
 // Funcion que parsea el csv y lo convierte a JSON
 function push($filename) {
     /*
