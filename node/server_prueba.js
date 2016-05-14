@@ -27,14 +27,12 @@ function push($filename) {
     // La opcion no header es para cuando no tenemos headers en el csv
     var converter = new Converter({noheader:true});
 
-    var csvPath = '/srv/data/' + $filename;
-
     //end_parsed will be emitted once parsing finished
     converter.on("end_parsed", function (jsonArray) {
 
         switch ($filename) {
 
-          case 'tr.sai280':
+          case '/srv/data/tr.sai280':
             // Emite un evento al socket del tipo csvOutput
             sai280.emit('tiempo_real', jsonArray);
             break;
@@ -46,7 +44,7 @@ function push($filename) {
     });
 
     //read from file
-    fs.createReadStream(csvPath).pipe(converter);
+    fs.createReadStream($filename).pipe(converter);
 
     //sai280.emit('equipo', coord);
 
