@@ -58,7 +58,6 @@ class PersonaController extends Controller
             // set flash messages
             $this->get('session')->getFlashBag()->add('success', 'El usuario se ha creado satisfactoriamente.');
 
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
