@@ -15,24 +15,34 @@
 
             var socket = io('64.37.55.176:5140/tr-sai280');
 
-            socket.on('equipo', function (data){
+            socket.on('tiempo_real', function (data){
 
-//                var series = chart.series[0], shift = series.data.length > 20; // shift if the series is longer than 20
-                var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 20;  // shift if the series is longer than 20
-                var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 20;  // shift if the series is longer than 20
-                var llave_serie      = chart.series[2], shift_llave = llave_serie.data.length > 20; // shift if the series is longer than 20
-                var boca_pozo_serie  = chart.series[3], shift_bp    = boca_pozo_serie.data.length > 20; // shift if the series is longer than 20
+                for (clave in data) {
 
-                var tiempo     = data[0];
-                var anemometro = data[1];
-                var aparejo    = data[2];
-                var llave      = data[3];
-                var boca_pozo  = data[4];
 
-                anemometro_serie.addPoint([tiempo, anemometro], true, shift_anm);
-                aparejo_serie.addPoint([tiempo, aparejo],true, shift_apa);
-                llave_serie.addPoint([tiempo, llave],true,shift_llave);
-                boca_pozo_serie.addPoint([tiempo, boca_pozo],true,shift_bp);
+                    var punto = data[clave].field1.split(" ");
+
+                    var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 20000;  // shift if the series is longer than 20
+                    var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 20000;  // shift if the series is longer than 20
+                    var llave_serie      = chart.series[2], shift_llave = llave_serie.data.length > 20000; // shift if the series is longer than 20
+                    var boca_pozo_serie  = chart.series[3], shift_bp    = boca_pozo_serie.data.length > 20000; // shift if the series is longer than 20
+
+                    //hay que multiplicar por 1000 el unixtimestamp
+                    var tiempo     = parseFloat(punto[0])*1000;
+                    var anemometro = parseFloat(punto[1]);
+                    var aparejo    = parseFloat(punto[2]);
+                    var llave      = parseFloat(punto[3]);
+                    var boca_pozo  = parseFloat(punto[4]);
+
+                    anemometro_serie.addPoint([tiempo, anemometro], false, shift_anm);
+                    aparejo_serie.addPoint([tiempo, aparejo],false, shift_apa);
+                    llave_serie.addPoint([tiempo, llave],false,shift_llave);
+                    boca_pozo_serie.addPoint([tiempo, boca_pozo],false,shift_bp);
+                }
+
+
+
+                chart.redraw();
 
             });
 
@@ -204,12 +214,9 @@
                     labels: {
                         rotation: -45
                     },
-                    tickPixelInterval: 150,
-                    maxZoom: 20 * 1000,
+//                    tickPixelInterval: 150,
+//                    maxZoom: 20 * 1000,
                     type: 'datetime',
-                    dateTimeLabelFormats : {
-                        day: '%S:%M:%H'
-                    }
                 }],
                 yAxis: [
                     { // Secondary yAxis
