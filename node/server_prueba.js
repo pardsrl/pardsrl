@@ -30,7 +30,7 @@ function push($filename) {
     converter.on("end_parsed", function (jsonArray) {
 
         switch ($filename) {
-          
+
           case 'tr.sai280':
             // Emite un evento al socket del tipo csvOutput
             sai280.emit('tiempo_real', jsonArray);
@@ -78,7 +78,7 @@ setInterval(function () {
 */
 watch('/srv/data/tr.sai280', function(filename) {
   console.log(filename, ' changed.');
-  push($filename);
+  push(filename);
 });
 
 
