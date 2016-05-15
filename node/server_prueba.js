@@ -9,20 +9,20 @@ const fs = require('fs');
 // Funcion que parsea el csv y lo convierte a JSON
 function push($filename) {
     /*
-    var x = (new Date).getTime();
+     var x = (new Date).getTime();
 
-    var aparejo    = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
+     var aparejo    = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
 
-    var anemometro = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
+     var anemometro = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
 
-    var llave      = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
+     var llave      = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
 
-    var boca_pozo  = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
+     var boca_pozo  = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
 
-    var coord = new Array();
+     var coord = new Array();
 
-    coord.push(x, aparejo, anemometro, llave, boca_pozo);
-    */
+     coord.push(x, aparejo, anemometro, llave, boca_pozo);
+     */
 
     // La opcion no header es para cuando no tenemos headers en el csv
     var converter = new Converter({noheader:true});
@@ -32,19 +32,23 @@ function push($filename) {
 
         switch ($filename) {
 
-          case '/srv/data/tr.sai280':
-            // Emite un evento al socket del tipo csvOutput
-            sai280.emit('tiempo_real', jsonArray);
-            break;
+            case '/srv/data/tr.sai280':
+                // Emite un evento al socket del tipo csvOutput
+                sai280.emit('tiempo_real', jsonArray);
+                break;
 
-          default:
+            default:
 
         }
 
     });
 
+
     //read from file
-    fs.createReadStream($filename).pipe(converter);
+    var stream = fs.createReadStream($filename);
+
+    stream.on('error', function (error) {console.log("Caught", error);});
+    stream.on('readable', function () {stream.pipe(converter);});
 
     //sai280.emit('equipo', coord);
 
@@ -67,21 +71,13 @@ sai280.on('connection', function (socket) {
 });
 
 /*
-setInterval(function () {
+ setInterval(function () {
 
-    //console.log(io.);
-    //if(server._connections > 1 ){
-        pushCsv();
-      //  console.log('enviando');
-    //}
+ //console.log(io.);
+ //if(server._connections > 1 ){
+ pushCsv();
+ //  console.log('enviando');
+ //}
 
-}, 1000);
-*/
-watch('/srv/data/tr.sai280', function(filename) {
-  console.log(filename, ' changed.');
-  push(filename);
-});
-
-
-// Activa el server en el puerto 1337
-server.listen(5140);
+ }, 1000);
+ */
