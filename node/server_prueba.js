@@ -30,11 +30,24 @@ function push($filename) {
     //end_parsed will be emitted once parsing finished
     converter.on("end_parsed", function (jsonArray) {
 
+        var dataset = array();
+
+        for (key in jsonArray) {
+
+            var puntos = jsonArray[key].field1.split(" ");
+
+            for(p in puntos){
+                puntos[p] = Number(puntos[p]);
+            }
+
+            dataset.push(puntos);
+        }
+
         switch ($filename) {
 
             case '/srv/data/tr.sai280':
                 // Emite un evento al socket del tipo csvOutput
-                sai280.emit('tiempo_real', jsonArray);
+                sai280.emit('tiempo_real', dataset);
                 break;
 
             default:
