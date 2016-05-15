@@ -19,8 +19,7 @@
 
                 for (clave in data) {
 
-
-                    var punto = data[clave].field1.split(" ");
+                    var puntos = data[clave];
 
                     var anemometro_serie = chart.series[0], shift_anm   = anemometro_serie.data.length > 1200;  // shift if the series is longer than 20
                     var aparejo_serie    = chart.series[1], shift_apa   = aparejo_serie.data.length > 1200;  // shift if the series is longer than 20
@@ -30,11 +29,11 @@
                     //console.log(anemometro_serie.data.length);
 
                     //hay que multiplicar por 1000 el unixtimestamp
-                    var tiempo     = parseFloat(punto[0])*1000;
-                    var anemometro = parseFloat(punto[1]);
-                    var aparejo    = parseFloat(punto[2]);
-                    var llave      = parseFloat(punto[3]);
-                    var boca_pozo  = parseFloat(punto[4]);
+                    var tiempo     = puntos[0]*1000;
+                    var anemometro = puntos[1];
+                    var aparejo    = puntos[2];
+                    var llave      = puntos[3];
+                    var boca_pozo  = puntos[4];
 
                     anemometro_serie.addPoint([tiempo, anemometro], false, shift_anm);
                     aparejo_serie.addPoint([tiempo, aparejo],false, shift_apa);
@@ -189,6 +188,7 @@
                 chart: {
                     zoomType: 'xy',
                     renderTo: 'en-vivo',
+                    animation: false,
                     events: {
                         load: cargarDatos
                     }
@@ -328,7 +328,7 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- AREA CHART -->
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -345,7 +345,7 @@
         </div><!-- /.row -->
 
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- LINE CHART -->
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -357,7 +357,7 @@
                 </div>
                 <div class="box-body">
                     <div class="chart">
-                        <div id="en-vivo" style="width:100%; height:400px;"></div>
+                        <div id="en-vivo" style="width:100%; height:300px;"></div>
                     </div>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
