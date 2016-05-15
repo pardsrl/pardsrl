@@ -30,7 +30,7 @@ function push($filename) {
     //end_parsed will be emitted once parsing finished
     converter.on("end_parsed", function (jsonArray) {
 
-        var dataset = array();
+        var dataset = Array();
 
         for (key in jsonArray) {
 
