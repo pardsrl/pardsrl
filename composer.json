@@ -1,6 +1,7 @@
 {
     "name": "vagrant/live_data",
     "license": "proprietary",
+    "description" : "Proyecto de monitorizacion de equipamiento en vivo.",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -60,3 +61,4 @@
         }
     }
 }
+
