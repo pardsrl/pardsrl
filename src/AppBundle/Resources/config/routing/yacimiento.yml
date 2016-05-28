@@ -1,0 +1,24 @@
+yacimiento_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Yacimiento:index" }
+    methods:  GET
+
+yacimiento_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Yacimiento:show" }
+    methods:  GET
+
+yacimiento_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Yacimiento:new" }
+    methods:  [GET, POST]
+
+yacimiento_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Yacimiento:edit" }
+    methods:  [GET, POST]
+
+yacimiento_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Yacimiento:delete" }
+    methods:  DELETE

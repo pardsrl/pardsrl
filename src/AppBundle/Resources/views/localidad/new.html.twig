@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+{% set __title = 'Nueva Localidad' %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- form start -->
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="box-footer">
+                        <input class="btn btn-primary" type="submit" value="Crear"/>
+                        <a class="btn btn-default" href="{{ path('localidad_index') }}"> Volver al Listado</a>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

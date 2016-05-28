@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Listado de pozos' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Acronimo</th>
+                                <th>Profundidad</th>
+                                <th>Sistemaextraccion</th>
+                                <th>Latitud</th>
+                                <th>Longitud</th>
+                                <th>Activo</th>
+                                <th>Fechacreacion</th>
+                                <th>Fechaactualizacion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for pozo in pozos %}
+                            <tr>
+                                <td>{{ pozo.id }}</td>
+                                <td><a href="{{ path('pozo_show', { 'id': pozo.id }) }}">{{ pozo.nombre }}</a></td>
+                                <td>{{ pozo.acronimo }}</td>
+                                <td>{{ pozo.profundidad }}</td>
+                                <td>{{ pozo.sistemaExtraccion }}</td>
+                                <td>{{ pozo.latitud }}</td>
+                                <td>{{ pozo.longitud }}</td>
+                                <td>{% if pozo.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                                <td>{% if pozo.fechaCreacion %}{{ pozo.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>{% if pozo.fechaActualizacion %}{{ pozo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
+                                    <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('pozo_edit', { 'id': pozo.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ pozo.id }}" href="{{ path('pozo_delete', { 'id': pozo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            {{ knp_pagination_render(pozos) }}
+
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('pozo_new') }}">Nuevo pozo</a>
+
+{% endblock %}
+

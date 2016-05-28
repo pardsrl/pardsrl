@@ -1,3 +1,19 @@
+app_pais:
+        resource: "@AppBundle/Resources/config/routing/pais.yml"
+        prefix:   /pais
+
+app_provincia:
+        resource: "@AppBundle/Resources/config/routing/provincia.yml"
+        prefix:   /provincia
+
+app_localidad:
+        resource: "@AppBundle/Resources/config/routing/localidad.yml"
+        prefix:   /localidad
+
+app_yacimiento:
+        resource: "@AppBundle/Resources/config/routing/yacimiento.yml"
+        prefix:   /yacimiento
+
 app_equipo:
         resource: "@AppBundle/Resources/config/routing/equipo.yml"
         prefix:   /equipo
@@ -10,6 +26,10 @@ app_persona:
     resource: "@AppBundle/Resources/config/routing/persona.yml"
     prefix:   /usuarios
 
+app_pozo:
+        resource: "@AppBundle/Resources/config/routing/pozo.yml"
+        prefix:   /pozo
+
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}
@@ -19,3 +39,11 @@ dashboard:
 #    path:     ajax/datos_en_vivo
 #    defaults: { _controller: AppBundle:Ajax:datosEnVivo }
 #    methods: [GET]
+
+notificaciones_personales:
+    path:     /notificacionesPersonales
+    defaults: { _controller: AppBundle:Notificaciones:notificacionesPersonales }
+
+notificaciones_sistema:
+    path:     /notificacionesSistema
+    defaults: { _controller: AppBundle:Notificaciones:notificacionesSistema }

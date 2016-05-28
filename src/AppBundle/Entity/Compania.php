@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Base\BaseClass;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -11,16 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="compania")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CompaniaRepository")
  */
-class Compania
+class Compania extends BaseClass
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -36,54 +29,29 @@ class Compania
      */
     private $descripcion;
 
-
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="activo", type="boolean")
+     * @ORM\Column(name="acronimo", type="string", length=15, nullable=false)
      */
-    private $activo = true;
-
-    /**
-     * @var \DateTime $fechaCreacion
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
-    protected $fechaCreacion;
-    /**
-     * @var \DateTime $fechaActualizacion
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    protected $fechaActualizacion;
-
-    /**
-     * @var string $creadoPor
-     *
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column
-     */
-    protected $creadoPor;
-
-    /**
-     * @var string $actualizadoPor
-     *
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column
-     */
-    protected $actualizadoPor;
+    private $acronimo;
 
 
     /**
-     * Get id
+     * @var yacimientos
      *
-     * @return int
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Yacimiento", mappedBy="compania")
+     *
      */
-    public function getId()
+    private $yacimientos;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->id;
+        $this->yacimientos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -134,29 +102,31 @@ class Compania
         return $this->descripcion;
     }
 
+
     /**
-     * Set activo
+     * Set acronimo
      *
-     * @param boolean $activo
+     * @param string $acronimo
      *
      * @return Compania
      */
-    public function setActivo($activo)
+    public function setAcronimo($acronimo)
     {
-        $this->activo = $activo;
+        $this->acronimo = $acronimo;
 
         return $this;
     }
 
     /**
-     * Get activo
+     * Get acronimo
      *
-     * @return bool
+     * @return string
      */
-    public function getActivo()
+    public function getAcronimo()
     {
-        return $this->activo;
+        return $this->acronimo;
     }
+
 
     public function __toString()
     {
@@ -164,98 +134,38 @@ class Compania
     }
 
     /**
-     * Set fechaCreacion
+     * Add yacimiento
      *
-     * @param \DateTime $fechaCreacion
+     * @param \AppBundle\Entity\Yacimiento $yacimiento
      *
      * @return Compania
      */
-    public function setFechaCreacion($fechaCreacion)
+    public function addYacimiento(\AppBundle\Entity\Yacimiento $yacimiento)
     {
-        $this->fechaCreacion = $fechaCreacion;
+        $this->yacimientos[] = $yacimiento;
 
         return $this;
     }
 
     /**
-     * Get fechaCreacion
+     * Remove yacimiento
      *
-     * @return \DateTime
+     * @param \AppBundle\Entity\Yacimiento $yacimiento
      */
-    public function getFechaCreacion()
+    public function removeYacimiento(\AppBundle\Entity\Yacimiento $yacimiento)
     {
-        return $this->fechaCreacion;
+        $this->yacimientos->removeElement($yacimiento);
     }
 
     /**
-     * Set fechaActualizacion
+     * Get yacimientos
      *
-     * @param \DateTime $fechaActualizacion
-     *
-     * @return Compania
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setFechaActualizacion($fechaActualizacion)
+    public function getYacimientos()
     {
-        $this->fechaActualizacion = $fechaActualizacion;
-
-        return $this;
+        return $this->yacimientos;
     }
 
-    /**
-     * Get fechaActualizacion
-     *
-     * @return \DateTime
-     */
-    public function getFechaActualizacion()
-    {
-        return $this->fechaActualizacion;
-    }
 
-    /**
-     * Set creadoPor
-     *
-     * @param string $creadoPor
-     *
-     * @return Compania
-     */
-    public function setCreadoPor($creadoPor)
-    {
-        $this->creadoPor = $creadoPor;
-
-        return $this;
-    }
-
-    /**
-     * Get creadoPor
-     *
-     * @return string
-     */
-    public function getCreadoPor()
-    {
-        return $this->creadoPor;
-    }
-
-    /**
-     * Set actualizadoPor
-     *
-     * @param string $actualizadoPor
-     *
-     * @return Compania
-     */
-    public function setActualizadoPor($actualizadoPor)
-    {
-        $this->actualizadoPor = $actualizadoPor;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizadoPor
-     *
-     * @return string
-     */
-    public function getActualizadoPor()
-    {
-        return $this->actualizadoPor;
-    }
 }

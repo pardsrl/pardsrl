@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pozo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ pozo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Acronimo</th>
+                <td>{{ pozo.acronimo }}</td>
+            </tr>
+            <tr>
+                <th>Profundidad</th>
+                <td>{{ pozo.profundidad }}</td>
+            </tr>
+            <tr>
+                <th>Sistemaextraccion</th>
+                <td>{{ pozo.sistemaExtraccion }}</td>
+            </tr>
+            <tr>
+                <th>Latitud</th>
+                <td>{{ pozo.latitud }}</td>
+            </tr>
+            <tr>
+                <th>Longitud</th>
+                <td>{{ pozo.longitud }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ pozo.id }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if pozo.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if pozo.fechaCreacion %}{{ pozo.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechaactualizacion</th>
+                <td>{% if pozo.fechaActualizacion %}{{ pozo.fechaActualizacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pozo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('pozo_edit', { 'id': pozo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

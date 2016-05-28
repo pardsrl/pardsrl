@@ -17,7 +17,7 @@
                                 <th>Email</th>
                                 <th>Activo</th>
                                 <th>Fecha de creacion</th>
-                                <th>Fecha de ctualizacion</th>
+                                <th>Fecha de actualizacion</th>
                                 <th>Creado Por</th>
                                 <th>Actualizado Por</th>
                                 <th>Acciones</th>
@@ -35,7 +35,8 @@
                                 <td>{% if equipo.fechaCreacion %}{{ equipo.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>{% if equipo.fechaActualizacion %}{{ equipo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>{{ equipo.creadoPor }}</td>
-                                <td>{{ equipo.actualizadoPor }}</td>                                <td>
+                                <td>{{ equipo.actualizadoPor }}</td>
+                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('equipo_edit', { 'id': equipo.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
                                     <a title="Eliminar" class="btn btn-default btn-sm" href="{{ path('equipo_delete', { 'id': equipo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>

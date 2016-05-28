@@ -60,7 +60,7 @@
                             {%- if loop.last %}
                                 <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ ".id }) }}"  }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm" href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { 'id': " ~ entity_singularized ~ ".id }) }}"}}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ "{{ " ~ entity_singularized ~ ".id }}"}}" href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { 'id': " ~ entity_singularized ~ ".id }) }}"}}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             {%- endif %}
                         {%- endfor %}

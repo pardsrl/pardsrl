@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Listado de provincias' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Descripción</th>
+                                <th>País</th>
+                                <th>Codigo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for provincium in provincias %}
+                            <tr>
+                                <td><a href="{{ path('provincia_show', { 'id': provincium.id }) }}">{{ provincium.id }}</a></td>
+                                <td>{{ provincium.descripcion }}</td>
+                                <td>{{ provincium.pais }}</td>
+                                <td>{{ provincium.codigo }}</td>                                <td>
+                                    <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('provincia_edit', { 'id': provincium.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ provincium.id }}" href="{{ path('provincia_delete', { 'id': provincium.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            {{ knp_pagination_render(provincias) }}
+
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('provincia_new') }}">Nueva provincia</a>
+
+{% endblock %}
+

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\DBAL\Driver\PDOException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -113,14 +115,21 @@ class CompaniaController extends Controller
      */
     public function deleteAction(Request $request, Compania $companium)
     {
-        $form = $this->createDeleteForm($companium);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        try{
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($companium);
             $em->flush();
+
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'La Companía se ha dado de baja satisfactoriamente.');
+
+        }catch (\Exception $ex){
+            $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar la companiía.');
         }
+
+
 
         return $this->redirectToRoute('compania_index');
     }

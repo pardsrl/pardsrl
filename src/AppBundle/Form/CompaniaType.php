@@ -17,6 +17,7 @@ class CompaniaType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion')
+            ->add('acronimo')
             ->add('activo')
         ;
     }

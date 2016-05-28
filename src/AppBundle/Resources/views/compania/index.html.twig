@@ -13,11 +13,12 @@
                                 <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
+                                <th>Acrónimo</th>
                                 <th>Activo</th>
-                                <th>Fechacreacion</th>
-                                <th>Fechaactualizacion</th>
-                                <th>Creadopor</th>
-                                <th>Actualizadopor</th>
+                                <th>Fecha Creacion</th>
+                                <th>Fecha Actualizacion</th>
+                                <th>Creado Por</th>
+                                <th>Actualizado Por</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -27,6 +28,7 @@
                                 <td><a href="{{ path('compania_show', { 'id': companium.id }) }}">{{ companium.id }}</a></td>
                                 <td>{{ companium.nombre }}</td>
                                 <td>{{ companium.descripcion }}</td>
+                                <td>{{ companium.acronimo }}</td>
                                 <td>{% if companium.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
                                 <td>{% if companium.fechaCreacion %}{{ companium.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>{% if companium.fechaActualizacion %}{{ companium.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>

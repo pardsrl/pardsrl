@@ -105,6 +105,50 @@ class Builder implements ContainerAwareInterface
         )->setExtra( 'icon', 'fa fa-circle-o');
 
         $menu->addChild(
+            'Yacimientos',
+            array(
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            )
+        )
+            ->setUri( '#' )
+            ->setExtra( 'icon', 'fa fa-image' )
+            ->setAttribute( 'class', 'treeview' );
+
+        $menu['Yacimientos']->addChild(
+            'Listado',
+            array('route' => 'yacimiento_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Yacimientos']->addChild(
+            'Nuevo Yacimiento',
+            array('route' => 'yacimiento_new')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu->addChild(
+            'Pozos',
+            array(
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            )
+        )
+            ->setUri( '#' )
+            ->setExtra( 'icon', 'fa fa-sort-amount-asc' )
+            ->setAttribute( 'class', 'treeview' );
+
+        $menu['Pozos']->addChild(
+            'Listado',
+            array('route' => 'pozo_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Pozos']->addChild(
+            'Nuevo Pozo',
+            array('route' => 'pozo_new')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu->addChild(
             'Usuarios',
             array(
                 'childrenAttributes' => array(
@@ -146,6 +190,34 @@ class Builder implements ContainerAwareInterface
         $menu['Roles']->addChild(
             'Nuevo Rol',
             array('route' => 'rol_new')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+
+        $menu->addChild(
+            'Territorial',
+            array(
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            )
+        )
+            ->setUri( '#' )
+            ->setExtra( 'icon', 'fa fa-map-pin' )
+            ->setAttribute( 'class', 'treeview' );
+
+        $menu['Territorial']->addChild(
+            'Países',
+            array('route' => 'pais_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Territorial']->addChild(
+            'Provincias',
+            array('route' => 'provincia_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Territorial']->addChild(
+            'Localidades',
+            array('route' => 'localidad_index')
         )->setExtra( 'icon', 'fa fa-circle-o');
         //$menu->addChild('Usuarios')->addChild('listado', array('route' => 'persona_index'));
 //

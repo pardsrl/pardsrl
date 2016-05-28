@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Base\BaseClass;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -12,16 +13,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="equipo")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EquipoRepository")
  */
-class Equipo
+class Equipo extends BaseClass
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -61,53 +54,11 @@ class Equipo
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Persona", inversedBy="equipos")
      */
     private $personas;
-    
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="activo", type="boolean")
-     */
-    private $activo;
 
     /**
-     * @var \DateTime $fechaCreacion
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Intervencion", mappedBy="equipo")
      */
-    protected $fechaCreacion;
-    /**
-     * @var \DateTime $fechaActualizacion
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    protected $fechaActualizacion;
-
-    /**
-     * @var string $creadoPor
-     *
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column
-     */
-    protected $creadoPor;
-
-    /**
-     * @var string $actualizadoPor
-     *
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column
-     */
-    protected $actualizadoPor;
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $intervenciones;
 
     /**
      * Set nombre
@@ -206,30 +157,6 @@ class Equipo
     }
 
     /**
-     * Set activo
-     *
-     * @param boolean $activo
-     *
-     * @return Equipo
-     */
-    public function setActivo($activo)
-    {
-        $this->activo = $activo;
-
-        return $this;
-    }
-
-    /**
-     * Get activo
-     *
-     * @return bool
-     */
-    public function getActivo()
-    {
-        return $this->activo;
-    }
-
-    /**
      * Set compania
      *
      * @param \AppBundle\Entity\Compania $compania
@@ -294,99 +221,48 @@ class Equipo
         return $this->personas;
     }
 
+
     /**
-     * Set fechaCreacion
+     * Add intervencione
      *
-     * @param \DateTime $fechaCreacion
+     * @param \AppBundle\Entity\Intervencion $intervencione
      *
      * @return Equipo
      */
-    public function setFechaCreacion($fechaCreacion)
+    public function addIntervencione(\AppBundle\Entity\Intervencion $intervencione)
     {
-        $this->fechaCreacion = $fechaCreacion;
+        $this->intervenciones[] = $intervencione;
 
         return $this;
     }
 
     /**
-     * Get fechaCreacion
+     * Remove intervencione
      *
-     * @return \DateTime
+     * @param \AppBundle\Entity\Intervencion $intervencione
      */
-    public function getFechaCreacion()
+    public function removeIntervencione(\AppBundle\Entity\Intervencion $intervencione)
     {
-        return $this->fechaCreacion;
+        $this->intervenciones->removeElement($intervencione);
     }
 
     /**
-     * Set fechaActualizacion
+     * Get intervenciones
      *
-     * @param \DateTime $fechaActualizacion
-     *
-     * @return Equipo
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setFechaActualizacion($fechaActualizacion)
+    public function getIntervenciones()
     {
-        $this->fechaActualizacion = $fechaActualizacion;
-
-        return $this;
+        return $this->intervenciones;
     }
 
-    /**
-     * Get fechaActualizacion
-     *
-     * @return \DateTime
-     */
-    public function getFechaActualizacion()
-    {
-        return $this->fechaActualizacion;
+
+    public function getNombreCompleto(){
+        return $this->getCompania()->getAcronimo().' '.$this->getNombre();
     }
 
-    /**
-     * Set creadoPor
-     *
-     * @param string $creadoPor
-     *
-     * @return Equipo
-     */
-    public function setCreadoPor($creadoPor)
-    {
-        $this->creadoPor = $creadoPor;
-
-        return $this;
+    public function getWebSocketNamespace(){
+        return strtolower(str_replace(' ','',$this->getNombreCompleto()));
     }
 
-    /**
-     * Get creadoPor
-     *
-     * @return string
-     */
-    public function getCreadoPor()
-    {
-        return $this->creadoPor;
-    }
-
-    /**
-     * Set actualizadoPor
-     *
-     * @param string $actualizadoPor
-     *
-     * @return Equipo
-     */
-    public function setActualizadoPor($actualizadoPor)
-    {
-        $this->actualizadoPor = $actualizadoPor;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizadoPor
-     *
-     * @return string
-     */
-    public function getActualizadoPor()
-    {
-        return $this->actualizadoPor;
-    }
 }

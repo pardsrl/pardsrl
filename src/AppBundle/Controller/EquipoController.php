@@ -152,7 +152,7 @@ class EquipoController extends Controller
     public function estadisticasAction(Request $request, Equipo $equipo){
         
         return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
-            'equipo' => $equipo
+            'equipo'           => $equipo
         ));
     }
 

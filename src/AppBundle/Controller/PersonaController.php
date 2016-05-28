@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Persona;
 use AppBundle\Form\PersonaType;
-use UsuarioBundle\Entity\Usuario;
 
 /**
  * Persona controller.
