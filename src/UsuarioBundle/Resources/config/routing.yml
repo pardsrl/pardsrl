@@ -7,5 +7,5 @@ usuario_homepage:
     defaults: { _controller: UsuarioBundle:Default:index }
 
 cambiar-password:
-    path:     /cambiar-password/{id}
+    path:     /usuarios/{id}/cambiar-password
     defaults: { _controller: UsuarioBundle:CambiarPassword:cambiarPassword }
