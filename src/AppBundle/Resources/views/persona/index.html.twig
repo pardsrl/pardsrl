@@ -43,6 +43,9 @@
                                     <a title="Editar" class="btn btn-default btn-sm"
                                        href="{{ path('persona_edit', { 'id': persona.id }) }}"><i
                                                 class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Cambiar Password" class="btn btn-default btn-sm"
+                                       href="{{ path('cambiar-password', { 'id': persona.usuario.id }) }}"><i
+                                                class="fa fa-fw fa-key"></i></a>
                                     <a title="Eliminar" class="btn btn-default btn-sm"
                                        href="{{ path('persona_delete', { 'id': persona.id }) }}">
                                         <i class="glyphicon glyphicon-remove-circle"></i></a>
