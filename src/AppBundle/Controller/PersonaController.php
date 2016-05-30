@@ -44,7 +44,6 @@ class PersonaController extends Controller
     {
         $persona = new Persona();
 
-        
         $form = $this->createForm('AppBundle\Form\PersonaType', $persona);
         $form->handleRequest($request);
 
@@ -61,7 +60,7 @@ class PersonaController extends Controller
             $em->persist($persona);
             $em->flush();
 
-            return $this->redirectToRoute('persona_show', array('id' => $persona->getId()));
+            return $this->redirectToRoute('persona_index');
         }
 
         return $this->render('AppBundle:persona:new.html.twig', array(

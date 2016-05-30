@@ -34,13 +34,6 @@ class UsuarioType extends AbstractType
                 'label' => false,
                 'attr' => array('placeholder'=> 'Nombre de Usuario')
             ))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'options' => array('translation_domain' => 'FOSUserBundle'),
-                'first_options' => array('label' => false,'attr' => array('placeholder'=>'contraseña')),
-                'second_options' => array('label' => false,'attr' => array('placeholder'=>'Repita la contraseña')),
-                'invalid_message' => 'Las contraseñas ingresadas no coinciden',
-            ))
             ;
 
 
@@ -64,12 +57,23 @@ class UsuarioType extends AbstractType
             // This should be considered a new "Usuario"
             if (!$usuario || null === $usuario->getId()) {
 
-                $form->add('roles',ChoiceType::class,array(
+                $form
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array('label' => false,'attr' => array('placeholder'=>'contraseña')),
+                    'second_options' => array('label' => false,'attr' => array('placeholder'=>'Repita la contraseña')),
+                    'invalid_message' => 'Las contraseñas ingresadas no coinciden',
+                ))
+                ->add('roles',ChoiceType::class,array(
                     'choices' => $aRoles,
                     'label' => 'Rol',
                     'expanded' => true,
                     'choices_as_values'=> true,
                     'mapped' => false
+                ))
+                ->add('enabled', null, array(
+                    'label' => 'Habilitado'
                 ));
 
             }else{
@@ -86,6 +90,9 @@ class UsuarioType extends AbstractType
                     'choices_as_values'=> true,
                     'expanded' => true,
                     'mapped'   => false
+                ))
+                ->add('enabled', null, array(
+                    'label' => 'Habilitado'
                 ));
 
             }
@@ -105,8 +112,8 @@ class UsuarioType extends AbstractType
         ));
     }
 
-    public function getParent()
-    {
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-    }
+//    public function getParent()
+//    {
+//        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+//    }
 }

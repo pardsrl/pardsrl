@@ -5,3 +5,7 @@ usuario_rol:
 usuario_homepage:
     path:     /
     defaults: { _controller: UsuarioBundle:Default:index }
+
+cambiar-password:
+    path:     /cambiar-password/{id}
+    defaults: { _controller: UsuarioBundle:CambiarPassword:cambiarPassword }
