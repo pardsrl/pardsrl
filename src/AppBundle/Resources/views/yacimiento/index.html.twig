@@ -13,11 +13,11 @@
                                 <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Acronimo</th>
+                                <th>Compañía</th>
+                                <th>Localidad</th>
                                 <th>Activo</th>
-                                <th>Fecha de creacion</th>
-                                <th>Fecha de actualizacion</th>
-                                <th>Creado Por</th>
-                                <th>Actualizado Por</th>
+                                <th>Fecha de creación</th>
+                                <th>Fecha de actualización</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -27,14 +27,13 @@
                                 <td>{{ yacimiento.id }}</td>
                                 <td><a href="{{ path('yacimiento_show', { 'id': yacimiento.id }) }}">{{ yacimiento.nombre }}</a></td>
                                 <td>{{ yacimiento.acronimo }}</td>
+                                <td>{{ yacimiento.compania }}</td>
+                                <td>{{ yacimiento.localidad }}</td>
                                 <td>{% if yacimiento.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
                                 <td>{% if yacimiento.fechaCreacion %}{{ yacimiento.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>{% if yacimiento.fechaActualizacion %}{{ yacimiento.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>{{ yacimiento.creadoPor }}</td>
-                                <td>{{ yacimiento.actualizadoPor }}</td>
-                                <td>
+                                <td>{% if yacimiento.fechaActualizacion %}{{ yacimiento.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('yacimiento_edit', { 'id': yacimiento.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ yacimiento.id }}" href="{{ path('yacimiento_delete', { 'id': yacimiento.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ yacimiento.id }}" data-href="{{ path('yacimiento_delete', { 'id': yacimiento.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -45,6 +44,12 @@
             {{ knp_pagination_render(yacimientos) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('yacimiento_new') }}">Nuevo yacimiento</a>

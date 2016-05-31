@@ -25,14 +25,18 @@ class PersonaController extends Controller
         $personas = $em->getRepository('AppBundle:Persona')->findAll();
 
         $paginator = $this->get('knp_paginator');
+
         $personas = $paginator->paginate(
             $personas,
             $request->query->get('page', 1)/* page number */,
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:persona:index.html.twig', array(
             'personas' => $personas,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -43,24 +47,19 @@ class PersonaController extends Controller
     public function newAction(Request $request)
     {
         $persona = new Persona();
-
         $form = $this->createForm('AppBundle\Form\PersonaType', $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $rol = $form->get('usuario')->get('roles')->getData();
-
-            $persona->getUsuario()->addRole($rol);
-
-            // set flash messages
-            $this->get('session')->getFlashBag()->add('success', 'El usuario se ha creado satisfactoriamente.');
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
 
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardado satisfactoriamente.');
+
             return $this->redirectToRoute('persona_index');
+
         }
 
         return $this->render('AppBundle:persona:new.html.twig', array(
@@ -75,11 +74,10 @@ class PersonaController extends Controller
      */
     public function showAction(Persona $persona)
     {
-        $deleteForm = $this->createDeleteForm($persona);
+
 
         return $this->render('AppBundle:persona:show.html.twig', array(
-            'persona' => $persona,
-            'delete_form' => $deleteForm->createView(),
+            'persona' => $persona
         ));
     }
 
@@ -94,21 +92,12 @@ class PersonaController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            $nuevoRol = $editForm->get('usuario')->get('roles')->getData();
-
-            //limpio los roles anteriores
-            $persona->getUsuario()->setRoles(array());
-
-            $persona->getUsuario()->addRole($nuevoRol);
-
-
-            // set flash messages
-            $this->get('session')->getFlashBag()->add('success', 'El usuario se ha actualizado satisfactoriamente. Para que los cambios de ROLES surgan efectos se debe volver a iniciar sesión');
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
+
+            // set flash messages
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha actualizado satisfactoriamente.');
 
             return $this->redirectToRoute('persona_edit', array('id' => $persona->getId()));
         }
@@ -130,9 +119,15 @@ class PersonaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($persona);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($persona);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('persona_index');
@@ -141,14 +136,13 @@ class PersonaController extends Controller
     /**
      * Creates a form to delete a Persona entity.
      *
-     * @param Persona $persona The Persona entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Persona $persona)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('persona_delete', array('id' => $persona->getId())))
+            ->setAction($this->generateUrl('persona_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

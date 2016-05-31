@@ -32,8 +32,11 @@ class YacimientoController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:yacimiento:index.html.twig', array(
             'yacimientos' => $yacimientos,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -71,11 +74,10 @@ class YacimientoController extends Controller
      */
     public function showAction(Yacimiento $yacimiento)
     {
-        $deleteForm = $this->createDeleteForm($yacimiento);
+
 
         return $this->render('AppBundle:yacimiento:show.html.twig', array(
-            'yacimiento' => $yacimiento,
-            'delete_form' => $deleteForm->createView(),
+            'yacimiento' => $yacimiento
         ));
     }
 
@@ -117,9 +119,15 @@ class YacimientoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($yacimiento);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($yacimiento);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('yacimiento_index');
@@ -128,14 +136,13 @@ class YacimientoController extends Controller
     /**
      * Creates a form to delete a Yacimiento entity.
      *
-     * @param Yacimiento $yacimiento The Yacimiento entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Yacimiento $yacimiento)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('yacimiento_delete', array('id' => $yacimiento->getId())))
+            ->setAction($this->generateUrl('yacimiento_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

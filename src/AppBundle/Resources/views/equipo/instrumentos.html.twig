@@ -5,6 +5,7 @@
     <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
     <script src="{{ asset('highcharts.4.2.4/js/highcharts-more.src.js') }}"></script>
     <script src="{{ asset('highcharts.4.2.4/js/modules/solid-gauge.js') }}"></script>
+    <script src="{{ asset('socket.io/socket.io-1.4.5.js') }}"></script>
 
     <script type="application/javascript" language="JavaScript">
         $(document).ready(function () {
@@ -106,27 +107,7 @@
                             }
                         }]
 
-                    },
-                    // Add some life
-                    function (chart) {
-
-                        if (!chart.renderer.forExport) {
-                            setInterval(function () {
-                                var point = chart.series[0].points[0],
-                                        newVal,
-                                        inc = Math.round((Math.random() - 0.5) * 1500);
-
-                                newVal = point.y + inc;
-                                if (newVal < 0 || newVal > 3000) {
-                                    newVal = point.y - inc;
-                                }
-
-                                point.update(newVal);
-
-                            }, 1000);
-                        }
                     });
-
 
             $('#boca-de-pozo').highcharts({
 
@@ -221,31 +202,11 @@
                             name: 'Presion',
                             data: [80],
                             tooltip: {
-                                valueSuffix: ' km/h'
+                                valueSuffix: ' psi'
                             }
                         }]
 
-                    },
-                    // Add some life
-                    function (chart) {
-
-                        if (!chart.renderer.forExport) {
-                            setInterval(function () {
-                                var point = chart.series[0].points[0],
-                                        newVal,
-                                        inc = Math.round((Math.random() - 0.5) * 1500);
-
-                                newVal = point.y + inc;
-                                if (newVal < 0 || newVal > 3000) {
-                                    newVal = point.y - inc;
-                                }
-
-                                point.update(newVal);
-
-                            }, 1000);
-                        }
                     });
-
 
             var gaugeOptions = {
 
@@ -333,29 +294,6 @@
                 }]
 
             }));
-
-
-            setTimeout(function () {
-                // Speed
-                var chart = $('#anemometro').highcharts(),
-                        point,
-                        newVal,
-                        inc;
-
-                if (chart) {
-                    point = chart.series[0].points[0];
-                    inc = Math.round((Math.random() - 0.5) * 100);
-                    newVal = point.y + inc;
-
-                    if (newVal < 0 || newVal > 200) {
-                        newVal = point.y - inc;
-                    }
-
-                    point.update(newVal);
-                }
-
-            }, 1000);
-
 
             $('#aparejo').highcharts({
 
@@ -446,73 +384,68 @@
                                 }
                             },
                             {
-                            name: 'Decimal',
-                            data: [80],
-                            dial: {
-                                radius: "60%",
-                                backgroundColor: "#339",
+                                name: 'Decimal',
+                                data: [80],
+                                dial: {
+                                    radius: "60%",
+                                    backgroundColor: "#339",
 
-                            },
-
-                            dataLabels: {
-                                formatter: function () {
-                                    var kmh = this.y,
-                                            mph = Math.round(kmh * 0.621);
-                                    // return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
-                                    //    '<span style="color:#933">' + mph + ' mph</span>';
                                 },
-                                backgroundColor: {
-                                    linearGradient: {
-                                        x1: 0,
-                                        y1: 0,
-                                        x2: 0,
-                                        y2: 1
+
+                                dataLabels: {
+                                    formatter: function () {
+                                        var kmh = this.y,
+                                                mph = Math.round(kmh * 0.621);
+                                        // return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
+                                        //    '<span style="color:#933">' + mph + ' mph</span>';
                                     },
-                                    stops: [
-                                        [0, '#DDD'],
-                                        [1, '#FFF']
-                                    ]
+                                    backgroundColor: {
+                                        linearGradient: {
+                                            x1: 0,
+                                            y1: 0,
+                                            x2: 0,
+                                            y2: 1
+                                        },
+                                        stops: [
+                                            [0, '#DDD'],
+                                            [1, '#FFF']
+                                        ]
+                                    }
+                                },
+                                tooltip: {
+                                    //valueSuffix: ' km/h'
                                 }
-                            },
-                            tooltip: {
-                                //valueSuffix: ' km/h'
                             }
-                        }
                         ]
 
-                    },
-                    // Add some life
-                    function (chart) {
-                        setInterval(function () {
-                            var point = chart.series[0].points[0],
-                                    newVal,
-                                    inc = Math.round((Math.random() - 0.5) * 20);
-
-                            newVal = point.y + inc;
-                            if (newVal < 0 || newVal > 200) {
-                                newVal = point.y - inc;
-                            }
-
-                            //var point = chart.series[0].points[0].update($valor)
-                            point.update(newVal);
-
-                            var point = chart.series[1].points[0],
-                                    newVal,
-                                    inc = Math.round((Math.random()) * 100);
-
-                            newVal = point.y + inc;
-                            if (newVal < 0 || newVal > 1000) {
-                                newVal = point.y - inc;
-                            }
-
-                            //console.log(newVal);
-
-                            //var point = chart.series[1].points[0].update($valor)
-                            point.update(newVal);
-
-                        }, 1000);
-
                     });
+
+            var socket = io('64.37.55.176:5140/tr-sai280');
+
+            socket.on('tiempo_real', function (data){
+
+                for(clave in data){
+
+                    var puntos = data[clave];
+
+                    var aparejo = puntos[2].toString().split(".");
+
+                    $('#aparejo').highcharts().series[0].points[0].update(Number(aparejo[0]));
+
+                    $('#aparejo').highcharts().series[1].points[0].update(Number(aparejo[1]));
+
+                    //anemometro
+                    $('#anemometro').highcharts().series[0].points[0].update(puntos[1]);
+
+                    //lave
+                    $('#llave').highcharts().series[0].points[0].update(puntos[3]);
+
+                    //boca e pozo
+                    $('#boca-de-pozo').highcharts().series[0].points[0].update(puntos[4]);
+
+                }
+
+            });
 
 
         });

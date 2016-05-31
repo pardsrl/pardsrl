@@ -1,40 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Localidad</h1>
+{% set __title = 'Localidad' %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ localidad.id }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ localidad.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Codigo</th>
-                <td>{{ localidad.codigo }}</td>
-            </tr>
-            <tr>
-                <th>Codigopostal</th>
-                <td>{{ localidad.codigoPostal }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ localidad.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Codigo</th>
+                            <td>{{ localidad.codigo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Codigopostal</th>
+                            <td>{{ localidad.codigoPostal }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <td>{{ localidad.descripcion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Provincia</th>
+                            <td>{{ localidad.provincia }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pais</th>
+                            <td>{{ localidad.provincia.pais }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('localidad_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('localidad_edit', { 'id': localidad.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('localidad_edit', { 'id': localidad.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('localidad_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

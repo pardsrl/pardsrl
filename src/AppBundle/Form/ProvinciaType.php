@@ -17,9 +17,7 @@ class ProvinciaType extends AbstractType
         $builder
             ->add('descripcion')
             ->add('codigo')
-            ->add('pais',null,array(
-                'label' => 'País'
-            ))
+            ->add('pais')
         ;
     }
     

@@ -12,7 +12,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Descripcion</th>
-                                <th>Código País</th>
+                                <th>Codigopais</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -23,7 +23,7 @@
                                 <td>{{ pai.descripcion }}</td>
                                 <td>{{ pai.codigoPais }}</td>                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('pais_edit', { 'id': pai.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ pai.id }}" href="{{ path('pais_delete', { 'id': pai.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ pai.id }}" data-href="{{ path('pais_delete', { 'id': pai.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -36,7 +36,13 @@
         </div>
     </div>
 
-    <a class="btn btn-primary" href="{{ path('pais_new') }}">Nuevo País</a>
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('pais_new') }}">Nuevo país</a>
 
 {% endblock %}
 

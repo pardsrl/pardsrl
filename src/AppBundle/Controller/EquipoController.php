@@ -32,8 +32,11 @@ class EquipoController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:equipo:index.html.twig', array(
             'equipos' => $equipos,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -53,7 +56,7 @@ class EquipoController extends Controller
             $em->flush();
 
             // set flash messages
-            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardaro satisfactoriamente.');
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardado satisfactoriamente.');
 
             return $this->redirectToRoute('equipo_index');
 
@@ -71,11 +74,10 @@ class EquipoController extends Controller
      */
     public function showAction(Equipo $equipo)
     {
-        $deleteForm = $this->createDeleteForm($equipo);
+
 
         return $this->render('AppBundle:equipo:show.html.twig', array(
-            'equipo' => $equipo,
-            'delete_form' => $deleteForm->createView(),
+            'equipo' => $equipo
         ));
     }
 
@@ -117,9 +119,15 @@ class EquipoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($equipo);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($equipo);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('equipo_index');
@@ -128,19 +136,17 @@ class EquipoController extends Controller
     /**
      * Creates a form to delete a Equipo entity.
      *
-     * @param Equipo $equipo The Equipo entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Equipo $equipo)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('equipo_delete', array('id' => $equipo->getId())))
+            ->setAction($this->generateUrl('equipo_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;
     }
-
 
     /**
      * Muestra estadisticas del equipo
@@ -150,16 +156,24 @@ class EquipoController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function estadisticasAction(Request $request, Equipo $equipo){
-        
+
         return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
             'equipo'           => $equipo
         ));
     }
 
+    /**
+     * Muestra los instrumentos del equipo
+     *
+     * @param Request $request
+     * @param Equipo $equipo
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function instrumentosAction(Request $request, Equipo $equipo)
     {
         return $this->render('AppBundle:equipo:instrumentos.html.twig', array(
             'equipo' => $equipo
         ));
     }
+
 }

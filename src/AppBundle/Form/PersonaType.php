@@ -20,7 +20,6 @@ class PersonaType extends AbstractType
             ->add('apellido')
             ->add('telefonoPrincipal')
             ->add('telefonoSecundario')
-            ->add('compania')
             ->add('cargo')
             ->add('usuario', UsuarioType::class, array())
         ;

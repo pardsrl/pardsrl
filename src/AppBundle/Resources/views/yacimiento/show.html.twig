@@ -1,48 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Yacimiento</h1>
+{% set __title = 'Yacimiento' %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ yacimiento.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Acronimo</th>
-                <td>{{ yacimiento.acronimo }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ yacimiento.id }}</td>
-            </tr>
-            <tr>
-                <th>Activo</th>
-                <td>{% if yacimiento.activo %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechacreacion</th>
-                <td>{% if yacimiento.fechaCreacion %}{{ yacimiento.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechaactualizacion</th>
-                <td>{% if yacimiento.fechaActualizacion %}{{ yacimiento.fechaActualizacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ yacimiento.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ yacimiento.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Acronimo</th>
+                            <td>{{ yacimiento.acronimo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Activo</th>
+                            <td>{% if yacimiento.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Fechacreacion</th>
+                            <td>{% if yacimiento.fechaCreacion %}{{ yacimiento.fechaCreacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Fechaactualizacion</th>
+                            <td>{% if yacimiento.fechaActualizacion %}{{ yacimiento.fechaActualizacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Creado Por</th>
+                            <td>{% if yacimiento.creadoPor %}{{ yacimiento.creadoPor }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Actualizado Por</th>
+                            <td>{% if yacimiento.actualizadoPor %}{{ yacimiento.actualizadoPor }}{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('yacimiento_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('yacimiento_edit', { 'id': yacimiento.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('yacimiento_edit', { 'id': yacimiento.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('yacimiento_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

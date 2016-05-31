@@ -15,12 +15,8 @@ class PaisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion',null, array(
-                'label' => 'Descripción'
-            ))
-            ->add('codigoPais',null,array(
-                'label' => 'Código'
-            ))
+            ->add('descripcion')
+            ->add('codigoPais')
         ;
     }
     

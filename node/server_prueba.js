@@ -1,28 +1,82 @@
-var server    = require('http').createServer();
-var io        = require('socket.io')(server);
-var Converter = require("csvtojson").Converter;
-var watch     = require('node-watch');
+var server      = require('http').createServer();
+var io          = require('socket.io')(server);
+var Converter   = require("csvtojson").Converter;
+var watch       = require('node-watch');
+var mysql       = require('mysql');
+var MySQLEvents = require('mysql-events');
 
 const fs = require('fs');
+const MYSQL_DATABASE = "live_data";
+
+
+var dsn = {
+    host:     'localhost',
+    user:     'root',
+    password: '123',
+    database : MYSQL_DATABASE
+};
+
+
+var mysqlEventWatcher = MySQLEvents(dsn);
+
+
+var watcher = mysqlEventWatcher.add(
+    MYSQL_DATABASE+'.notificacion',
+    function (oldRow, newRow) {
+        //row inserted
+        if (oldRow === null) {
+
+            var id_notificacion = newRow.fields.id;
+
+            var sistema_flag    = newRow.fields.sistema;
+
+            //la notifiacion es de sistema
+            if(sistema_flag){
+
+                notificaciones.emit('sistema',newRow.fields);
+
+            }else{
+
+                var connection = mysql.createConnection(dsn);
+
+                connection.connect();
+
+                connection.query('SELECT * FROM notificacion_distribucion WHERE notificacion_id='+ id_notificacion +';', function(err, rows, fields) {
+                    if (err) throw err;
+
+                    //es una notificacion de equipo
+                    if (fields.equipo_id) {
+                        notificaciones.emit('grupal_' + fields.equipo_id, rows[0]);
+                        //es una notificacion personal
+                    } else {
+                        notificaciones.emit('personal_' + fields.persona_id, rows[0]);
+
+                    }
+                });
+
+                connection.end();
+
+            }
+
+        }
+
+        // //row deleted
+        // if (newRow === null) {
+        //     //delete code goes here
+        // }
+        //
+        // //row updated
+        // if (oldRow !== null && newRow !== null) {
+        //     //update code goes here
+        // }
+    },
+    'match this string or regex'
+);
+
 
 
 // Funcion que parsea el csv y lo convierte a JSON
 function push($filename) {
-    /*
-     var x = (new Date).getTime();
-
-     var aparejo    = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
-
-     var anemometro = Math.floor((Math.random() * ((150 + 1) - 1)) + 1);
-
-     var llave      = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
-
-     var boca_pozo  = Math.floor((Math.random() * ((1800 + 1) - 1)) + 1);
-
-     var coord = new Array();
-
-     coord.push(x, aparejo, anemometro, llave, boca_pozo);
-     */
 
     // La opcion no header es para cuando no tenemos headers en el csv
     var converter = new Converter({noheader:true});
@@ -33,7 +87,7 @@ function push($filename) {
         var dataset = Array();
 
         for (key in jsonArray) {
-
+            
             var puntos = jsonArray[key].field1.split(" ");
 
             for(p in puntos){
@@ -63,18 +117,13 @@ function push($filename) {
     stream.on('error', function (error) {console.log("Caught", error);});
     stream.on('readable', function () {stream.pipe(converter);});
 
-    //sai280.emit('equipo', coord);
-
-    //console.log('enviando - ');
-
-    //console.log(io.sockets.clients().length);
 }
 
 
-var sai280 = io.of('/tr-sai280');
-// Detecta cuando alguien se conecta, parsea el csv y se lo manda
-sai280.on('connection', function (socket) {
+var sai280 = io.of('/sai280');
 
+// Detecta cuando alguien se conecta
+sai280.on('connection', function (socket) {
     socket.on('event', function (data) {
     });
 
@@ -83,14 +132,24 @@ sai280.on('connection', function (socket) {
     });
 });
 
-/*
- setInterval(function () {
 
- //console.log(io.);
- //if(server._connections > 1 ){
- pushCsv();
- //  console.log('enviando');
- //}
+try{
+    watch('/srv/data/tr.sai280', function(filename) {
+        //console.log(filename, ' changed.');
+        push(filename);
+    });
+} catch (err) {
+    // handle the error safely
+    console.log(err)
+}
 
- }, 1000);
- */
+
+var notificaciones = io.of('/notificaciones');
+
+
+
+
+
+
+// Activa el server en el puerto 5140
+server.listen(5140);

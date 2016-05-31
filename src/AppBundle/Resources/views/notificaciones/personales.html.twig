@@ -1,0 +1,38 @@
+<li class="dropdown notifications-menu">
+    <!-- Menu toggle button -->
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bell-o"></i>
+        {% if cant_notificaiones  %}<span class="label label-warning">{{ cant_notificaiones }}</span> {% endif %}
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">Tienes {{ cant_notificaiones }} Notificaciones</li>
+        <li>
+            <!-- Inner Menu: contains the notifications -->
+            <ul class="menu">
+                {% if not cant_notificaiones %}
+                <li><!-- start notification -->
+                    <a href="#">
+                        <i class="fa  fa-thumbs-up text-aqua"></i> No Tienes notificaciones pendientes.
+                    </a>
+                </li><!-- end notification -->
+                {% else %}
+                    {% for notificacion in ultimas_notificaciones %}
+
+                        {% if notificacion.distribucion.persona %}
+                            {% set icon = 'fa-user text-aqua' %}
+                        {% elseif notificacion.distribucion.equipo %}
+                            {% set icon = 'fa-cubes text-yellow' %}
+                        {% endif %}
+
+                        <li><!-- start notification -->
+                            <a href="#">
+                                <i class="fa  {{ icon }} "></i> {{ notificacion.notificacion }}
+                            </a>
+                        </li><!-- end notification -->
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </li>
+        {% if cant_notificaiones  %}<li class="footer"><a href="#">Ver todas mis notificaciones</a></li>{% endif %}
+    </ul>
+</li>

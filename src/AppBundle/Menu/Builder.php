@@ -149,7 +149,7 @@ class Builder implements ContainerAwareInterface
         )->setExtra( 'icon', 'fa fa-circle-o');
 
         $menu->addChild(
-            'Usuarios',
+            'Personas',
             array(
                 'childrenAttributes' => array(
                     'class' => 'treeview-menu',
@@ -160,13 +160,13 @@ class Builder implements ContainerAwareInterface
             ->setExtra( 'icon', 'fa fa-user' )
             ->setAttribute( 'class', 'treeview' );
 
-        $menu['Usuarios']->addChild(
+        $menu['Personas']->addChild(
                 'Listado',
                 array('route' => 'persona_index')
             )->setExtra( 'icon', 'fa fa-circle-o');
 
-        $menu['Usuarios']->addChild(
-                'Nuevo Usuario',
+        $menu['Personas']->addChild(
+                'Nueva Persona',
                 array('route' => 'persona_new')
             )->setExtra( 'icon', 'fa fa-circle-o');
 

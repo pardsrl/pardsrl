@@ -26,11 +26,14 @@
             $request->query->get('page', 1)/* page number */,
             10/* limit per page */
         );
+
+        $deleteForm = $this->createDeleteForm();
 {% endblock method_body %}
 
 {% block method_return %}
         return $this->render('{{ bundle }}:{{ entity|lower|replace({'\\': '/'}) }}:index.html.twig', array(
             '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+            'delete_form' => $deleteForm->createView()
         ));
 {% endblock method_return %}
     }

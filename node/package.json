@@ -6,7 +6,9 @@
   "dependencies": {
     "socket.io": "^1.4.5",
     "csvtojson": "^0.5.4",
-    "node-watch": "^0.3.5"
+    "node-watch": "^0.3.5",
+    "mysql": "^2.10.2",
+    "mysql-events": "^0.0.7"
   },
   "devDependencies": {},
   "scripts": {

@@ -32,8 +32,11 @@ class ProvinciaController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:provincia:index.html.twig', array(
             'provincias' => $provincias,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -71,11 +74,10 @@ class ProvinciaController extends Controller
      */
     public function showAction(Provincia $provincium)
     {
-        $deleteForm = $this->createDeleteForm($provincium);
+
 
         return $this->render('AppBundle:provincia:show.html.twig', array(
-            'provincium' => $provincium,
-            'delete_form' => $deleteForm->createView(),
+            'provincium' => $provincium
         ));
     }
 
@@ -117,9 +119,15 @@ class ProvinciaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($provincium);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($provincium);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('provincia_index');
@@ -128,14 +136,13 @@ class ProvinciaController extends Controller
     /**
      * Creates a form to delete a Provincia entity.
      *
-     * @param Provincia $provincium The Provincia entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Provincia $provincium)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('provincia_delete', array('id' => $provincium->getId())))
+            ->setAction($this->generateUrl('provincia_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

@@ -11,11 +11,11 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Codigo</th>
                                 <th>Descripcion</th>
+                                <th>Código Postal</th>
                                 <th>Provincia</th>
                                 <th>País</th>
-                                <th>Codigo</th>
-                                <th>Código Postal</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -23,13 +23,14 @@
                         {% for localidad in localidads %}
                             <tr>
                                 <td><a href="{{ path('localidad_show', { 'id': localidad.id }) }}">{{ localidad.id }}</a></td>
+                                <td>{{ localidad.codigo }}</td>
                                 <td>{{ localidad.descripcion }}</td>
+                                <td>{{ localidad.codigoPostal }}</td>
                                 <td>{{ localidad.provincia }}</td>
                                 <td>{{ localidad.provincia.pais }}</td>
-                                <td>{{ localidad.codigo }}</td>
-                                <td>{{ localidad.codigoPostal }}</td>                                <td>
+                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('localidad_edit', { 'id': localidad.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ localidad.id }}" href="{{ path('localidad_delete', { 'id': localidad.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ localidad.id }}" data-href="{{ path('localidad_delete', { 'id': localidad.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -40,6 +41,12 @@
             {{ knp_pagination_render(localidads) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('localidad_new') }}">Nueva localidad</a>

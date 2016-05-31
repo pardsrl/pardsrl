@@ -21,4 +21,4 @@ compania_edit:
 compania_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Compania:delete" }
-    methods:  GET
+    methods:  DELETE

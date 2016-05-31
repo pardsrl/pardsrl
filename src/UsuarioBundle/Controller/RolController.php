@@ -32,8 +32,11 @@ class RolController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('UsuarioBundle:rol:index.html.twig', array(
             'rols' => $rols,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -53,7 +56,7 @@ class RolController extends Controller
             $em->flush();
 
             // set flash messages
-            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardaro satisfactoriamente.');
+            $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardado satisfactoriamente.');
 
             return $this->redirectToRoute('rol_index');
 
@@ -71,11 +74,10 @@ class RolController extends Controller
      */
     public function showAction(Rol $rol)
     {
-        $deleteForm = $this->createDeleteForm($rol);
+
 
         return $this->render('UsuarioBundle:rol:show.html.twig', array(
-            'rol' => $rol,
-            'delete_form' => $deleteForm->createView(),
+            'rol' => $rol
         ));
     }
 
@@ -117,9 +119,15 @@ class RolController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($rol);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($rol);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('rol_index');
@@ -128,14 +136,13 @@ class RolController extends Controller
     /**
      * Creates a form to delete a Rol entity.
      *
-     * @param Rol $rol The Rol entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Rol $rol)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('rol_delete', array('id' => $rol->getId())))
+            ->setAction($this->generateUrl('rol_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

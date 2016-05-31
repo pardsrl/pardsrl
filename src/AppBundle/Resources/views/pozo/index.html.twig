@@ -37,7 +37,7 @@
                                 <td>{% if pozo.fechaCreacion %}{{ pozo.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>{% if pozo.fechaActualizacion %}{{ pozo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('pozo_edit', { 'id': pozo.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ pozo.id }}" href="{{ path('pozo_delete', { 'id': pozo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ pozo.id }}" data-href="{{ path('pozo_delete', { 'id': pozo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -48,6 +48,12 @@
             {{ knp_pagination_render(pozos) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('pozo_new') }}">Nuevo pozo</a>

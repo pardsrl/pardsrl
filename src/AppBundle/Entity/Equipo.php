@@ -257,6 +257,11 @@ class Equipo extends BaseClass
     }
 
 
+    public function __toString()
+    {
+        return $this->getNombreCompleto();
+    }
+
     public function getNombreCompleto(){
         return $this->getCompania()->getAcronimo().' '.$this->getNombre();
     }

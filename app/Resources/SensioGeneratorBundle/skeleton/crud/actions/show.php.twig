@@ -16,17 +16,12 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-{% if 'delete' in actions %}
-        $deleteForm = $this->createDeleteForm(${{ entity_singularized }});
-{% endif %}
+
 {% endblock method_body %}
 
 {% block method_return %}
         return $this->render('{{ bundle }}:{{ entity|lower|replace({'\\': '/'}) }}:show.html.twig', array(
-            '{{ entity_singularized }}' => ${{ entity_singularized }},
-{% if 'delete' in actions %}
-            'delete_form' => $deleteForm->createView(),
-{% endif %}
+            '{{ entity_singularized }}' => ${{ entity_singularized }}
         ));
 {% endblock method_return %}
     }

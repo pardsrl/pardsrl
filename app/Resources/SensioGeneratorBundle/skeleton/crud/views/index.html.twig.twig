@@ -60,7 +60,7 @@
                             {%- if loop.last %}
                                 <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ ".id }) }}"  }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ "{{ " ~ entity_singularized ~ ".id }}"}}" href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { 'id': " ~ entity_singularized ~ ".id }) }}"}}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ "{{ " ~ entity_singularized ~ ".id }}"}}" data-href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { 'id': " ~ entity_singularized ~ ".id }) }}"}}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             {%- endif %}
                         {%- endfor %}
@@ -74,6 +74,12 @@
             {{  "{{ knp_pagination_render("~entity_pluralized~") }}" }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ "{{ form_start(delete_form) }}" }}
+        <input type="submit" value="Delete">
+        {{ "{{ form_end(delete_form) }}" }}
     </div>
 
     <a class="btn btn-primary" href="{{ "{{ path('" ~  route_name_prefix  ~ "_new') }}" }}">Nuevo {{ entity_singularized }}</a>

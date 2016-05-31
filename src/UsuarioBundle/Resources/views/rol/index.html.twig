@@ -25,7 +25,7 @@
                                 <td>{{ rol.slug }}</td>
                                 <td>{% if rol.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('rol_edit', { 'id': rol.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm" href="{{ path('rol_delete', { 'id': rol.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ rol.id }}" data-href="{{ path('rol_delete', { 'id': rol.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -36,6 +36,12 @@
             {{ knp_pagination_render(rols) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('rol_new') }}">Nuevo rol</a>

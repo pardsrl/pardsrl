@@ -1,64 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Persona</h1>
+{% set __title = 'Persona' %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ persona.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombrecompleto</th>
-                <td>{{ persona.nombreCompleto }}</td>
-            </tr>
-            <tr>
-                <th>Apellido</th>
-                <td>{{ persona.apellido }}</td>
-            </tr>
-            <tr>
-                <th>Telefonoprincipal</th>
-                <td>{{ persona.telefonoPrincipal }}</td>
-            </tr>
-            <tr>
-                <th>Telefonosecundario</th>
-                <td>{{ persona.telefonoSecundario }}</td>
-            </tr>
-            <tr>
-                <th>Cargo</th>
-                <td>{{ persona.cargo }}</td>
-            </tr>
-            <tr>
-                <th>Fechacreacion</th>
-                <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechaactualizacion</th>
-                <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Creadopor</th>
-                <td>{{ persona.creadoPor }}</td>
-            </tr>
-            <tr>
-                <th>Actualizadopor</th>
-                <td>{{ persona.actualizadoPor }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ persona.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Apellido</th>
+                            <td>{{ persona.apellido }}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefonoprincipal</th>
+                            <td>{{ persona.telefonoPrincipal }}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefonosecundario</th>
+                            <td>{{ persona.telefonoSecundario }}</td>
+                        </tr>
+                        <tr>
+                            <th>Cargo</th>
+                            <td>{{ persona.cargo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ persona.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Habilitado</th>
+                            <td>{% if persona.usuario.enabled %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Fechacreacion</th>
+                            <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Fechaactualizacion</th>
+                            <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('persona_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('persona_edit', { 'id': persona.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('persona_edit', { 'id': persona.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('persona_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -32,8 +32,11 @@ class PaisController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:pais:index.html.twig', array(
             'pais' => $pais,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -71,11 +74,10 @@ class PaisController extends Controller
      */
     public function showAction(Pais $pai)
     {
-        $deleteForm = $this->createDeleteForm($pai);
+
 
         return $this->render('AppBundle:pais:show.html.twig', array(
-            'pai' => $pai,
-            'delete_form' => $deleteForm->createView(),
+            'pai' => $pai
         ));
     }
 
@@ -117,9 +119,15 @@ class PaisController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($pai);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($pai);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('pais_index');
@@ -128,14 +136,13 @@ class PaisController extends Controller
     /**
      * Creates a form to delete a Pais entity.
      *
-     * @param Pais $pai The Pais entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Pais $pai)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('pais_delete', array('id' => $pai->getId())))
+            ->setAction($this->generateUrl('pais_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

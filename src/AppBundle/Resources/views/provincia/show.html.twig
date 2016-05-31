@@ -1,36 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Provincia</h1>
+{% set __title = 'Provincia' %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ provincium.id }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ provincium.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Codigo</th>
-                <td>{{ provincium.codigo }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ provincium.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Codigo</th>
+                            <td>{{ provincium.codigo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <td>{{ provincium.descripcion }}</td>
+                        </tr>
+                        <tr>
+                            <th>País</th>
+                            <td>{{ provincium.pais }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('provincia_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('provincia_edit', { 'id': provincium.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('provincia_edit', { 'id': provincium.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('provincia_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

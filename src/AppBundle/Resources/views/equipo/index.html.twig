@@ -10,35 +10,30 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Modelo</th>
                                 <th>Tel</th>
                                 <th>Email</th>
+                                <th>Id</th>
                                 <th>Activo</th>
-                                <th>Fecha de creacion</th>
-                                <th>Fecha de actualizacion</th>
-                                <th>Creado Por</th>
-                                <th>Actualizado Por</th>
+                                <th>Fechacreacion</th>
+                                <th>Fechaactualizacion</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                         {% for equipo in equipos %}
                             <tr>
-                                <td><a href="{{ path('equipo_show', { 'id': equipo.id }) }}">{{ equipo.id }}</a></td>
-                                <td>{{ equipo.nombre }}</td>
+                                <td><a href="{{ path('equipo_show', { 'id': equipo.id }) }}">{{ equipo.nombre }}</a></td>
                                 <td>{{ equipo.modelo }}</td>
                                 <td>{{ equipo.tel }}</td>
                                 <td>{{ equipo.email }}</td>
+                                <td>{{ equipo.id }}</td>
                                 <td>{% if equipo.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
                                 <td>{% if equipo.fechaCreacion %}{{ equipo.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>{% if equipo.fechaActualizacion %}{{ equipo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>{{ equipo.creadoPor }}</td>
-                                <td>{{ equipo.actualizadoPor }}</td>
-                                <td>
+                                <td>{% if equipo.fechaActualizacion %}{{ equipo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('equipo_edit', { 'id': equipo.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm" href="{{ path('equipo_delete', { 'id': equipo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ equipo.id }}" data-href="{{ path('equipo_delete', { 'id': equipo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -49,6 +44,12 @@
             {{ knp_pagination_render(equipos) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('equipo_new') }}">Nuevo equipo</a>

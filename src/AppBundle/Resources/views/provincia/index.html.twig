@@ -11,9 +11,9 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Descripción</th>
-                                <th>País</th>
                                 <th>Codigo</th>
+                                <th>Descripcion</th>
+                                <th>Pais</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -21,11 +21,12 @@
                         {% for provincium in provincias %}
                             <tr>
                                 <td><a href="{{ path('provincia_show', { 'id': provincium.id }) }}">{{ provincium.id }}</a></td>
+                                <td>{{ provincium.codigo }}</td>
                                 <td>{{ provincium.descripcion }}</td>
                                 <td>{{ provincium.pais }}</td>
-                                <td>{{ provincium.codigo }}</td>                                <td>
+                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('provincia_edit', { 'id': provincium.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data="{{ provincium.id }}" href="{{ path('provincia_delete', { 'id': provincium.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ provincium.id }}" data-href="{{ path('provincia_delete', { 'id': provincium.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -36,6 +37,12 @@
             {{ knp_pagination_render(provincias) }}
 
         </div>
+    </div>
+
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('provincia_new') }}">Nueva provincia</a>

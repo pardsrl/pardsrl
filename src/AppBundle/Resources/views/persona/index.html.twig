@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set __title = 'Usuarios' %}
+{% set __title = 'Listado de personas' %}
 
 {% block content %}
     <div class="row">
@@ -9,46 +9,34 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Nombre de Usuario</th>
-                            <th>Tel. principal</th>
-                            <th>Cargo</th>
-                            <th>Estado</th>
-                            <th>Fecha Creación</th>
-                            <th>Creado Por</th>
-                            <th>Acciones</th>
-                        </tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Telefonoprincipal</th>
+                                <th>Telefonosecundario</th>
+                                <th>Cargo</th>
+                                <th>Habilitado</th>
+                                <th>Fechacreacion</th>
+                                <th>Fechaactualizacion</th>
+                                <th>Acciones</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {% for persona in personas %}
                             <tr>
-                                <td><a href="{{ path('persona_show', { 'id': persona.id }) }}">{{ persona.id }}</a></td>
-                                <td>{{ persona.nombre }}</td>
+                                <td>{{ persona.id }}</td>
+                                <td><a href="{{ path('persona_show', { 'id': persona.id }) }}">{{ persona.nombre }}</a></td>
                                 <td>{{ persona.apellido }}</td>
-                                <td>{{ persona.usuario.username }}</td>
                                 <td>{{ persona.telefonoPrincipal }}</td>
+                                <td>{{ persona.telefonoSecundario }}</td>
                                 <td>{{ persona.cargo }}</td>
-                                <td>{% if persona.usuario.enabled %}
-                                        <span class="label label-success">Habilitado</span>
-                                    {% else %}
-                                        <span class="label label-danger">Baja</span>
-                                    {% endif %}
-                                </td>
-                                <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d-m-Y') }}{% endif %}</td>
-                                <td>{{ persona.creadoPor }}</td>
-                                <td>
-                                    <a title="Editar" class="btn btn-default btn-sm"
-                                       href="{{ path('persona_edit', { 'id': persona.id }) }}"><i
-                                                class="glyphicon glyphicon-pencil"></i></a>
-                                    <a title="Cambiar Password" class="btn btn-default btn-sm"
-                                       href="{{ path('cambiar-password', { 'id': persona.usuario.id }) }}"><i
-                                                class="fa fa-fw fa-key"></i></a>
-                                    <a title="Eliminar" class="btn btn-default btn-sm"
-                                       href="{{ path('persona_delete', { 'id': persona.id }) }}">
-                                        <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                <td>{% if persona.usuario.enabled %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                                <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
+                                    <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('persona_edit', { 'id': persona.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Cambiar Password" class="btn btn-default btn-sm" href="{{ path('cambiar-password', { 'id': persona.usuario.id }) }}"><i class="fa fa-fw fa-key"></i></a>
+                                    <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ persona.id }}" data-href="{{ path('persona_delete', { 'id': persona.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -57,10 +45,17 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
             {{ knp_pagination_render(personas) }}
+
         </div>
     </div>
 
+    <div class="delete-obj-form hidden">
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+    </div>
 
+    <a class="btn btn-primary" href="{{ path('persona_new') }}">Nuevo persona</a>
 
-    <a class="btn btn-primary" href="{{ path('persona_new') }}">Nuevo Usuario</a>
 {% endblock %}
+

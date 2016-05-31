@@ -32,8 +32,11 @@ class LocalidadController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:localidad:index.html.twig', array(
             'localidads' => $localidads,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -71,11 +74,10 @@ class LocalidadController extends Controller
      */
     public function showAction(Localidad $localidad)
     {
-        $deleteForm = $this->createDeleteForm($localidad);
+
 
         return $this->render('AppBundle:localidad:show.html.twig', array(
-            'localidad' => $localidad,
-            'delete_form' => $deleteForm->createView(),
+            'localidad' => $localidad
         ));
     }
 
@@ -117,9 +119,15 @@ class LocalidadController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($localidad);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($localidad);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('localidad_index');
@@ -128,14 +136,13 @@ class LocalidadController extends Controller
     /**
      * Creates a form to delete a Localidad entity.
      *
-     * @param Localidad $localidad The Localidad entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Localidad $localidad)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('localidad_delete', array('id' => $localidad->getId())))
+            ->setAction($this->generateUrl('localidad_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

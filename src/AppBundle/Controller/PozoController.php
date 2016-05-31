@@ -32,8 +32,11 @@ class PozoController extends Controller
             10/* limit per page */
         );
 
+        $deleteForm = $this->createDeleteForm();
+
         return $this->render('AppBundle:pozo:index.html.twig', array(
             'pozos' => $pozos,
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -71,11 +74,10 @@ class PozoController extends Controller
      */
     public function showAction(Pozo $pozo)
     {
-        $deleteForm = $this->createDeleteForm($pozo);
+
 
         return $this->render('AppBundle:pozo:show.html.twig', array(
-            'pozo' => $pozo,
-            'delete_form' => $deleteForm->createView(),
+            'pozo' => $pozo
         ));
     }
 
@@ -117,9 +119,15 @@ class PozoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($pozo);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($pozo);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
+            }
         }
 
         return $this->redirectToRoute('pozo_index');
@@ -128,14 +136,13 @@ class PozoController extends Controller
     /**
      * Creates a form to delete a Pozo entity.
      *
-     * @param Pozo $pozo The Pozo entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Pozo $pozo)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('pozo_delete', array('id' => $pozo->getId())))
+            ->setAction($this->generateUrl('pozo_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;

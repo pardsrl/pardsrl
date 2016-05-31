@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,7 @@ class EquipoType extends AbstractType
             ->add('tel')
             ->add('email')
             ->add('compania')
-            ->add('personas','entity', array(
+            ->add('personas',EntityType::class, array(
                 'class' => 'AppBundle\Entity\Persona',
                 'property'     => 'nombreCompleto',
                 'multiple'     => true,

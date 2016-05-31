@@ -23,9 +23,9 @@ class PozoType extends AbstractType
             ->add('sistemaExtraccion',ChoiceType::class,array(
                 'choices' => array(
                     "AIB" => "AIB" ,
-                     "PcP" => "PcP",
-                     "BES" => "BES",
-                     "NINGUNO" => ""
+                    "PcP" => "PcP",
+                    "BES" => "BES",
+                    "NINGUNO" => ""
                 ),
                 'choices_as_values' => true,
                 'label' => 'Sistema de extracción'
@@ -35,7 +35,7 @@ class PozoType extends AbstractType
             ->add('activo')
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
