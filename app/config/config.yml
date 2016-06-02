@@ -34,6 +34,8 @@ framework:
 
 # Twig Configuration
 twig:
+    globals:
+         node_server: "%node_server%"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form:

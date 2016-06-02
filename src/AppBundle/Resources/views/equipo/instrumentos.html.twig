@@ -420,7 +420,13 @@
 
                     });
 
-            var socket = io('64.37.55.176:5140/tr-sai280');
+            var server = $.LiveData.server;
+
+            var websocket_connection = server.getBaseWs()+'/{{ equipo.webSocketNamespace }}';
+
+            var socket = io(websocket_connection);
+
+            //var socket = io('64.37.55.176:5140/tr-sai280');
 
             socket.on('tiempo_real', function (data){
 
