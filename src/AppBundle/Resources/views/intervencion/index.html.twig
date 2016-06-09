@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+
+{% set __title = 'Intervenciones' %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- form start -->
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="box-footer">
+                        <input class="btn btn-primary" type="submit" value="Nueva Intervención"/>
+                        <a class="btn btn-default" href="{{ path('pozo_index') }}"> Volver al Listado de pozos</a>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Listado últimas intervenciones</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body table-responsive no-padding">
+
+            <table class="table table-hover">
+                <tbody><tr>
+                    <th>ID</th>
+                    <th>Equipo</th>
+                    <th>Accion</th>
+                    <th>Fecha intervencion</th>
+                    <th>Registrado el día</th>
+                    <th>Creado Por</th>
+                </tr>
+                {% for intervencion in intervenciones %}
+                    <tr>
+                        <td>{{ intervencion.id }}</td>
+                        <td>{{ intervencion.equipo.nombreCompleto }}</td>
+                        <td>{% if intervencion.accion == 0 %}<span class="label label-success">Apertura</span>{% else %}<span class="label label-warning">Cierre</span>{% endif %}</td>
+                        <td>{{ intervencion.fecha | date('d/m/Y') }}</td>
+                        <td>{{ intervencion.fechaCreacion | date('d/m/Y H:i:s') }}</td>
+                        <td>{{ intervencion.creadoPor }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div><!-- /.box-body -->
+    </div>
+    {{ knp_pagination_render(intervenciones) }}
+{% endblock %}

@@ -10,4 +10,24 @@ namespace AppBundle\Repository;
  */
 class IntervencionRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getQb()
+    {
+        return $this->createQueryBuilder('interv');
+    }
+
+    public function getUltimasIntervencionesByPozo($pozo)
+    {
+        $qb = $this->getQb()
+            ->innerJoin('interv.pozo','pozo')
+            ->where('pozo = :pozo')
+            ->orderBy('interv.fecha','DESC')
+            ->orderBy('interv.fechaCreacion','DESC');
+
+        $qb->setParameter('pozo',$pozo);
+
+        return $qb;
+    }
+
+
 }

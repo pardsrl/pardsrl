@@ -147,6 +147,7 @@
                         type: 'spline',
                         dashStyle: 'Dot',
                         color: '#D8D8D8',
+                        lineWidth: 1,
                         yAxis: 0,
                         data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
                         tooltip: {
@@ -156,6 +157,7 @@
                         name: 'Aparejo',
                         type: 'spline',
                         color: Highcharts.getOptions().colors[1],
+                        lineWidth: 1,
                         yAxis: 1,
                         data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],
                         tooltip: {
@@ -171,6 +173,7 @@
                             enabled: false
                         },
                         color: Highcharts.getOptions().colors[2],
+                        lineWidth: 1,
                         dashStyle: 'spline',
                         tooltip: {
                             valueSuffix: ' psi'
@@ -199,6 +202,12 @@
                 },
                 plotOptions: {
                     series: {
+                        lineWidth: 1,
+                        states: {
+                            hover:{
+                                lineWidth: 1,
+                            },
+                        },
                         marker: {
                             enabled: false
                         }
@@ -288,16 +297,17 @@
                 series: [
                     {
                         name: 'Anemómetro',
-                        type: 'spline',
+                        type: 'line',
                         yAxis: 0,
                         dashStyle: 'Dot',
                         color: '#D8D8D8',
+                        lineWidth: 3,
                         tooltip: {
                             valueSuffix: ' km/h'
                         }
                     }, {
                         name: 'Aparejo',
-                        type: 'spline',
+                        type: 'line',
                         color: Highcharts.getOptions().colors[1],
                         yAxis: 1,
                         tooltip: {
@@ -306,7 +316,7 @@
                     }, {
 
                         name: 'Llave',
-                        type: 'spline',
+                        type: 'line',
                         color: Highcharts.getOptions().colors[2],
                         yAxis: 2,
                         tooltip: {
@@ -315,7 +325,7 @@
 
                     }, {
                         name: 'Boca Pozo',
-                        type: 'spline',
+                        type: 'line',
                         yAxis: 2,
                         tooltip: {
                             valueSuffix: ' psi'

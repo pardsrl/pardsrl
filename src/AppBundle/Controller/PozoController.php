@@ -75,7 +75,6 @@ class PozoController extends Controller
     public function showAction(Pozo $pozo)
     {
 
-
         return $this->render('AppBundle:pozo:show.html.twig', array(
             'pozo' => $pozo
         ));
@@ -119,13 +118,14 @@ class PozoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try{
+            try {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($pozo);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
-            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success',
+                    'El registro se ha dado de baja satisfactoriamente.');
+            } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', 'Hubo un error al intentar eliminar el registro.');
             }
         }
@@ -144,7 +144,6 @@ class PozoController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('pozo_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

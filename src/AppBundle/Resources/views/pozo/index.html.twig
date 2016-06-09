@@ -17,6 +17,7 @@
                                 <th>Sistemaextraccion</th>
                                 <th>Latitud</th>
                                 <th>Longitud</th>
+                                <th>Estado</th>
                                 <th>Activo</th>
                                 <th>Fechacreacion</th>
                                 <th>Fechaactualizacion</th>
@@ -33,9 +34,11 @@
                                 <td>{{ pozo.sistemaExtraccion }}</td>
                                 <td>{{ pozo.latitud }}</td>
                                 <td>{{ pozo.longitud }}</td>
+                                <td>{% if pozo.estadoUltimaIntervencion == 1 %}<span class="label label-warning">Cerrado</span{% else %}<span class="label label-success">Abierto</span>{% endif %}</td>
                                 <td>{% if pozo.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
                                 <td>{% if pozo.fechaCreacion %}{{ pozo.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>{% if pozo.fechaActualizacion %}{{ pozo.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
+                                    <a title="Ver intervenciones"   class="btn btn-default btn-sm" href="{{ path('intervencion_index', { 'id': pozo.id }) }}"><i class="glyphicon glyphicon-cog"></i></a>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('pozo_edit', { 'id': pozo.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
                                     <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ pozo.id }}" data-href="{{ path('pozo_delete', { 'id': pozo.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
                                 </td>

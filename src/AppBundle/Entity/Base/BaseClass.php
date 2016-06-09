@@ -13,15 +13,6 @@ abstract class BaseClass
 {
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="activo", type="boolean")
@@ -62,17 +53,6 @@ abstract class BaseClass
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $actualizadoPor;
-
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return boolean

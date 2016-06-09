@@ -15,6 +15,15 @@ class Pozo extends BaseClass
 {
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
@@ -70,6 +79,16 @@ class Pozo extends BaseClass
      */
     private $intervenciones;
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set nombre
      *
@@ -294,5 +313,40 @@ class Pozo extends BaseClass
     public function getIntervenciones()
     {
         return $this->intervenciones;
+    }
+
+    /**
+     *
+     *
+     * @return mixed|null
+     */
+    public function getUltimaIntervencion(){
+
+        $intervencion = null;
+
+        if( $this->getIntervenciones()->count()){
+            $intervencion = $this->getIntervenciones()->last();
+        }
+
+        return $intervencion;
+    }
+
+    /**
+     * Busca la accion de la ultima intervencion realizada en el pozo
+     *
+     *
+     * @return int 0 (abierto) 1 (cerrado)
+     */
+    public function getEstadoUltimaIntervencion(){
+
+        $estado = 1; //Por defecto el pozo se encuentra cerrado
+
+        $ultimaIntervencion = $this->getUltimaIntervencion();
+
+        if($ultimaIntervencion){
+           $estado = $ultimaIntervencion->getAccion();
+        }
+
+        return $estado;
     }
 }

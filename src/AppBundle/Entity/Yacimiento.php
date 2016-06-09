@@ -14,7 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Yacimiento extends BaseClass
 {
 
-
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
     /**
      * @var string
      *
@@ -59,6 +67,16 @@ class Yacimiento extends BaseClass
     public function __construct()
     {
         $this->pozos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

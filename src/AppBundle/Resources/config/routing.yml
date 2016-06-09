@@ -30,6 +30,10 @@ app_pozo:
         resource: "@AppBundle/Resources/config/routing/pozo.yml"
         prefix:   /pozo
 
+app_intervencion:
+        resource: "@AppBundle/Resources/config/routing/intervencion.yml"
+        prefix:   /intervenciones
+
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}
@@ -41,9 +45,9 @@ dashboard:
 #    methods: [GET]
 
 notificaciones_personales:
-    path:     /notificacionesPersonales
+    path:     /notificaciones_personales
     defaults: { _controller: AppBundle:Notificaciones:notificacionesPersonales }
 
 notificaciones_sistema:
-    path:     /notificacionesSistema
+    path:     /notificaciones_sistema
     defaults: { _controller: AppBundle:Notificaciones:notificacionesSistema }

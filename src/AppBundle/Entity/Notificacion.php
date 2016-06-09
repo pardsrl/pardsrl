@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notificacion extends BaseClass
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      * @var string
@@ -54,6 +62,16 @@ class Notificacion extends BaseClass
         $this->estados = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set notificacion
      *

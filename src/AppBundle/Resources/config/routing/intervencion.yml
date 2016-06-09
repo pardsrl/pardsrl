@@ -1,0 +1,9 @@
+intervencion_index:
+    path:     /pozo/{id}/
+    defaults: { _controller: "AppBundle:Intervencion:index" }
+    methods:  GET
+
+intervencion_nueva:
+    path:     /pozo/{id}/nueva/
+    defaults: { _controller: "AppBundle:Intervencion:nueva" }
+    methods:  POST

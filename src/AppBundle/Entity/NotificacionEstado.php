@@ -15,6 +15,15 @@ class NotificacionEstado extends BaseClass
 {
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="leido", type="boolean")
@@ -34,7 +43,16 @@ class NotificacionEstado extends BaseClass
      */
     private $persona;
 
-
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set leido
      *

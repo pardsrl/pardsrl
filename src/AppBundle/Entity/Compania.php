@@ -16,6 +16,15 @@ class Compania extends BaseClass
 {
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255, unique=true)
@@ -54,6 +63,16 @@ class Compania extends BaseClass
         $this->yacimientos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set nombre
      *

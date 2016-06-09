@@ -15,6 +15,15 @@ class Intervencion extends BaseClass
 {
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
@@ -46,7 +55,16 @@ class Intervencion extends BaseClass
      */
     private $pozo;
 
-
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set fecha
      *
