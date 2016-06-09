@@ -38,6 +38,11 @@
                     <th>Registrado el día</th>
                     <th>Creado Por</th>
                 </tr>
+                {% if intervenciones is empty %}
+                <tr>
+                    <td colspan="6">Hasta el momento no se han registrado intervenciones</td>
+                </tr>
+                {% endif %}
                 {% for intervencion in intervenciones %}
                     <tr>
                         <td>{{ intervencion.id }}</td>
