@@ -92,6 +92,12 @@ class PersonaController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $rol = $editForm->get('usuario')->get('roles')->getData();
+
+            $persona->getUsuario()->setRoles(array());
+            $persona->getUsuario()->addRole($rol);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($persona);
             $em->flush();
