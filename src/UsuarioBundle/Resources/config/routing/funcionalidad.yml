@@ -1,0 +1,24 @@
+funcionalidad_index:
+    path:     /
+    defaults: { _controller: "UsuarioBundle:Funcionalidad:index" }
+    methods:  GET
+
+funcionalidad_show:
+    path:     /{id}/show
+    defaults: { _controller: "UsuarioBundle:Funcionalidad:show" }
+    methods:  GET
+
+funcionalidad_new:
+    path:     /new
+    defaults: { _controller: "UsuarioBundle:Funcionalidad:new" }
+    methods:  [GET, POST]
+
+funcionalidad_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UsuarioBundle:Funcionalidad:edit" }
+    methods:  [GET, POST]
+
+funcionalidad_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UsuarioBundle:Funcionalidad:delete" }
+    methods:  DELETE

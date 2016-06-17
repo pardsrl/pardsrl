@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Nueva Funcionalidad' %}
+
+{% block content %}
+
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- form start -->
+                    {{ form_start(form) }}
+                    {{ form_row(form.nombre) }}
+                    {{ form_row(form.descripcion) }}
+                    {{ form_row(form.activo) }}
+
+                    <div class="box-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar"/>
+                        <a class="btn btn-default" href="{{ path('funcionalidad_index') }}"> Volver al Listado</a>
+                    </div>
+
+                    {{ form_widget(form._token) }}
+                    {{ form_end(form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -4,3 +4,11 @@
     margin: 0px;
 }
 
+.table tbody>tr>td.vert-align
+{
+    vertical-align: middle;
+}
+
+.help-block{
+    color: red;
+}

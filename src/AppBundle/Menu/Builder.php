@@ -194,6 +194,52 @@ class Builder implements ContainerAwareInterface
 
 
         $menu->addChild(
+            'Funcionalidad',
+            array(
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            )
+        )
+            ->setUri( '#' )
+            ->setExtra( 'icon', 'fa fa-group' )
+            ->setAttribute( 'class', 'treeview' );
+
+        $menu['Funcionalidad']->addChild(
+            'Listado',
+            array('route' => 'funcionalidad_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Funcionalidad']->addChild(
+            'Nueva Funcionalidad',
+            array('route' => 'funcionalidad_new')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+
+
+        $menu->addChild(
+            'Acciones',
+            array(
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            )
+        )
+            ->setUri( '#' )
+            ->setExtra( 'icon', 'fa fa-group' )
+            ->setAttribute( 'class', 'treeview' );
+
+        $menu['Acciones']->addChild(
+            'Listado',
+            array('route' => 'accion_index')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu['Acciones']->addChild(
+            'Nueva Accion',
+            array('route' => 'accion_new')
+        )->setExtra( 'icon', 'fa fa-circle-o');
+
+        $menu->addChild(
             'Territorial',
             array(
                 'childrenAttributes' => array(

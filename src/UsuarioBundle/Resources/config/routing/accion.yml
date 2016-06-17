@@ -1,0 +1,24 @@
+accion_index:
+    path:     /
+    defaults: { _controller: "UsuarioBundle:Accion:index" }
+    methods:  GET
+
+accion_show:
+    path:     /{id}/show
+    defaults: { _controller: "UsuarioBundle:Accion:show" }
+    methods:  GET
+
+accion_new:
+    path:     /new
+    defaults: { _controller: "UsuarioBundle:Accion:new" }
+    methods:  [GET, POST]
+
+accion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UsuarioBundle:Accion:edit" }
+    methods:  [GET, POST]
+
+accion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UsuarioBundle:Accion:delete" }
+    methods:  DELETE

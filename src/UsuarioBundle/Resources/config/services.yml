@@ -5,3 +5,20 @@ services:
           - { name: form.type }
       arguments:
           - "@doctrine.orm.entity_manager"
+
+  usuario.form.accion:
+        class: UsuarioBundle\Form\AccionType
+        tags:
+            - { name: form.type }
+        arguments:
+            - "@router"
+
+  listener.request:
+      class: UsuarioBundle\EventListener\FirewallListener
+      arguments: [ @service_container ]
+      tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+  security.manager:
+      class: UsuarioBundle\Services\SecurityManager
+      arguments: [ @doctrine.orm.entity_manager ]

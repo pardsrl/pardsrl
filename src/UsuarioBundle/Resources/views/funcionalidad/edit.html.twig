@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-
-{% set __title = 'Editar Rol' %}
+{% set __title = 'Editar Funcionalidad' %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        {% include 'UsuarioBundle:rol:funcionalidadRol.js.twig' %}
+        {% include 'UsuarioBundle:funcionalidad:funcionalidadAccion.js.twig' %}
     </script>
 {% endblock %}
+
 
 {% block content %}
 <div class="box box-default">
@@ -18,14 +18,14 @@
                 <!-- form start -->
                 {{ form_start(edit_form) }}
                 {{ form_row(edit_form.nombre) }}
-                {{ form_row(edit_form.slug) }}
+                {{ form_row(edit_form.descripcion) }}
                 {{ form_row(edit_form.activo) }}
 
-                {% include 'UsuarioBundle:rol:funcionalidadRol.html.twig' with {'form': edit_form}  %}
+                {% include 'UsuarioBundle:funcionalidad:funcionalidadAccion.html.twig' with {'form': edit_form}  %}
 
                 <div class="box-footer">
                     <input class="btn btn-primary" type="submit" value="Editar"/>
-                    <a class="btn btn-default" href="{{ path('rol_index') }}"> Volver al Listado</a>
+                    <a class="btn btn-default" href="{{ path('funcionalidad_index') }}"> Volver al Listado</a>
                 </div>
 
                 {{ form_widget(edit_form._token) }}

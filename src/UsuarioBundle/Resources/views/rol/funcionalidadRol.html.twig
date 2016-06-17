@@ -1,0 +1,38 @@
+{% set accion_prototype %}
+    <tr>
+        <td>{{ form_widget(form.funcionalidadesRol.vars.prototype.funcionalidad) }}</td>
+        <td class="hidden">{{ form_widget(form.funcionalidadesRol.vars.prototype.rol) }}</td>
+        <td>{{ form_widget(form.funcionalidadesRol.vars.prototype.activo) }}</td>
+        <td class="text-center vert-align" ><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>
+    </tr>
+{% endset %}
+
+<div class="box">
+    <div class="box-body no-padding">
+        <table class="table table-hover funcionalidades">
+            <tbody data-prototype="{{ accion_prototype |e('html_attr') }}">
+            <tr>
+                <th>Funcionalidad</th>
+                <th class="hidden">Rol</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+            {% for funcionalidadRol in form.funcionalidadesRol %}
+                <tr>
+                    <td>{{ form_widget(funcionalidadRol.funcionalidad) }}{{ form_errors(funcionalidadRol.funcionalidad, { 'attr': {'class': 'error-item'} }) }}</td>
+                    <td class="hidden">{{ form_widget(funcionalidadRol.rol) }}</td>
+                    <td>{{ form_widget(funcionalidadRol.activo) }}</td>
+                    <td class="text-center vert-align"><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div><!-- /.box-body -->
+    <div class="box-footer clearfix">
+        <div class="pull-right no-margin">
+            <button id="agregar-accion" type="button" class="btn btn-success "><i class="fa fa-plus"></i>Agregar funcionalidad</button>
+        </div>
+
+    </div>
+</div>

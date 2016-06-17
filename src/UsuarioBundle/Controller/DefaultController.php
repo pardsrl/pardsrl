@@ -3,11 +3,12 @@
 namespace UsuarioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function accessDeniedAction()
     {
-        return $this->render('UsuarioBundle:Default:index.html.twig');
+        throw new AccessDeniedHttpException('Acceso Prohibido');
     }
 }

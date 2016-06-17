@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Accion' %}
+
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ accion.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ accion.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <td>{{ accion.descripcion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ruta</th>
+                            <td>{{ accion.ruta }}</td>
+                        </tr>
+                        <tr>
+                            <th>Activo</th>
+                            <td>{% if accion.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('accion_edit', { 'id': accion.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('accion_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

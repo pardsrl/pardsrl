@@ -2,9 +2,17 @@ usuario_rol:
     resource: "@UsuarioBundle/Resources/config/routing/rol.yml"
     prefix:   /roles
 
-usuario_homepage:
-    path:     /
-    defaults: { _controller: UsuarioBundle:Default:index }
+usuario_accion:
+    resource: "@UsuarioBundle/Resources/config/routing/accion.yml"
+    prefix:   /accion
+
+usuario_funcionalidad:
+    resource: "@UsuarioBundle/Resources/config/routing/funcionalidad.yml"
+    prefix:   /funcionalidad
+
+usuario_acceso_denegado:
+    path: /usuario/acceso-denegado
+    defaults: { _controller: UsuarioBundle:Default:accessDenied}
 
 cambiar-password:
     path:     /usuarios/{id}/cambiar-password

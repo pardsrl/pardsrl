@@ -57,43 +57,43 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <!-- Menu toggle button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">Tienes 4 mensajes</li>
-                            <li>
-                                <!-- inner menu: contains the messages -->
-                                <ul class="menu">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <!-- User Image -->
-                                                <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-                                            </div>
-                                            <!-- Message title and timestamp -->
-                                            <h4>
-                                                Equipo de soporte
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <!-- The message -->
-                                            <p>Que tal les ha parecido la demo?<br> Creo que les va a gustar ;)</p>
-                                        </a>
-                                    </li><!-- end message -->
-                                </ul><!-- /.menu -->
-                            </li>
-                            <li class="footer"><a href="#">Ver todos los mensajes</a></li>
-                        </ul>
-                    </li><!-- /.messages-menu -->
+                    {#<li class="dropdown messages-menu">#}
+                        {#<!-- Menu toggle button -->#}
+                        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+                            {#<i class="fa fa-envelope-o"></i>#}
+                            {#<span class="label label-success">4</span>#}
+                        {#</a>#}
+                        {#<ul class="dropdown-menu">#}
+                            {#<li class="header">Tienes 4 mensajes</li>#}
+                            {#<li>#}
+                                {#<!-- inner menu: contains the messages -->#}
+                                {#<ul class="menu">#}
+                                    {#<li><!-- start message -->#}
+                                        {#<a href="#">#}
+                                            {#<div class="pull-left">#}
+                                                {#<!-- User Image -->#}
+                                                {#<img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">#}
+                                            {#</div>#}
+                                            {#<!-- Message title and timestamp -->#}
+                                            {#<h4>#}
+                                                {#Equipo de soporte#}
+                                                {#<small><i class="fa fa-clock-o"></i> 5 mins</small>#}
+                                            {#</h4>#}
+                                            {#<!-- The message -->#}
+                                            {#<p>Que tal les ha parecido la demo?<br> Creo que les va a gustar ;)</p>#}
+                                        {#</a>#}
+                                    {#</li><!-- end message -->#}
+                                {#</ul><!-- /.menu -->#}
+                            {#</li>#}
+                            {#<li class="footer"><a href="#">Ver todos los mensajes</a></li>#}
+                        {#</ul>#}
+                    {#</li><!-- /.messages-menu -->#}
 
-                    <!-- Notifications Personales Menu -->
-                    {{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}
+                    {#<!-- Notifications Personales Menu -->#}
+                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}#}
 
-                    <!-- Notifications Sistema Menu -->
-                    {{ render(controller('AppBundle:Notificaciones:notificacionesSistema')) }}
+                    {#<!-- Notifications Sistema Menu -->#}
+                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesSistema')) }}#}
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">

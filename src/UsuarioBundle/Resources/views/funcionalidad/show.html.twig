@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% set __title = 'Funcionalidad' %}
+
+{% block content %}
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ funcionalidad.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ funcionalidad.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <td>{{ funcionalidad.descripcion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Activo</th>
+                            <td>{% if funcionalidad.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{{ path('funcionalidad_edit', { 'id': funcionalidad.id }) }}"> Editar</a>
+                    <a class="btn btn-default" href="{{ path('funcionalidad_index') }}"> Volver al Listado</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

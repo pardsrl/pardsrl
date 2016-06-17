@@ -5,123 +5,123 @@ namespace UsuarioBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use UsuarioBundle\Entity\Rol;
-use UsuarioBundle\Form\RolType;
+use UsuarioBundle\Entity\Accion;
+use UsuarioBundle\Form\AccionType;
 
 /**
- * Rol controller.
+ * Accion controller.
  *
  */
-class RolController extends Controller
+class AccionController extends Controller
 {
     /**
-     * Lists all Rol entities.
+     * Lists all Accion entities.
      *
      */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $rols = $em->getRepository('UsuarioBundle:Rol')->findAll();
+        $accions = $em->getRepository('UsuarioBundle:Accion')->findAll();
 
         $paginator = $this->get('knp_paginator');
 
-        $rols = $paginator->paginate(
-            $rols,
+        $accions = $paginator->paginate(
+            $accions,
             $request->query->get('page', 1)/* page number */,
             10/* limit per page */
         );
 
         $deleteForm = $this->createDeleteForm();
 
-        return $this->render('UsuarioBundle:rol:index.html.twig', array(
-            'rols' => $rols,
+        return $this->render('UsuarioBundle:accion:index.html.twig', array(
+            'accions' => $accions,
             'delete_form' => $deleteForm->createView()
         ));
     }
 
     /**
-     * Creates a new Rol entity.
+     * Creates a new Accion entity.
      *
      */
     public function newAction(Request $request)
     {
-        $rol = new Rol();
-        $form = $this->createForm('UsuarioBundle\Form\RolType', $rol);
+        $accion = new Accion();
+        $form = $this->createForm('UsuarioBundle\Form\AccionType', $accion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($rol);
+            $em->persist($accion);
             $em->flush();
 
             // set flash messages
             $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardado satisfactoriamente.');
 
-            return $this->redirectToRoute('rol_edit', array('id' => $rol->getId()));
+            return $this->redirectToRoute('accion_index');
 
         }
 
-        return $this->render('UsuarioBundle:rol:new.html.twig', array(
-            'rol' => $rol,
+        return $this->render('UsuarioBundle:accion:new.html.twig', array(
+            'accion' => $accion,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Rol entity.
+     * Finds and displays a Accion entity.
      *
      */
-    public function showAction(Rol $rol)
+    public function showAction(Accion $accion)
     {
 
 
-        return $this->render('UsuarioBundle:rol:show.html.twig', array(
-            'rol' => $rol
+        return $this->render('UsuarioBundle:accion:show.html.twig', array(
+            'accion' => $accion
         ));
     }
 
     /**
-     * Displays a form to edit an existing Rol entity.
+     * Displays a form to edit an existing Accion entity.
      *
      */
-    public function editAction(Request $request, Rol $rol)
+    public function editAction(Request $request, Accion $accion)
     {
-        $deleteForm = $this->createDeleteForm($rol);
-        $editForm = $this->createForm('UsuarioBundle\Form\RolType', $rol);
+        $deleteForm = $this->createDeleteForm($accion);
+        $editForm = $this->createForm('UsuarioBundle\Form\AccionType', $accion);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($rol);
+            $em->persist($accion);
             $em->flush();
 
             // set flash messages
             $this->get('session')->getFlashBag()->add('success', 'El registro se ha actualizado satisfactoriamente.');
 
-            return $this->redirectToRoute('rol_edit', array('id' => $rol->getId()));
+            return $this->redirectToRoute('accion_edit', array('id' => $accion->getId()));
         }
 
-        return $this->render('UsuarioBundle:rol:edit.html.twig', array(
-            'rol' => $rol,
+        return $this->render('UsuarioBundle:accion:edit.html.twig', array(
+            'accion' => $accion,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Deletes a Rol entity.
+     * Deletes a Accion entity.
      *
      */
-    public function deleteAction(Request $request, Rol $rol)
+    public function deleteAction(Request $request, Accion $accion)
     {
-        $form = $this->createDeleteForm($rol);
+        $form = $this->createDeleteForm($accion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
-                $em->remove($rol);
+                $em->remove($accion);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', 'El registro se ha dado de baja satisfactoriamente.');
@@ -130,11 +130,11 @@ class RolController extends Controller
             }
         }
 
-        return $this->redirectToRoute('rol_index');
+        return $this->redirectToRoute('accion_index');
     }
 
     /**
-     * Creates a form to delete a Rol entity.
+     * Creates a form to delete a Accion entity.
      *
      *
      * @return \Symfony\Component\Form\Form The form
@@ -142,7 +142,7 @@ class RolController extends Controller
     private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('rol_delete', array('id' => '__obj_id__')))
+            ->setAction($this->generateUrl('accion_delete', array('id' => '__obj_id__')))
             ->setMethod('DELETE')
             ->getForm()
         ;
