@@ -50,7 +50,7 @@ class FuncionalidadController extends Controller
     {
         $funcionalidad = new Funcionalidad();
 
-        $form = $this->createForm('UsuarioBundle\Form\FuncionalidadType', $funcionalidad);
+        $form = $this->createForm(FuncionalidadType::class, $funcionalidad);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,7 +91,7 @@ class FuncionalidadController extends Controller
     public function editAction(Request $request, Funcionalidad $funcionalidad)
     {
         $deleteForm = $this->createDeleteForm($funcionalidad);
-        $editForm = $this->createForm('UsuarioBundle\Form\FuncionalidadType', $funcionalidad);
+        $editForm = $this->createForm(FuncionalidadType::class, $funcionalidad);
 
         $funcionalidadesAccionesOriginales = new ArrayCollection();
 

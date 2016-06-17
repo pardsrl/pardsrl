@@ -47,7 +47,7 @@ class PersonaController extends Controller
     public function newAction(Request $request)
     {
         $persona = new Persona();
-        $form = $this->createForm('AppBundle\Form\PersonaType', $persona);
+        $form = $this->createForm(PersonaType::class, $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +88,7 @@ class PersonaController extends Controller
     public function editAction(Request $request, Persona $persona)
     {
         $deleteForm = $this->createDeleteForm($persona);
-        $editForm = $this->createForm('AppBundle\Form\PersonaType', $persona);
+        $editForm = $this->createForm(PersonaType::class, $persona);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

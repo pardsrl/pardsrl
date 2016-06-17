@@ -47,7 +47,7 @@ class YacimientoController extends Controller
     public function newAction(Request $request)
     {
         $yacimiento = new Yacimiento();
-        $form = $this->createForm('AppBundle\Form\YacimientoType', $yacimiento);
+        $form = $this->createForm(YacimientoType::class, $yacimiento);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

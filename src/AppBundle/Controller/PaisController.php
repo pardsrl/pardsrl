@@ -47,7 +47,7 @@ class PaisController extends Controller
     public function newAction(Request $request)
     {
         $pai = new Pais();
-        $form = $this->createForm('AppBundle\Form\PaisType', $pai);
+        $form = $this->createForm(PaisType::class, $pai);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

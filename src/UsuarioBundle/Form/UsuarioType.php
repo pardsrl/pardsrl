@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\HttpKernel\Debug\ExceptionHandler;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UsuarioType extends AbstractType

@@ -10,7 +10,7 @@ class CambiarPasswordController extends Controller
 {
     public function cambiarPasswordAction(Request $request, Usuario $usuario )
     {
-        $form = $this->createForm('UsuarioBundle\Form\CambiarPasswordType', $usuario);
+        $form = $this->createForm(CambiarPasswordType::class, $usuario);
 
         $form->handleRequest($request);
 

@@ -47,7 +47,7 @@ class EquipoController extends Controller
     public function newAction(Request $request)
     {
         $equipo = new Equipo();
-        $form = $this->createForm('AppBundle\Form\EquipoType', $equipo);
+        $form = $this->createForm(EquipoType::class, $equipo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +88,7 @@ class EquipoController extends Controller
     public function editAction(Request $request, Equipo $equipo)
     {
         $deleteForm = $this->createDeleteForm($equipo);
-        $editForm = $this->createForm('AppBundle\Form\EquipoType', $equipo);
+        $editForm = $this->createForm(EquipoType::class, $equipo);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

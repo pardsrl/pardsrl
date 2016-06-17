@@ -47,7 +47,7 @@ class AccionController extends Controller
     public function newAction(Request $request)
     {
         $accion = new Accion();
-        $form = $this->createForm('UsuarioBundle\Form\AccionType', $accion);
+        $form = $this->createForm(AccionType::class, $accion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +88,7 @@ class AccionController extends Controller
     public function editAction(Request $request, Accion $accion)
     {
         $deleteForm = $this->createDeleteForm($accion);
-        $editForm = $this->createForm('UsuarioBundle\Form\AccionType', $accion);
+        $editForm = $this->createForm(AccionType::class, $accion);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

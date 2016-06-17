@@ -47,7 +47,7 @@ class CompaniaController extends Controller
     public function newAction(Request $request)
     {
         $companium = new Compania();
-        $form = $this->createForm('AppBundle\Form\CompaniaType', $companium);
+        $form = $this->createForm(CompaniaType::class, $companium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +88,7 @@ class CompaniaController extends Controller
     public function editAction(Request $request, Compania $companium)
     {
         $deleteForm = $this->createDeleteForm($companium);
-        $editForm = $this->createForm('AppBundle\Form\CompaniaType', $companium);
+        $editForm = $this->createForm(CompaniaType::class, $companium);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -47,7 +47,7 @@ class PozoController extends Controller
     public function newAction(Request $request)
     {
         $pozo = new Pozo();
-        $form = $this->createForm('AppBundle\Form\PozoType', $pozo);
+        $form = $this->createForm(PozoType::class, $pozo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +87,7 @@ class PozoController extends Controller
     public function editAction(Request $request, Pozo $pozo)
     {
         $deleteForm = $this->createDeleteForm($pozo);
-        $editForm = $this->createForm('AppBundle\Form\PozoType', $pozo);
+        $editForm = $this->createForm(PozoType::class, $pozo);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

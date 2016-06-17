@@ -47,7 +47,7 @@ class RolController extends Controller
     public function newAction(Request $request)
     {
         $rol = new Rol();
-        $form = $this->createForm('UsuarioBundle\Form\RolType', $rol);
+        $form = $this->createForm(RolType::class, $rol);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +88,7 @@ class RolController extends Controller
     public function editAction(Request $request, Rol $rol)
     {
         $deleteForm = $this->createDeleteForm($rol);
-        $editForm = $this->createForm('UsuarioBundle\Form\RolType', $rol);
+        $editForm = $this->createForm(RolType::class, $rol);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

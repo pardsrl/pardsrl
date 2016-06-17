@@ -47,7 +47,7 @@ class ProvinciaController extends Controller
     public function newAction(Request $request)
     {
         $provincium = new Provincia();
-        $form = $this->createForm('AppBundle\Form\ProvinciaType', $provincium);
+        $form = $this->createForm(ProvinciaType::class, $provincium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

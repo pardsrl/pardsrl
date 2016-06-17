@@ -3,12 +3,12 @@
 namespace UsuarioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DefaultController extends Controller
 {
     public function accessDeniedAction()
     {
-        throw new AccessDeniedHttpException('Acceso Prohibido');
+        throw new AccessDeniedException('Acceso Prohibido');
     }
 }

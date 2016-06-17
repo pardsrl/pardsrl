@@ -47,7 +47,7 @@ class LocalidadController extends Controller
     public function newAction(Request $request)
     {
         $localidad = new Localidad();
-        $form = $this->createForm('AppBundle\Form\LocalidadType', $localidad);
+        $form = $this->createForm(LocalidadType::class, $localidad);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

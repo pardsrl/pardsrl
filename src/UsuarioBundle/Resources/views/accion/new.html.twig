@@ -3,6 +3,23 @@
 
 {% set __title = 'Nueva Acción' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/select2/select2.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('dashboard_v2/plugins/select2/select2.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="box box-default">
         <div class="box-body">
@@ -10,7 +27,10 @@
                 <div class="col-md-6">
                     <!-- form start -->
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                    {{ form_row(form.nombre) }}
+                    {{ form_row(form.descripcion) }}
+                    {{ form_row(form.ruta, { 'attr': {'class': 'select2'} }) }}
+                    {{ form_row(form.activo) }}
                     <div class="box-footer">
                         <input class="btn btn-primary" type="submit" value="Crear"/>
                         <a class="btn btn-default" href="{{ path('accion_index') }}"> Volver al Listado</a>
