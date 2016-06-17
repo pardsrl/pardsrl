@@ -17,3 +17,9 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    #node_config
+        node_server:
+           ip: 127.0.0.1
+           port:  9999
+           notifications_namespace : 'notificaciones'

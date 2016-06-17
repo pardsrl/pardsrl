@@ -5,6 +5,7 @@ namespace UsuarioBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use UsuarioBundle\Entity\Usuario;
+use UsuarioBundle\Form\CambiarPasswordType;
 
 class CambiarPasswordController extends Controller
 {
