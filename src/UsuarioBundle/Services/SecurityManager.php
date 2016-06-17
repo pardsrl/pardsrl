@@ -21,7 +21,6 @@ class SecurityManager
      * @return bool
      */
     public function isGranted($role,$ruta){
-        return true;
 
         $rol = $this->em->getRepository('UsuarioBundle:Rol')->findOneBySlug($role);
 
