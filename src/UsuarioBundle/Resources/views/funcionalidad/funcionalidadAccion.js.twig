@@ -28,6 +28,10 @@ jQuery(document).ready(function () {
 
         console.log($collectionHolder.data('index'));
     });
+
+    //aplico el plugin select2 para todos los selects cargados
+    $('table.funcionalidades tbody select').select2();
+
 });
 
 function addAccionForm($collectionHolder, $newLinkLi) {
@@ -46,4 +50,5 @@ function addAccionForm($collectionHolder, $newLinkLi) {
 
     $collectionHolder.append(newForm);
 
+    $collectionHolder.find('select.select2').last().select2();
 }

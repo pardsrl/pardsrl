@@ -2,7 +2,7 @@ var $collectionHolder;
 
 jQuery(document).ready(function () {
     // Get the ul that holds the collection of tags
-    $collectionHolder = $('table.funcionalidades tbody');
+    $collectionHolder = $('table.roles tbody');
 
     $addAccionBtn = $('#agregar-accion');
 
@@ -28,6 +28,9 @@ jQuery(document).ready(function () {
 
         console.log($collectionHolder.data('index'));
     });
+
+    //aplico el plugin select2 para todos los selects cargados
+    $('table.roles tbody select').select2();
 });
 
 function addAccionForm($collectionHolder, $newLinkLi) {
@@ -45,5 +48,7 @@ function addAccionForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     $collectionHolder.append(newForm);
+
+    $collectionHolder.find('select.select2').last().select2();
 
 }

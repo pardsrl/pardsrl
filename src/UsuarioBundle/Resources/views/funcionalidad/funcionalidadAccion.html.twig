@@ -1,6 +1,6 @@
 {% set accion_prototype %}
     <tr>
-        <td>{{ form_widget(form.funcionalidadesAccion.vars.prototype.accion) }}</td>
+        <td>{{ form_widget(form.funcionalidadesAccion.vars.prototype.accion, { 'attr': {'class': 'select2'} }) }}</td>
         <td class="hidden">{{ form_widget(form.funcionalidadesAccion.vars.prototype.funcionalidad) }}</td>
         <td>{{ form_widget(form.funcionalidadesAccion.vars.prototype.activo) }}</td>
         <td class="text-center vert-align" ><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>
@@ -19,7 +19,9 @@
             </tr>
             {% for funcionalidadAccion in form.funcionalidadesAccion %}
                 <tr>
-                    <td>{{ form_widget(funcionalidadAccion.accion) }}{{ form_errors(funcionalidadAccion.accion, { 'attr': {'class': 'error-item'} }) }}</td>
+                    <td>{{ form_widget(funcionalidadAccion.accion, { 'attr': {'class': 'select2'} }) }}
+                        {{ form_errors(funcionalidadAccion.accion, { 'attr': {'class': 'error-item'} }) }}
+                    </td>
                     <td class="hidden">{{ form_widget(funcionalidadAccion.funcionalidad) }}</td>
                     <td>{{ form_widget(funcionalidadAccion.activo) }}</td>
                     <td class="text-center vert-align"><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>

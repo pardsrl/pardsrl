@@ -2,8 +2,15 @@
 
 {% set __title = 'Editar Funcionalidad' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/select2/select2.min.css') }}">
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('dashboard_v2/plugins/select2/select2.min.js') }}"></script>
+
     <script type="text/javascript">
         {% include 'UsuarioBundle:funcionalidad:funcionalidadAccion.js.twig' %}
     </script>

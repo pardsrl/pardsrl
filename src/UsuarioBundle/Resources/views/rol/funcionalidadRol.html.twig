@@ -1,6 +1,6 @@
 {% set accion_prototype %}
     <tr>
-        <td>{{ form_widget(form.funcionalidadesRol.vars.prototype.funcionalidad) }}</td>
+        <td>{{ form_widget(form.funcionalidadesRol.vars.prototype.funcionalidad, { 'attr': {'class': 'select2'} }) }}</td>
         <td class="hidden">{{ form_widget(form.funcionalidadesRol.vars.prototype.rol) }}</td>
         <td>{{ form_widget(form.funcionalidadesRol.vars.prototype.activo) }}</td>
         <td class="text-center vert-align" ><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>
@@ -9,7 +9,7 @@
 
 <div class="box">
     <div class="box-body no-padding">
-        <table class="table table-hover funcionalidades">
+        <table class="table table-hover roles">
             <tbody data-prototype="{{ accion_prototype |e('html_attr') }}">
             <tr>
                 <th>Funcionalidad</th>
@@ -19,7 +19,10 @@
             </tr>
             {% for funcionalidadRol in form.funcionalidadesRol %}
                 <tr>
-                    <td>{{ form_widget(funcionalidadRol.funcionalidad) }}{{ form_errors(funcionalidadRol.funcionalidad, { 'attr': {'class': 'error-item'} }) }}</td>
+                    <td>
+                        {{ form_widget(funcionalidadRol.funcionalidad, { 'attr': {'class': 'select2'} }) }}
+                        {{ form_errors(funcionalidadRol.funcionalidad, { 'attr': {'class': 'error-item'} }) }}
+                    </td>
                     <td class="hidden">{{ form_widget(funcionalidadRol.rol) }}</td>
                     <td>{{ form_widget(funcionalidadRol.activo) }}</td>
                     <td class="text-center vert-align"><a class="btn btn-danger btn-xs remove-accion">Borrar</a></td>
