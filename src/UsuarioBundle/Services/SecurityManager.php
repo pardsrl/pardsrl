@@ -20,10 +20,16 @@ class SecurityManager
      * @param $ruta
      * @return bool
      */
-    public function isGranted($role,$ruta){
+    public function isGranted($role, $ruta)
+    {
 
         $rol = $this->em->getRepository('UsuarioBundle:Rol')->findOneBySlug($role);
 
+        //si no encuentra el rol, se deniega el acceso.
+        if (!$rol) {
+            return false;
+        }
+        
         //obtengo las funcionalidades activas
         $funcionalidades = $rol->getFuncionalidades();
 
@@ -31,12 +37,14 @@ class SecurityManager
 
             //recorro las acciones activas
             foreach ($funcionalidad->getAcciones() as $accion) {
-                if($accion->getRuta() == $ruta){
+                if ($accion->getRuta() == $ruta) {
                     return true;
                 }
             }
         }
-        
+
         return false;
     }
+
+
 }
