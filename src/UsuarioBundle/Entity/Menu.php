@@ -45,6 +45,7 @@ class Menu
 
     /**
      * @ORM\OneToMany(targetEntity="Menu", mappedBy="padre")
+     * @ORM\OrderBy({"orden" = "ASC"})
      */
     private $hijos;
 
@@ -304,5 +305,61 @@ class Menu
     public function tieneHijos()
     {
         return $this->hijos->count() ? true : false;
+    }
+
+    public function getHijosActivos(){
+
+        $filtro = function($item) {
+
+            if($item->getActivo()){
+                return true;
+            }else{
+                return false;
+            }
+        };
+
+        return $this->getHijos()->filter($filtro);
+    }
+
+    /**
+     * @return bool
+     */
+    public function tieneHijosActivos()
+    {
+        return $this->getHijosActivos()->count() ? true : false;
+    }
+
+
+    public function esHeader(){
+
+        if($this->getAccion() == null && $this->tieneHijos() ){
+
+            $header = true;
+
+            foreach ($this->getHijosActivos() as $hijo){
+                if($hijo->getAccion()){
+                    $header = false;
+                }
+            }
+
+            return $header;
+
+        }
+
+        return false;
+    }
+
+    public function esSubMenu(){
+
+        return $this->esHeader() ? false : true;
+    }
+
+    public function esLink(){
+        if($this->getAccion() && !$this->tieneHijos()){
+            return true;
+        }
+
+        return false;
+
     }
 }

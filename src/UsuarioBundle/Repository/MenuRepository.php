@@ -16,7 +16,7 @@ class MenuRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('menu');
     }
 
-    public function getPadresActivos()
+    public function getRootsActivos()
     {
         $qb = $this->getQb()
             ->leftJoin('menu.accion','acc')
