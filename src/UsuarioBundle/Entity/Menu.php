@@ -332,7 +332,7 @@ class Menu
 
     public function esHeader(){
 
-        if($this->getAccion() == null && $this->tieneHijos() ){
+        if($this->getAccion() === null && $this->tieneHijos() ){
 
             $header = true;
 

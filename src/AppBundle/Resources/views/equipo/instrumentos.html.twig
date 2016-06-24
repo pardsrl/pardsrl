@@ -351,20 +351,22 @@
 
                         series: [
                             {
+                                yAxis: 1,
                                 name: 'Peso',
-                                data: [600],
+                                data: [0],
                                 color: '#933',
 
                                 dial: {
-                                    backgroundColor: "#933",
-
+                                    backgroundColor: "#933"
                                 },
                                 dataLabels: {
+                                    x: 0,
+                                    y:100,
+                                    allowOverlap: true,
                                     formatter: function () {
-                                        var kmh = this.y,
-                                                mph = Math.round(kmh * 1.21);
-                                        //return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
-                                        //    '<span style="color:#933">' + mph + ' mph</span>';
+                                        var klb = this.y;
+
+                                        return '<span style="color:#933">' + klb + ' klb</span>';
                                     },
                                     backgroundColor: {
                                         linearGradient: {
@@ -384,8 +386,9 @@
                                 }
                             },
                             {
-                                name: 'Decimal',
-                                data: [80],
+                                yAxis: 0,
+                                name: 'Peso',
+                                data: [0],
                                 dial: {
                                     radius: "60%",
                                     backgroundColor: "#339",
@@ -393,11 +396,13 @@
                                 },
 
                                 dataLabels: {
+                                    x: 0,
+                                    y:67,
+                                    allowOverlap: true,
                                     formatter: function () {
-                                        var kmh = this.y,
-                                                mph = Math.round(kmh * 0.621);
-                                        // return '<span style="color:#339">' + kmh + ' km/h</span><br/>' +
-                                        //    '<span style="color:#933">' + mph + ' mph</span>';
+                                        var lb = this.y;
+
+                                        return '<span style="color:#339">' + lb + ' lb</span><br/>';
                                     },
                                     backgroundColor: {
                                         linearGradient: {
@@ -413,7 +418,7 @@
                                     }
                                 },
                                 tooltip: {
-                                    //valueSuffix: ' km/h'
+                                    valueSuffix: ' lb'
                                 }
                             }
                         ]
@@ -436,9 +441,11 @@
 
                     var aparejo = puntos[2].toString().split(".");
 
+                    console.log(aparejo);
+
                     $('#aparejo').highcharts().series[0].points[0].update(Number(aparejo[0]));
 
-                    $('#aparejo').highcharts().series[1].points[0].update(Number(aparejo[1]));
+                    $('#aparejo').highcharts().series[1].points[0].update(Number(aparejo[1])*10);
 
                     //anemometro
                     $('#anemometro').highcharts().series[0].points[0].update(puntos[1]);
