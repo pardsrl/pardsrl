@@ -101,7 +101,12 @@ function push($filename) {
 
             case '/srv/data/tr.sai280':
                 // Emite un evento al socket del tipo csvOutput
-                sai280.emit('tiempo_real', dataset);
+                sai280.emit('trpl', dataset);
+                break;
+
+            case '/srv/data/man.sai280':
+                // Emite un evento al socket del tipo csvOutput
+                sai280.emit('trman', dataset);
                 break;
 
             default:
@@ -119,7 +124,9 @@ function push($filename) {
 
 }
 
-
+/**
+ * SAI 280
+ */
 var sai280 = io.of('/sai280');
 
 // Detecta cuando alguien se conecta
@@ -134,10 +141,11 @@ sai280.on('connection', function (socket) {
 
 
 try{
-    watch('/srv/data/tr.sai280', function(filename) {
+    watch(['/srv/data/tr.sai280', '/srv/data/man.sai280'], function(filename) {
         //console.log(filename, ' changed.');
         push(filename);
     });
+
 } catch (err) {
     // handle the error safely
     console.log(err)
