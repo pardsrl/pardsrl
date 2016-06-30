@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UsuarioBundle\Form\UsuarioType;
@@ -18,6 +19,13 @@ class PersonaType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellido')
+            ->add('sexo', ChoiceType::class, array(
+                'choices' => array(
+                    'Masculino' => 'M' ,
+                    'Femenino'  => 'F'
+                ),
+                'choices_as_values' => true
+            ))
             ->add('telefonoPrincipal')
             ->add('telefonoSecundario')
             ->add('cargo')

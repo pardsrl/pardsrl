@@ -37,6 +37,13 @@ class Persona extends BaseClass
      */
     protected $apellido;
 
+    /**
+     *
+     * @var String $sexo
+     *
+     * @ORM\Column(type="string" , length=50)
+     */
+    protected $sexo;
 
     /**
      *
@@ -137,6 +144,31 @@ class Persona extends BaseClass
     public function getApellido()
     {
         return $this->apellido;
+    }
+
+
+    /**
+     * Set sexo
+     *
+     * @param string $sexo
+     *
+     * @return Persona
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return string
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
     }
 
     /**

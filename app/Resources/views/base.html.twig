@@ -76,6 +76,8 @@
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+
+                    {% set avatar = (app.user.persona.sexo == 'M') ? 'avatar5.png' : 'avatar2.png' %}
                     <!-- Messages: style can be found in dropdown.less-->
                     {#<li class="dropdown messages-menu">#}
                         {#<!-- Menu toggle button -->#}
@@ -120,14 +122,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                            <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ app.user.persona.nombreCompleto }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
                                 <p>
                                     {{ app.user.persona.nombreCompleto }} - {{ app.user.persona.cargo }}
                                     <small>Miembro de {{ app.user.persona.compania }}</small>
@@ -169,7 +171,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                    <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{ app.user.persona.nombreCompleto }}</p>
