@@ -2,6 +2,7 @@
 
 namespace UsuarioBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -89,10 +90,29 @@ class RolController extends Controller
     {
         $deleteForm = $this->createDeleteForm($rol);
         $editForm = $this->createForm(RolType::class, $rol);
+
+        $funcionalidadesRolOriginales = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($rol->getFuncionalidadesRol() as $funcionalidadRol) {
+            $funcionalidadesRolOriginales->add($funcionalidadRol);
+        }
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($funcionalidadesRolOriginales as $funcionalidadRol) {
+                if (false === $rol->getFuncionalidadesRol()->contains($funcionalidadRol)) {
+                    // remove the Task from the Tag
+                    $rol->getFuncionalidadesRol()->removeElement($funcionalidadRol);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($funcionalidadRol);
+                }
+            }
+
             $em->persist($rol);
             $em->flush();
 
