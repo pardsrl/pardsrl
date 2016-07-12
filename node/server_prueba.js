@@ -99,14 +99,19 @@ function push($filename) {
 
         switch ($filename) {
 
-            case '/srv/data/tr.sai280':
+            case '/srv/data/trpl.sai280':
                 // Emite un evento al socket del tipo csvOutput
                 sai280.emit('trpl', dataset);
                 break;
 
-            case '/srv/data/man.sai280':
+            case '/srv/data/trman.sai280':
                 // Emite un evento al socket del tipo csvOutput
                 sai280.emit('trman', dataset);
+                break;
+
+            case '/srv/data/hstpl.sai280':
+                // Emite un evento al socket del tipo csvOutput
+                sai280.emit('hstpl', dataset);
                 break;
 
             default:
@@ -141,7 +146,7 @@ sai280.on('connection', function (socket) {
 
 
 try{
-    watch(['/srv/data/tr.sai280', '/srv/data/man.sai280'], function(filename) {
+    watch(['/srv/data/trman.sai280', '/srv/data/trpl.sai280','/srv/data/hstpl.sai280'], function(filename) {
         //console.log(filename, ' changed.');
         push(filename);
     });
