@@ -10,7 +10,19 @@
                 <div class="col-md-6">
                     <!-- form start -->
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                    {{ form_row(form.accionDesc) }}
+                    <div class="form-group">
+                        {{ form_label(form.fecha) }}
+                        <div class="col-sm-10">
+                            <div id="intervencion_fecha" class="form-inline">
+                                {{ form_widget(form.fecha.date, { 'attr': { 'class': 'datepicker' } }) }}
+                                {{ form_widget(form.fecha.time.hour) }}
+                                {{ form_widget(form.fecha.time.minute) }}
+                                {{ form_errors(form.fecha) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_row(form.equipo) }}
                     <div class="box-footer">
                         <input class="btn btn-primary" type="submit" value="Nueva Intervención"/>
                         <a class="btn btn-default" href="{{ path('pozo_index') }}"> Volver al Listado de pozos</a>
@@ -48,7 +60,7 @@
                         <td>{{ intervencion.id }}</td>
                         <td>{{ intervencion.equipo.nombreCompleto }}</td>
                         <td>{% if intervencion.accion == 0 %}<span class="label label-success">Apertura</span>{% else %}<span class="label label-warning">Cierre</span>{% endif %}</td>
-                        <td>{{ intervencion.fecha | date('d/m/Y') }}</td>
+                        <td>{{ intervencion.fecha | date('d/m/Y H:i:s') }}</td>
                         <td>{{ intervencion.fechaCreacion | date('d/m/Y H:i:s') }}</td>
                         <td>{{ intervencion.creadoPor }}</td>
                     </tr>

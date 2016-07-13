@@ -3,7 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,11 +27,11 @@ class IntervencionType extends AbstractType
                 'data'     => $intervencion->getAccion() == 0 ? 'Abrir Pozo' : 'Cerrar Pozo'
             ))
             ->add('accion',HiddenType::class )
-            ->add('fecha', DateType::class, array(
-                'html5' => true,
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
-                'attr' => array('class' => 'datepicker')
+            ->add('fecha', DateTimeType::class, array(
+                'html5' => false,
+                'date_widget' => 'single_text',
+                'date_format' => 'dd/MM/yyyy',
+                'label' => 'Fecha'
             ))
             ->add('equipo')
         ;
