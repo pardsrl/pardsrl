@@ -124,8 +124,36 @@ function push($filename) {
     //read from file
     var stream = fs.createReadStream($filename);
 
-    stream.on('error', function (error) {console.log("Caught", error);});
-    stream.on('readable', function () {stream.pipe(converter);});
+    // stream.on('error', function (error) {console.log("Caught", error);});
+    // stream.on('readable', function () {stream.pipe(converter);});
+
+
+
+
+    stream.on('readable', onreadable)
+    stream.on('error', onerror)
+    stream.on('end', cleanup)
+
+    // define all functions in scope
+    // so they can be referenced by cleanup and vice-versa
+    function onreadable() {
+        cleanup();
+        stream.pipe(converter);
+    }
+
+    function onerror(err) {
+        cleanup();
+        console.log("Caught", err);
+    }
+
+    function cleanup() {
+        // remove all event listeners created in this promise
+        stream.removeListener('readable', onreadable)
+        stream.removeListener('error', onerror)
+        stream.removeListener('end', cleanup)
+    }
+
+
 
 }
 
