@@ -1,39 +1,69 @@
-var Converter = require("csvtojson").Converter;
-var server = require('http').createServer();
-var io = require('socket.io')(server);
+var server      = require('http').createServer();
+var io          = require('socket.io')(server);
+
 const fs = require('fs');
 
-var csvPath = 'data/dls68.csv';
 
 // Funcion que parsea el csv y lo convierte a JSON
-function pushCsv() {
-    //Converter Class
+function push($filename) {
 
-    // La opcion no header es para cuando no tenemos headers en el csv
-    var converter = new Converter({noheader:true});
 
-    //end_parsed will be emitted once parsing finished
-    converter.on("end_parsed", function (jsonArray) {
-        // Emite un evento al socket del tipo csvOutput
-        io.emit('csvOutput', jsonArray);
-    });
+  fs.readFile($filename, function (err, data) {
 
-    //read from file
-    fs.createReadStream(csvPath).pipe(converter);
+    if (err) throw err;
+
+    switch ($filename) {
+
+        case '/srv/data/trpl.sai280':
+            // Emite un evento al socket del tipo csvOutput
+            sai280.emit('trpl', data);
+            break;
+
+        case '/srv/data/trman.sai280':
+            // Emite un evento al socket del tipo csvOutput
+            sai280.emit('trman', data);
+            break;
+
+        case '/srv/data/hstpl.sai280':
+            // Emite un evento al socket del tipo csvOutput
+            sai280.emit('hstpl', data);
+            break;
+
+        default:
+
+    }
+
+  });
+
 }
 
-// Detecta cuando alguien se conecta, parsea el csv y se lo manda
-io.on('connection', function (socket) {
-    pushCsv();
-    socket.on('event', function (data) {});
-    socket.on('disconnect', function () {});
+/**
+ * SAI 280
+ */
+var sai280 = io.of('/sai280');
+
+// Detecta cuando alguien se conecta
+sai280.on('connection', function (socket) {
+    socket.on('event', function (data) {
+    });
+
+    socket.on('disconnect', function () {
+        //console.log('desconectado');
+    });
 });
 
-// Intervalo de 30 segundos
-setInterval(function () {
-    pushCsv();
-}, 30000);
+
+try{
+    watch(['/srv/data/trman.sai280', '/srv/data/trpl.sai280', '/srv/data/hstpl.sai280'], function(filename) {
+        //console.log(filename, ' changed.');
+        push(filename);
+    });
+
+} catch (err) {
+    // handle the error safely
+    console.log(err)
+}
 
 
-// Activa el server en el puerto 1337
-server.listen(1337);
+// Activa el server en el puerto 5140
+server.listen(5140);
