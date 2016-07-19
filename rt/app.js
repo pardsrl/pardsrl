@@ -22,7 +22,7 @@ app.get('/sai280/hstpl', function (req, res) {
       console.log(err)
     }
     else{
-      res.json(data);
+      res.send(data);
     }
   });
 
