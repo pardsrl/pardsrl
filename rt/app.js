@@ -1,8 +1,9 @@
 //var express = require('express');
 //var app = express();
 
-var app   = require('express').createServer();
-var io    = require('socket.io')(app);
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var watch = require('node-watch');
 var fs    = require('fs');
 
