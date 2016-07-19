@@ -1,11 +1,11 @@
 //var express = require('express');
 //var app = express();
 
-var app = require('express')();
+var app    = require('express')();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var watch = require('node-watch');
-var fs    = require('fs');
+var io     = require('socket.io')(server);
+var watch  = require('node-watch');
+var fs     = require('fs');
 
 const TRPL_SAI280   = '/srv/data/trpl.sai280';
 const TRMAN_SAI280  = '/srv/data/trman.sai280';
@@ -91,6 +91,6 @@ try{
   console.log(err)
 }
 
-app.listen(5140, function () {
+server.listen(5140, function () {
   console.log('Example app listening on port 5140!');
 });
