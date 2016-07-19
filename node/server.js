@@ -49,8 +49,17 @@ function push($filename) {
  */
 var sai280 = io.of('/sai280');
 
-sai280.on('hstpl_demanda', function (data) {
-    push(HSTPL_SAI280);
+// Detecta cuando alguien se conecta
+sai280.on('connection', function (socket) {
+    console.log('conectado');
+
+    socket.on('hstpl_demanda', function (data) {
+        push(HSTPL_SAI280);
+    });
+
+    socket.on('disconnect', function () {
+        console.log('desconectado');
+    });
 });
 
 
