@@ -71,10 +71,9 @@ var sai280 = io.of('/sai280');
 
 // Detecta cuando alguien se conecta
 sai280.on('connection', function (socket) {
-  //console.log('conectado');
+  console.log('conectado');
 
   socket.on('disconnect', function () {
-    delete socket.namespace.sockets[this.id];
     //console.log('desconectado');
   });
 });
