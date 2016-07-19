@@ -57,10 +57,10 @@ function recargarHstpl(hstpl){
 
     //console.log(websocket_connection);
 
+    hstpl.showLoading('Cargando datos del servidor...');
+
     $.getJSON("http://"+websocket_connection+"/hstpl", function( data ) {
-
-        hstpl.showLoading('Cargando datos del servidor...');
-
+        
         var anemometro_data = new Array();
         var aparejo_data    = new Array();
         var llave_data      = new Array();
