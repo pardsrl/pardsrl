@@ -1,8 +1,29 @@
-var trpl;
 
-function cargarDatosTrPl() {
+function cargarDatosTrPl(event) {
+
+    var trpl = event.target;
 
     socket.on('trpl', function (data) {
+
+
+        var data = data.split("\n");
+
+        var dataset = Array();
+
+        for (key in data) {
+
+            var puntos = data[key].split(" ");
+
+            for(p in puntos){
+                puntos[p] = Number(puntos[p]);
+            }
+
+            dataset.push(puntos);
+        }
+
+        dataset.pop();
+
+        data = dataset;
 
         for (clave in data) {
 
@@ -35,86 +56,241 @@ function cargarDatosTrPl() {
 
 }
 
+function cargarDatosHstpl(event){
+
+    var hstpl = event.target;
+
+    var anemometro_serie = hstpl.series[0];
+    var aparejo_serie = hstpl.series[1];
+    var llave_serie = hstpl.series[2];
+    var boca_pozo_serie = hstpl.series[3];
+
+
+    socket.emit('hstpl_demanda');
+
+    socket.on('hstpl', function (data) {
+
+
+        hstpl.showLoading('Cargando datos del servidor...');
+
+        var data = JSON.parse(data);
+
+        var anemometro_data = new Array();
+        var aparejo_data = new Array();
+        var llave_data = new Array();
+        var boca_pozo_data = new Array();
+
+        data.forEach(function(item, index, ar){
+
+            anemometro_data.push([Number(item.t)*1000,Number(item.anem)]);
+            aparejo_data.push([Number(item.t)*1000,Number(item.hta)]);
+            llave_data.push([Number(item.t)*1000,Number(item.llave)]);
+            boca_pozo_data.push([Number(item.t)*1000,Number(item.bpozo)]);
+
+        });
+
+        anemometro_serie.setData(anemometro_data,false,false,true);
+        aparejo_serie.setData(aparejo_data,false,false,true);
+        llave_serie.setData(llave_data,false,false,true);
+        boca_pozo_serie.setData(boca_pozo_data,false,false,true);
+
+        hstpl.redraw();
+        hstpl.hideLoading();
+        
+
+    });
+}
 
 $(document).ready(function(){
 
-    $('#historico').highcharts({
+    {#$('#hstpl').highcharts({#}
+        {#chart: {#}
+            {#zoomType: 'xy',#}
+            {#animation: false,#}
+            {#events: {#}
+                {#load: cargarDatosHstpl#}
+            {#}#}
+        {#},#}
+        {#plotOptions: {#}
+            {#series: {#}
+                {#turboThreshold: 10000000,#}
+                {#lineWidth: 1,#}
+                {#states: {#}
+                    {#hover:{#}
+                        {#lineWidth: 1,#}
+                    {#},#}
+                {#},#}
+                {#marker: {#}
+                    {#enabled: false#}
+                {#}#}
+            {#}#}
+        {#},#}
+        {#title: {#}
+            {#text: ''#}
+        {#},#}
+        {#subtitle: {#}
+            {#text: ''#}
+        {#},#}
+        {#credits: {#}
+            {#enabled: false#}
+        {#},#}
+        {#xAxis: [{#}
+            {#crosshair: true,#}
+            {#labels: {#}
+                {#rotation: -45#}
+            {#},#}
+{#//                    tickPixelInterval: 150,#}
+{#//                    maxZoom: 20 * 1000,#}
+            {#type: 'datetime',#}
+            {#dateTimeLabelFormats: {#}
+                {#millisecond: '%H:%M:%S',#}
+            {#}#}
+
+        {#}],#}
+        {#yAxis: [#}
+            {#{ // Secondary yAxis#}
+                {#gridLineWidth: 0,#}
+                {#title: {#}
+                    {#text: 'Anemómetro (km/h)',#}
+                    {#style: {#}
+                        {#color: '#D8D8D8'#}
+                    {#}#}
+                {#},#}
+                {#labels: {#}
+                    {#format: '{value}',#}
+                    {#style: {#}
+                        {#color: '#D8D8D8'#}
+                    {#}#}
+                {#}#}
+
+            {#}, { // Primary yAxis#}
+                {#labels: {#}
+                    {#format: '{value}',#}
+                    {#style: {#}
+                        {#color: Highcharts.getOptions().colors[1]#}
+                    {#}#}
+                {#},#}
+                {#title: {#}
+                    {#text: 'Aparejo (klb)',#}
+                    {#style: {#}
+                        {#color: Highcharts.getOptions().colors[1]#}
+                    {#}#}
+                {#}#}
+
+            {#}, { // Tertiary yAxis#}
+                {#gridLineWidth: 0,#}
+                {#title: {#}
+                    {#text: 'Presión (psi)',#}
+                    {#style: {#}
+                        {#color: Highcharts.getOptions().colors[0]#}
+                    {#}#}
+                {#},#}
+                {#labels: {#}
+                    {#format: '{value}',#}
+                    {#style: {#}
+                        {#color: Highcharts.getOptions().colors[0]#}
+                    {#}#}
+                {#},#}
+                {#opposite: true#}
+            {#}#}
+        {#],#}
+        {#tooltip: {#}
+            {#shared: true#}
+        {#},#}
+        {#/*legend: {#}
+         {#layout: 'vertical',#}
+         {#align: 'left',#}
+         {#x: 80,#}
+         {#verticalAlign: 'top',#}
+         {#y: 0,#}
+         {#floating: true,#}
+         {#backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'#}
+         {#},*/#}
+        {#series: [#}
+            {#{#}
+                {#name: 'Anemómetro',#}
+                {#type: 'spline',#}
+                {#dashStyle: 'Dot',#}
+                {#color: '#D8D8D8',#}
+                {#lineWidth: 1,#}
+                {#yAxis: 0,#}
+                {#//data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],#}
+                {#tooltip: {#}
+                    {#valueSuffix: ' km/h'#}
+                {#}#}
+            {#}, {#}
+                {#name: 'Aparejo',#}
+                {#type: 'spline',#}
+                {#color: Highcharts.getOptions().colors[1],#}
+                {#lineWidth: 1,#}
+                {#yAxis: 1,#}
+                {#//data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],#}
+                {#tooltip: {#}
+                    {#valueSuffix: ' klb'#}
+                {#}#}
+            {#}, {#}
+
+                {#name: 'Llave',#}
+                {#type: 'spline',#}
+                {#yAxis: 2,#}
+                {#//data: [1416, 1216, 915.9, 1015.5, 812.3, 1309.5, 1109.6, 1910.2, 1013.1, 1616.9, 1218.2, 1016.7],#}
+                {#marker: {#}
+                    {#enabled: false#}
+                {#},#}
+                {#color: Highcharts.getOptions().colors[2],#}
+                {#lineWidth: 1,#}
+                {#dashStyle: 'spline',#}
+                {#tooltip: {#}
+                    {#valueSuffix: ' psi'#}
+                {#}#}
+
+            {#}, {#}
+                {#name: 'Boca Pozo',#}
+                {#type: 'spline',#}
+                {#yAxis: 2,#}
+                {#//data: [1400.0, 1000.9, 1900.5, 1750.5, 1800.2, 900.5, 784.2, 1260.5, 1736.3, 1000.3, 1350.9, 920.6],#}
+                {#tooltip: {#}
+                    {#valueSuffix: ' psi'#}
+                {#}#}
+            {#}#}
+        {#]#}
+    {#});#}
+
+
+    $('#hstpl').highcharts('StockChart', {
+
         chart: {
-            zoomType: 'xy'
+            events: {
+                load: cargarDatosHstpl
+            }
         },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
+
+        rangeSelector: {
+            selected: 2,
+            allButtonsEnabled: true,
+            buttons: [
+                {
+                    type: 'second',
+                    count: 30,
+                    text: 'sec'
+                },{
+                    type: 'minute',
+                    count: 10,
+                    text: 'min'
+                },{
+                    type: 'day',
+                    count: 1,
+                    text: 'día'
+                },{
+                    type: 'day',
+                    count: 5,
+                    text: '5d'
+                }
+            ]
         },
         credits: {
             enabled: false
         },
-        xAxis: [{
-//                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-//                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crosshair: true
-        }],
-        yAxis: [
-            { // Secondary yAxis
-                gridLineWidth: 0,
-                title: {
-                    text: 'Anemómetro (km/h)',
-                    style: {
-                        color: '#D8D8D8'
-                    }
-                },
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: '#D8D8D8'
-                    }
-                }
-
-            }, { // Primary yAxis
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                },
-                title: {
-                    text: 'Aparejo (klb)',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-
-            }, { // Tertiary yAxis
-                gridLineWidth: 0,
-                title: {
-                    text: 'Presión (psi)',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                opposite: true
-            }
-        ],
-        tooltip: {
-            shared: true
-        },
-        /*legend: {
-         layout: 'vertical',
-         align: 'left',
-         x: 80,
-         verticalAlign: 'top',
-         y: 0,
-         floating: true,
-         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-         },*/
         series: [
             {
                 name: 'Anemómetro',
@@ -122,27 +298,23 @@ $(document).ready(function(){
                 dashStyle: 'Dot',
                 color: '#D8D8D8',
                 lineWidth: 1,
-                yAxis: 0,
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
                 tooltip: {
-                    valueSuffix: ' km/h'
+                    valueSuffix: ' km/h',
+                    valueDecimals: 2
                 }
             }, {
                 name: 'Aparejo',
                 type: 'spline',
                 color: Highcharts.getOptions().colors[1],
                 lineWidth: 1,
-                yAxis: 1,
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],
                 tooltip: {
-                    valueSuffix: ' klb'
+                    valueSuffix: ' klb',
+                    valueDecimals: 2
                 }
             }, {
 
                 name: 'Llave',
                 type: 'spline',
-                yAxis: 2,
-                data: [1416, 1216, 915.9, 1015.5, 812.3, 1309.5, 1109.6, 1910.2, 1013.1, 1616.9, 1218.2, 1016.7],
                 marker: {
                     enabled: false
                 },
@@ -150,25 +322,25 @@ $(document).ready(function(){
                 lineWidth: 1,
                 dashStyle: 'spline',
                 tooltip: {
-                    valueSuffix: ' psi'
+                    valueSuffix: ' psi',
+                    valueDecimals: 2
                 }
 
             }, {
                 name: 'Boca Pozo',
                 type: 'spline',
-                yAxis: 2,
-                data: [1400.0, 1000.9, 1900.5, 1750.5, 1800.2, 900.5, 784.2, 1260.5, 1736.3, 1000.3, 1350.9, 920.6],
                 tooltip: {
-                    valueSuffix: ' psi'
+                    valueSuffix: ' psi',
+                    valueDecimals: 2
                 }
             }
         ]
     });
 
-    trpl = new Highcharts.Chart({
+    $('#trpl').highcharts({
         chart: {
             zoomType: 'xy',
-            renderTo: 'trpl',
+            //renderTo: 'trpl',
             animation: false,
             events: {
                 load: cargarDatosTrPl
