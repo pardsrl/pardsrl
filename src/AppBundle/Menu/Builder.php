@@ -49,7 +49,7 @@ class Builder implements ContainerAwareInterface
             foreach ($misEquipos as $equipo) {
 
                 $menu->addChild(
-                    $equipo->getNombre(),
+                    strtoupper($equipo->getNombreCompleto()),
                     array(
                         'childrenAttributes' => array(
                             'class' => 'treeview-menu',
@@ -60,12 +60,12 @@ class Builder implements ContainerAwareInterface
                     ->setExtra('icon', 'fa fa-circle-o text-aqua')
                     ->setAttribute('class', 'treeview');
 
-                $menu[$equipo->getNombre()]->addChild(
+                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
                     'Estadísticas',
                     array('route' => 'equipo_estadisticas', 'routeParameters' => array('id' => $equipo->getId()))
                 )->setExtra('icon', 'fa fa-bar-chart');
 
-                $menu[$equipo->getNombre()]->addChild(
+                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
                     'Instrumentos',
                     array('route' => 'equipo_instrumentos', 'routeParameters' => array('id' => $equipo->getId()))
                 )->setExtra('icon', 'fa  fa-cogs');
