@@ -5,29 +5,9 @@ function cargarDatosTrPl(event) {
 
     socket.on('trpl', function (data) {
 
+        var data = JSON.parse(data);
 
-        var data = data.split("\n");
-
-        var dataset = Array();
-
-        for (key in data) {
-
-            var puntos = data[key].split(" ");
-
-            for(p in puntos){
-                puntos[p] = Number(puntos[p]);
-            }
-
-            dataset.push(puntos);
-        }
-
-        dataset.pop();
-
-        data = dataset;
-
-        for (clave in data) {
-
-            var puntos = data[clave];
+        data.forEach(function(item, index, ar){
 
             var anemometro_serie = trpl.series[0], shift_anm = anemometro_serie.data.length > 1200;  // shift if the series is longer than 20
             var aparejo_serie = trpl.series[1], shift_apa = aparejo_serie.data.length > 1200;  // shift if the series is longer than 20
@@ -37,17 +17,17 @@ function cargarDatosTrPl(event) {
             //console.log(anemometro_serie.data.length);
 
             //hay que multiplicar por 1000 el unixtimestamp
-            var tiempo = puntos[0] * 1000;
-            var anemometro = puntos[1];
-            var aparejo = puntos[2];
-            var llave = puntos[3];
-            var boca_pozo = puntos[4];
+            var tiempo     = Number(item.t) * 1000;
+            var anemometro = Number(item.anem);
+            var aparejo    = Number(item.hta);
+            var llave      = Number(item.llave);
+            var boca_pozo  = Number(item.bpozo);
 
             anemometro_serie.addPoint([tiempo, anemometro], false, shift_anm);
             aparejo_serie.addPoint([tiempo, aparejo], false, shift_apa);
             llave_serie.addPoint([tiempo, llave], false, shift_llave);
             boca_pozo_serie.addPoint([tiempo, boca_pozo], false, shift_bp);
-        }
+        });
 
 
         trpl.redraw();
@@ -60,25 +40,31 @@ function cargarDatosHstpl(event){
 
     var hstpl = event.target;
 
+    recargarHstpl(hstpl);
+
+    //consfiguro para que se recargue cada 5 minutos.
+    setInterval(function() { recargarHstpl(hstpl); },300000);
+
+}
+
+
+function recargarHstpl(hstpl){
+
     var anemometro_serie = hstpl.series[0];
-    var aparejo_serie = hstpl.series[1];
-    var llave_serie = hstpl.series[2];
-    var boca_pozo_serie = hstpl.series[3];
+    var aparejo_serie    = hstpl.series[1];
+    var llave_serie      = hstpl.series[2];
+    var boca_pozo_serie  = hstpl.series[3];
 
+    //console.log(websocket_connection);
 
-    socket.emit('hstpl_demanda');
-
-    socket.on('hstpl', function (data) {
-
+    $.getJSON("http://"+websocket_connection+"/hstpl", function( data ) {
 
         hstpl.showLoading('Cargando datos del servidor...');
 
-        var data = JSON.parse(data);
-
         var anemometro_data = new Array();
-        var aparejo_data = new Array();
-        var llave_data = new Array();
-        var boca_pozo_data = new Array();
+        var aparejo_data    = new Array();
+        var llave_data      = new Array();
+        var boca_pozo_data  = new Array();
 
         data.forEach(function(item, index, ar){
 
@@ -96,165 +82,12 @@ function cargarDatosHstpl(event){
 
         hstpl.redraw();
         hstpl.hideLoading();
-        
 
     });
 }
 
+
 $(document).ready(function(){
-
-    {#$('#hstpl').highcharts({#}
-        {#chart: {#}
-            {#zoomType: 'xy',#}
-            {#animation: false,#}
-            {#events: {#}
-                {#load: cargarDatosHstpl#}
-            {#}#}
-        {#},#}
-        {#plotOptions: {#}
-            {#series: {#}
-                {#turboThreshold: 10000000,#}
-                {#lineWidth: 1,#}
-                {#states: {#}
-                    {#hover:{#}
-                        {#lineWidth: 1,#}
-                    {#},#}
-                {#},#}
-                {#marker: {#}
-                    {#enabled: false#}
-                {#}#}
-            {#}#}
-        {#},#}
-        {#title: {#}
-            {#text: ''#}
-        {#},#}
-        {#subtitle: {#}
-            {#text: ''#}
-        {#},#}
-        {#credits: {#}
-            {#enabled: false#}
-        {#},#}
-        {#xAxis: [{#}
-            {#crosshair: true,#}
-            {#labels: {#}
-                {#rotation: -45#}
-            {#},#}
-{#//                    tickPixelInterval: 150,#}
-{#//                    maxZoom: 20 * 1000,#}
-            {#type: 'datetime',#}
-            {#dateTimeLabelFormats: {#}
-                {#millisecond: '%H:%M:%S',#}
-            {#}#}
-
-        {#}],#}
-        {#yAxis: [#}
-            {#{ // Secondary yAxis#}
-                {#gridLineWidth: 0,#}
-                {#title: {#}
-                    {#text: 'Anemómetro (km/h)',#}
-                    {#style: {#}
-                        {#color: '#D8D8D8'#}
-                    {#}#}
-                {#},#}
-                {#labels: {#}
-                    {#format: '{value}',#}
-                    {#style: {#}
-                        {#color: '#D8D8D8'#}
-                    {#}#}
-                {#}#}
-
-            {#}, { // Primary yAxis#}
-                {#labels: {#}
-                    {#format: '{value}',#}
-                    {#style: {#}
-                        {#color: Highcharts.getOptions().colors[1]#}
-                    {#}#}
-                {#},#}
-                {#title: {#}
-                    {#text: 'Aparejo (klb)',#}
-                    {#style: {#}
-                        {#color: Highcharts.getOptions().colors[1]#}
-                    {#}#}
-                {#}#}
-
-            {#}, { // Tertiary yAxis#}
-                {#gridLineWidth: 0,#}
-                {#title: {#}
-                    {#text: 'Presión (psi)',#}
-                    {#style: {#}
-                        {#color: Highcharts.getOptions().colors[0]#}
-                    {#}#}
-                {#},#}
-                {#labels: {#}
-                    {#format: '{value}',#}
-                    {#style: {#}
-                        {#color: Highcharts.getOptions().colors[0]#}
-                    {#}#}
-                {#},#}
-                {#opposite: true#}
-            {#}#}
-        {#],#}
-        {#tooltip: {#}
-            {#shared: true#}
-        {#},#}
-        {#/*legend: {#}
-         {#layout: 'vertical',#}
-         {#align: 'left',#}
-         {#x: 80,#}
-         {#verticalAlign: 'top',#}
-         {#y: 0,#}
-         {#floating: true,#}
-         {#backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'#}
-         {#},*/#}
-        {#series: [#}
-            {#{#}
-                {#name: 'Anemómetro',#}
-                {#type: 'spline',#}
-                {#dashStyle: 'Dot',#}
-                {#color: '#D8D8D8',#}
-                {#lineWidth: 1,#}
-                {#yAxis: 0,#}
-                {#//data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],#}
-                {#tooltip: {#}
-                    {#valueSuffix: ' km/h'#}
-                {#}#}
-            {#}, {#}
-                {#name: 'Aparejo',#}
-                {#type: 'spline',#}
-                {#color: Highcharts.getOptions().colors[1],#}
-                {#lineWidth: 1,#}
-                {#yAxis: 1,#}
-                {#//data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 50, 13.9, 9.6],#}
-                {#tooltip: {#}
-                    {#valueSuffix: ' klb'#}
-                {#}#}
-            {#}, {#}
-
-                {#name: 'Llave',#}
-                {#type: 'spline',#}
-                {#yAxis: 2,#}
-                {#//data: [1416, 1216, 915.9, 1015.5, 812.3, 1309.5, 1109.6, 1910.2, 1013.1, 1616.9, 1218.2, 1016.7],#}
-                {#marker: {#}
-                    {#enabled: false#}
-                {#},#}
-                {#color: Highcharts.getOptions().colors[2],#}
-                {#lineWidth: 1,#}
-                {#dashStyle: 'spline',#}
-                {#tooltip: {#}
-                    {#valueSuffix: ' psi'#}
-                {#}#}
-
-            {#}, {#}
-                {#name: 'Boca Pozo',#}
-                {#type: 'spline',#}
-                {#yAxis: 2,#}
-                {#//data: [1400.0, 1000.9, 1900.5, 1750.5, 1800.2, 900.5, 784.2, 1260.5, 1736.3, 1000.3, 1350.9, 920.6],#}
-                {#tooltip: {#}
-                    {#valueSuffix: ' psi'#}
-                {#}#}
-            {#}#}
-        {#]#}
-    {#});#}
 
 
     $('#hstpl').highcharts('StockChart', {
@@ -340,7 +173,6 @@ $(document).ready(function(){
     $('#trpl').highcharts({
         chart: {
             zoomType: 'xy',
-            //renderTo: 'trpl',
             animation: false,
             events: {
                 load: cargarDatosTrPl

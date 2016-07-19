@@ -47,14 +47,14 @@ $(document).ready(function () {
 
     var server = $.LiveData.server;
 
-    var websocket_connection = server.getWsNotifications();
+    {#var websocket_connection = server.getWsNotifications();#}
 
-    var not = io(websocket_connection);
+    {#var not = io(websocket_connection);#}
 
-    not.on('sistema',function(data){
-        console.log('sistema');
-        console.log(data);
-    });
+    {#not.on('sistema',function(data){#}
+        {#console.log('sistema');#}
+        {#console.log(data);#}
+    {#});#}
 
     {#not.on('grupal_{{ equipo.id }}',function(data){#}
         {#console.log('equipo');#}
