@@ -1,0 +1,22 @@
+{
+  "name": "rt",
+  "version": "0.0.0",
+  "description": "Servidor Express para la generacion de datos en tiempo real y rest.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "real",
+    "time",
+    "rest",
+    "websocket",
+    "node",
+    "espress"
+  ],
+  "author": "Santiago Semhan",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.14.0"
+  }
+}
