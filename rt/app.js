@@ -7,19 +7,68 @@ var io     = require('socket.io')(server);
 var watch  = require('node-watch');
 var fs     = require('fs');
 
-const TRPL_SAI280   = '/srv/data/trpl.sai280';
-const TRMAN_SAI280  = '/srv/data/trman.sai280';
-const HSTPL_SAI280  = '/srv/data/hstpl.sai280';
-const HSTMAN_SAI280 = '/srv/data/hstman.sai280';
 
-const WATCH_FILES = [TRPL_SAI280,TRMAN_SAI280];
 
+const BASE_ARCHIVOS = '/srv/data/';
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+
+/**
+ * Controlador que retorna los puntos de los historicos
+ *
+ * @param equipo El equipo que se desea obtener la grafica
+ * @param grafica El tipo de grafica que se busca
+ *
+ */
+app.get('/:equipo/:grafica', function (req, res) {
+
+  var equipo  = req.params.equipo;
+  var grafica = req.params.grafica;
+
+  var archivo = BASE_ARCHIVOS+grafica+'.'+equipo;
+
+  fs.readFile(archivo, 'utf8', function(err, data) {
+    if( err ){
+      console.log(err)
+    }
+    else{
+      res.send(data);
+    }
+  });
+
+});
+
+/**
+ * WEBSOCKETS - TIEMPO REAL
+ */
+
+const TRPL_SAI280   = '/srv/data/trpl.sai280';
+const TRMAN_SAI280  = '/srv/data/trman.sai280';
+const TRPL_WTI15   = '/srv/data/trman.wti15';
+const TRMAN_WTI15   = '/srv/data/trman.wti15';
+
+const WATCH_FILES = [TRPL_SAI280,TRMAN_SAI280,TRPL_WTI15,TRMAN_WTI15];
+
+var sai280 = io.of('/sai280');
+var wti15  = io.of('/wti15');
+
+
+try{
+  watch(WATCH_FILES, function(filename) {
+    //console.log(filename, ' changed.');
+    push(filename);
+  });
+
+} catch (err) {
+  // handle the error safely
+  console.log(err)
+}
+
 
 function push($filename) {
 
@@ -40,6 +89,16 @@ function push($filename) {
         sai280.emit('trman', data);
         break;
 
+      case TRPL_WTI15:
+        // Emite un evento al socket del tipo csvOutput
+        wti15.emit('trpl', data);
+        break;
+
+      case TRMAN_WTI15:
+        // Emite un evento al socket del tipo csvOutput
+        wti15.emit('trman', data);
+        break;
+
       default:
 
     }
@@ -48,48 +107,6 @@ function push($filename) {
 
 }
 
-
-app.get('/sai280/hstpl', function (req, res) {
-
-  fs.readFile(HSTPL_SAI280, 'utf8', function(err, data) {
-    if( err ){
-      console.log(err)
-    }
-    else{
-      res.send(data);
-    }
-  });
-
-});
-
-
-
-/**
- * SAI 280
- */
-var sai280 = io.of('/sai280');
-
-// Detecta cuando alguien se conecta
-sai280.on('connection', function (socket) {
-  console.log('conectado');
-
-  socket.on('disconnect', function () {
-    //console.log('desconectado');
-  });
-});
-
-
-try{
-  watch(WATCH_FILES, function(filename) {
-    //console.log(filename, ' changed.');
-    push(filename);
-  });
-
-} catch (err) {
-  // handle the error safely
-  console.log(err)
-}
-
 server.listen(5140, function () {
-  console.log('Example app listening on port 5140!');
+  console.log('Servidor escuchando en puerto 5140!');
 });
