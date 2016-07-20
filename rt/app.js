@@ -1,12 +1,12 @@
 //var express = require('express');
 //var app = express();
 
-var app    = require('express')();
-var server = require('http').Server(app);
-var io     = require('socket.io')(server);
-var watch  = require('node-watch');
-var fs     = require('fs');
-
+var app         = require('express')();
+var server      = require('http').Server(app);
+var io          = require('socket.io')(server);
+var watch       = require('node-watch');
+var fs          = require('fs');
+var compression = require('compression')
 
 
 const BASE_ARCHIVOS = '/srv/data/';
@@ -16,6 +16,9 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+// comprimir las respuestas
+app.use(compression());
 
 
 /**
@@ -33,11 +36,20 @@ app.get('/:equipo/:grafica', function (req, res) {
   var archivo = BASE_ARCHIVOS+grafica+'.'+equipo;
 
   fs.readFile(archivo, 'utf8', function(err, data) {
+
+    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('Cache-Control', 'no-cache');
+
     if( err ){
       console.log(err)
     }
     else{
-      res.send(data);
+      res.write(data);
+
+      // !!! this is the important part
+      res.flush()
+
+      res.end();
     }
   });
 
