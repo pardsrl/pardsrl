@@ -4,46 +4,51 @@ function cargarDatosTrMan(){
 
     socket.on('trman', function (data) {
 
-        var data = JSON.parse(data);
+        try{
+            var data = JSON.parse(data);
 
-        data.forEach(function(item, index, ar){
+            data.forEach(function(item, index, ar){
 
-            //console.log(item);
+                //console.log(item);
 
-            var vb_serie            = trman.series[0], shift_vb         = vb_serie.data.length > 1200;
-            var prb_pozo_serie      = trman.series[1], shift_prb_pozo   = prb_pozo_serie.data.length > 1200;
-            var viento_serie        = trman.series[2], shift_viento     = viento_serie.data.length > 1200;
-            var ajuste_def_serie    = trman.series[3], shift_ajuste_def = ajuste_def_serie.data.length > 1200;
-            var ajuste_exc_serie    = trman.series[4], shift_ajuste_exc = ajuste_exc_serie.data.length > 1200;
-            var tension_serie       = trman.series[5], shift_tension    = tension_serie.data.length > 1200;
-            var prb_elev_serie      = trman.series[6], shift_prb_elev   = prb_elev_serie.data.length > 1200;
+                var vb_serie            = trman.series[0], shift_vb         = vb_serie.data.length > 1200;
+                var prb_pozo_serie      = trman.series[1], shift_prb_pozo   = prb_pozo_serie.data.length > 1200;
+                var viento_serie        = trman.series[2], shift_viento     = viento_serie.data.length > 1200;
+                var ajuste_def_serie    = trman.series[3], shift_ajuste_def = ajuste_def_serie.data.length > 1200;
+                var ajuste_exc_serie    = trman.series[4], shift_ajuste_exc = ajuste_exc_serie.data.length > 1200;
+                var tension_serie       = trman.series[5], shift_tension    = tension_serie.data.length > 1200;
+                var prb_elev_serie      = trman.series[6], shift_prb_elev   = prb_elev_serie.data.length > 1200;
 
-            //console.log(anemometro_serie.data.length);
+                //console.log(anemometro_serie.data.length);
 
-            //hay que multiplicar por 1000 el unixtimestamp
-            var tiempo     = Number(item.t)*1000;
-            {#var vb         = Number(item.);#}
-            {#var prb_pozo   = Number(item.);#}
-            {#var viento     = Number(item.);#}
-            {#var ajuste_def = Number(item.);#}
-            {#var ajuste_exc = Number(item.);#}
-            {#var tension    = Number(item.);#}
-            {#var prb_elev   = Number(item.);#}
+                //hay que multiplicar por 1000 el unixtimestamp
+                var tiempo     = Number(item.t)*1000;
+                var vb         = Number(item.mtv);
+                var prb_pozo   = Number(item.pbp);
+                var viento     = Number(item.vto);
+                var ajuste_def = Number(item.adef);
+                var ajuste_exc = Number(item.aexe);
+                var tension    = Number(item.tmay);
+                //var prb_elev   = Number(item.);
 
 
-            {#vb_serie.addPoint([tiempo,vb],false,shift_vb);#}
-            {#prb_pozo_serie.addPoint([tiempo,prb_pozo],false,shift_prb_pozo);#}
-            {#viento_serie.addPoint([tiempo,viento],false,shift_viento);#}
-            {#ajuste_def_serie.addPoint([tiempo,ajuste_def],false,shift_ajuste_def);#}
-            {#ajuste_exc_serie.addPoint([tiempo,ajuste_exc],false,shift_ajuste_exc);#}
-            {#tension_serie.addPoint([tiempo,tension],false,shift_tension);#}
-            {#prb_elev_serie.addPoint([tiempo,prb_elev],false,shift_prb_elev);#}
+                vb_serie.addPoint([tiempo,vb],false,shift_vb);
+                prb_pozo_serie.addPoint([tiempo,prb_pozo],false,shift_prb_pozo);
+                viento_serie.addPoint([tiempo,viento],false,shift_viento);
+                ajuste_def_serie.addPoint([tiempo,ajuste_def],false,shift_ajuste_def);
+                ajuste_exc_serie.addPoint([tiempo,ajuste_exc],false,shift_ajuste_exc);
+                tension_serie.addPoint([tiempo,tension],false,shift_tension);
+                //prb_elev_serie.addPoint([tiempo,prb_elev],false,shift_prb_elev);
 
-        });
+            });
 
-        trman.redraw();
+            trman.redraw();
+
+    }catch(e){
+        console.log(e.name);
+    }
+    
     });
-
 }
 
 
