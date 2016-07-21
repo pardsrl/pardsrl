@@ -22,13 +22,13 @@ function cargarDatosTrMan(){
                 //console.log(anemometro_serie.data.length);
 
                 //hay que multiplicar por 1000 el unixtimestamp
-                var tiempo     = Number(item.t)*1000;
-                var vb         = Number(item.mtv);
-                var prb_pozo   = Number(item.pbp);
-                var viento     = Number(item.vto);
-                var ajuste_def = Number(item.adef);
-                var ajuste_exc = Number(item.aexe);
-                var tension    = Number(item.tmay);
+                var tiempo     = item.t*100;
+                var vb         = item.mtv;
+                var prb_pozo   = item.pbp;
+                var viento     = item.vto;
+                var ajuste_def = item.adef;
+                var ajuste_exc = item.aexe;
+                var tension    = item.tmay;
                 //var prb_elev   = Number(item.);
 
 

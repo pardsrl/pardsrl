@@ -439,11 +439,13 @@
 
                 data.forEach(function(item, index, ar){
 
-                    var aparejo = item.hta.toString().split(".");
+                    //var aparejo = item.hta.toString().split(".");
 
-                    $('#aparejo').highcharts().series[0].points[0].update(Number(aparejo[0]));
+                    //console.log(item.hta);
 
-                    $('#aparejo').highcharts().series[1].points[0].update(Number(aparejo[1])*10);
+                    $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
+
+                    $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
 
                     //anemometro
                     $('#anemometro').highcharts().series[0].points[0].update(item.anem);
