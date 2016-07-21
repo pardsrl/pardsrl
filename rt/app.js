@@ -61,7 +61,7 @@ app.get('/:equipo/:grafica', function (req, res) {
 
 const TRPL_SAI280   = '/srv/data/trpl.sai280';
 const TRMAN_SAI280  = '/srv/data/trman.sai280';
-const TRPL_WTI15   = '/srv/data/trman.wti15';
+const TRPL_WTI15    = '/srv/data/trpl.wti15';
 const TRMAN_WTI15   = '/srv/data/trman.wti15';
 
 const WATCH_FILES = [TRPL_SAI280,TRMAN_SAI280,TRPL_WTI15,TRMAN_WTI15];
