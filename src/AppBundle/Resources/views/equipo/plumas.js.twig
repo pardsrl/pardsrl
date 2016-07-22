@@ -66,33 +66,31 @@ function recargarHstpl(hstpl){
 
     $.getJSON("http://"+websocket_connection+"/hstpl", function( data ) {
 
-        var anemometro_data = [];
-        var aparejo_data    = [];
-        var llave_data      = [];
-        var boca_pozo_data  = [];
+        {#var anemometro_data = [];#}
+        {#var aparejo_data    = [];#}
+        {#var llave_data      = [];#}
+        {#var boca_pozo_data  = [];#}
 
-        console.log('asd');
+        {#console.log(data);#}
 
-        console.log(data);
+        {#data.forEach(function(item, index, ar){#}
 
-        data.forEach(function(item, index, ar){
+            {#anemometro_data.push([item.t*1000,item.anem]);#}
+            {#aparejo_data.push([item.t*1000,item.hta]);#}
+            {#llave_data.push([item.t*1000,item.llave]);#}
+            {#boca_pozo_data.push([item.t*1000,item.bpozo]);#}
 
-            anemometro_data.push([item.t*1000,item.anem]);
-            aparejo_data.push([item.t*1000,item.hta]);
-            llave_data.push([item.t*1000,item.llave]);
-            boca_pozo_data.push([item.t*1000,item.bpozo]);
+        {#});#}
 
-        });
+        anemometro_serie.setData(data.datos.anem,false,false,true);
+        aparejo_serie.setData(data.datos.hta,false,false,true);
+        llave_serie.setData(data.datos.llave,false,false,true);
+        boca_pozo_serie.setData(data.datos.bpozo,false,false,true);
 
-        anemometro_serie.setData(anemometro_data,false,false,true);
-        aparejo_serie.setData(aparejo_data,false,false,true);
-        llave_serie.setData(llave_data,false,false,true);
-        boca_pozo_serie.setData(boca_pozo_data,false,false,true);
-
-        anemometro_data = null;
-        aparejo_data    = null;
-        llave_data      = null;
-        boca_pozo_data  = null;
+        {#anemometro_data = null;#}
+        {#aparejo_data    = null;#}
+        {#llave_data      = null;#}
+        {#boca_pozo_data  = null;#}
 
         hstpl.redraw();
         hstpl.hideLoading();
