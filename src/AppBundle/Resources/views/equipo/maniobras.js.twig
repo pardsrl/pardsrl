@@ -22,7 +22,7 @@ function cargarDatosTrMan(){
                 //console.log(anemometro_serie.data.length);
 
                 //hay que multiplicar por 1000 el unixtimestamp
-                var tiempo     = item.t*100;
+                var tiempo     = item.t;
                 var vb         = item.mtv;
                 var prb_pozo   = item.pbp;
                 var viento     = item.vto;
@@ -47,7 +47,7 @@ function cargarDatosTrMan(){
     }catch(e){
         console.log(e.name);
     }
-    
+
     });
 }
 
