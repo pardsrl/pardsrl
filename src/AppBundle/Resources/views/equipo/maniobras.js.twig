@@ -5,6 +5,9 @@ function cargarDatosTrMan(){
     socket.on('trman', function (data) {
 
         try{
+
+            if(data == undefined || data == '') return false;
+
             var data = JSON.parse(data);
 
             data.forEach(function(item, index, ar){

@@ -6,6 +6,8 @@ function cargarDatosTrPl(event) {
     socket.on('trpl', function (data) {
 
         try{
+            if(data == undefined || data == '') return false;
+
             var data = JSON.parse(data);
 
             data.forEach(function(item, index, ar){
@@ -92,7 +94,6 @@ function recargarHstpl(hstpl){
 
         hstpl.redraw();
         hstpl.hideLoading();
-
 
     });
 }
@@ -224,7 +225,6 @@ $(document).ready(function(){
             dateTimeLabelFormats: {
                 millisecond: '%H:%M:%S',
             }
-
         }],
         yAxis: [
             { // Secondary yAxis
