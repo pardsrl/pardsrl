@@ -22,7 +22,18 @@
                             </div>
                         </div>
                     </div>
-                    {{ form_row(form.equipo) }}
+                    {% set equipoClass = "" %}
+
+                    {% if form.equipoDesc is defined %}
+                        {% set equipoClass =  "hidden" %}
+                        {{ form_row(form.equipoDesc) }}
+                    {% endif %}
+
+                    <div class="{{ equipoClass }}">
+                        {{ form_row(form.equipo) }}
+                    </div>
+
+
                     <div class="box-footer">
                         <input class="btn btn-primary" type="submit" value="Nueva Intervención"/>
                         <a class="btn btn-default" href="{{ path('pozo_index') }}"> Volver al Listado de pozos</a>

@@ -2,11 +2,14 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IntervencionType extends AbstractType
@@ -35,6 +38,30 @@ class IntervencionType extends AbstractType
             ))
             ->add('equipo')
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $intervencion = $event->getData();
+
+            $form = $event->getForm();
+
+            // chequeo si la intervencion es un cierre
+            if ( $intervencion->getAccion() == 1) {
+
+                //Obtengo el equipo al cual se le realizó la última intervención.
+                $equipoUltimaIntervencion = $intervencion->getPozo()->getUltimaIntervencion()->getEquipo();
+
+                $form->add('equipo',EntityType::class,array(
+                    'class' => 'AppBundle\Entity\Equipo',
+                    'data' => $equipoUltimaIntervencion
+                ))
+                ->add('equipoDesc', TextType::class,array(
+                    'label'    => 'Equipo',
+                    'disabled' => true,
+                    'mapped'   => false,
+                    'data'     => $equipoUltimaIntervencion->getNombreCompleto()
+                ));
+            }
+        });
     }
 
     /**
