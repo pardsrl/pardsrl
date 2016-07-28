@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EstadisticasTemporales
  *
- * @ORM\Table(name="estadisticas_temporales")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EstadisticasTemporalesRepository")
+ * @ORM\Table(name="estadistica_temporal")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EstadisticaTemporalRepository")
  */
-class EstadisticasTemporales extends BaseClass
+class EstadisticaTemporal extends BaseClass
 {
     /**
      * @var int

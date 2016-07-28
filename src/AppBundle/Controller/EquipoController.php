@@ -149,15 +149,15 @@ class EquipoController extends Controller
     }
 
     /**
-     * Muestra estadisticas del equipo
+     * Muestra graficas del equipo
      *
      * @param Request $request
      * @param Equipo $equipo
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function estadisticasAction(Request $request, Equipo $equipo){
+    public function graficasAction(Request $request, Equipo $equipo){
 
-        return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
+        return $this->render('AppBundle:equipo:graficas.html.twig', array(
             'equipo'           => $equipo
         ));
     }

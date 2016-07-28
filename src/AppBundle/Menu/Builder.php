@@ -61,13 +61,18 @@ class Builder implements ContainerAwareInterface
                     ->setAttribute('class', 'treeview');
 
                 $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Estadísticas',
-                    array('route' => 'equipo_estadisticas', 'routeParameters' => array('id' => $equipo->getId()))
+                    'Gráficas',
+                    array('route' => 'equipo_graficas', 'routeParameters' => array('id' => $equipo->getId()))
                 )->setExtra('icon', 'fa fa-bar-chart');
 
                 $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
                     'Instrumentos',
-                    array('route' => 'equipo_instrumentos', 'routeParameters' => array('id' => $equipo->getId()))
+                    array('route' => 'equipo_graficas', 'routeParameters' => array('id' => $equipo->getId()))
+                )->setExtra('icon', 'fa  fa-cogs');
+
+                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
+                    'Registra Novedades',
+                    array('route' => 'novedad_nueva', 'routeParameters' => array('id' => $equipo->getId()))
                 )->setExtra('icon', 'fa  fa-cogs');
 
             }

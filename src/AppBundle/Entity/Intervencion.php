@@ -46,7 +46,6 @@ class Intervencion extends BaseClass
      */
     private $equipo;
 
-
     /**
      * @var $pozo
      *
@@ -54,6 +53,17 @@ class Intervencion extends BaseClass
      * @ORM\JoinColumn(name="pozo_id", referencedColumnName="id", nullable=false)
      */
     private $pozo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Novedad", mappedBy="intervencion")
+     */
+    private $novedades;
+
+
+    public function __toString()
+    {
+        return (string) $this->getId();
+    }
 
     /**
      * Get id
@@ -159,5 +169,65 @@ class Intervencion extends BaseClass
     public function getPozo()
     {
         return $this->pozo;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->novedades = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Add novedade
+     *
+     * @param \AppBundle\Entity\Novedad $novedade
+     *
+     * @return Intervencion
+     */
+    public function addNovedad(\AppBundle\Entity\Novedad $novedad)
+    {
+        $this->novedades[] = $novedad;
+
+        return $this;
+    }
+
+    /**
+     * Remove novedade
+     *
+     * @param \AppBundle\Entity\Novedad $novedad
+     */
+    public function removeNovedad(\AppBundle\Entity\Novedad $novedad)
+    {
+        $this->novedades->removeElement($novedad);
+    }
+
+    /**
+     * Get novedades
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNovedades()
+    {
+        return $this->novedades;
+    }
+
+
+    public function esApertura()
+    {
+        if($this->getAccion() == 0 )
+            return true;
+
+        return false;
+    }
+
+
+    public function esCierre()
+    {
+        if($this->getAccion() == 1)
+            return true;
+
+        return false;
     }
 }

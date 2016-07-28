@@ -23,9 +23,9 @@ equipo_delete:
     defaults: { _controller: "AppBundle:Equipo:delete" }
     methods:  DELETE
 
-equipo_estadisticas:
-    path: /{id}/estadisticas
-    defaults: { _controller: "AppBundle:Equipo:estadisticas"}
+equipo_graficas:
+    path: /{id}/graficas
+    defaults: { _controller: "AppBundle:Equipo:graficas"}
     methods: [GET, POST]
 
 equipo_instrumentos:

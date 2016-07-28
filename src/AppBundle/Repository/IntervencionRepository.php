@@ -29,5 +29,28 @@ class IntervencionRepository extends \Doctrine\ORM\EntityRepository
         return $qb;
     }
 
+    public function getUltimasIntervencionesByEquipo($equipo)
+    {
+        $qb = $this->getQb()
+            ->innerJoin('interv.equipo','equipo')
+            ->where('equipo = :equipo')
+            ->orderBy('interv.fecha','DESC')
+            ->orderBy('interv.fechaCreacion','DESC');
+
+        $qb->setParameter('equipo',$equipo);
+
+        return $qb;
+    }
+
+    public function getUltimaIntervencionByEquipo($equipo)
+    {
+
+        $intervencionesQb = $this->getUltimasIntervencionesByEquipo($equipo);
+
+        $intervencionesQb->setMaxResults(1);
+
+        return $intervencionesQb;
+    }
+
 
 }

@@ -70,6 +70,11 @@ class Equipo extends BaseClass
     private $intervenciones;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EstadisticaTemporal", mappedBy="equipo")
+     */
+    private $estadisticas;
+
+    /**
      * Get id
      *
      * @return int
@@ -276,6 +281,40 @@ class Equipo extends BaseClass
     }
 
 
+    /**
+     * Add estadistica
+     *
+     * @param \AppBundle\Entity\EstadisticaTemporal $estadistica
+     *
+     * @return Equipo
+     */
+    public function addEstadistica(\AppBundle\Entity\EstadisticaTemporal $estadistica)
+    {
+        $this->estadisticas[] = $estadistica;
+
+        return $this;
+    }
+
+    /**
+     * Remove estadistica
+     *
+     * @param \AppBundle\Entity\EstadisticaTemporal $estadistica
+     */
+    public function removeEstadistica(\AppBundle\Entity\EstadisticaTemporal $estadistica)
+    {
+        $this->estadisticas->removeElement($estadistica);
+    }
+
+    /**
+     * Get estadisticas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEstadisticas()
+    {
+        return $this->estadisticas;
+    }
+
     public function __toString()
     {
         return $this->getNombreCompleto();
@@ -288,5 +327,4 @@ class Equipo extends BaseClass
     public function getWebSocketNamespace(){
         return strtolower(str_replace(' ','',$this->getNombreCompleto()));
     }
-
 }

@@ -71,7 +71,7 @@
                         <td>{{ intervencion.id }}</td>
                         <td>{{ intervencion.equipo.nombreCompleto }}</td>
                         <td>{% if intervencion.accion == 0 %}<span class="label label-success">Apertura</span>{% else %}<span class="label label-warning">Cierre</span>{% endif %}</td>
-                        <td>{{ intervencion.fecha | date('d/m/Y H:i:s') }}</td>
+                        <td>{{ intervencion.fecha is empty ? "" : intervencion.fecha | date('d/m/Y H:i:s') }}</td>
                         <td>{{ intervencion.fechaCreacion | date('d/m/Y H:i:s') }}</td>
                         <td>{{ intervencion.creadoPor }}</td>
                     </tr>

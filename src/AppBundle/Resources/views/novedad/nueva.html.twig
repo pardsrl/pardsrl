@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+
+{% set __title = 'Registrar Novedad' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/select2/select2.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('dashboard_v2/plugins/select2/select2.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    {% if form %}
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <!-- form start -->
+                        {{ form_start(form) }}
+                        {#{{ form_widget(form) }}#}
+                        {{ form_row(form.maniobra, { 'attr': { 'class': 'select2' } }) }}
+                        <div class="form-group">
+                            {{ form_label(form.inicio) }}
+                            <div class="col-sm-10">
+                                <div id="novedad_inicio" class="form-inline">
+                                    {{ form_widget(form.inicio.date, { 'attr': { 'class': 'datepicker' } }) }}
+                                    {{ form_widget(form.inicio.time.hour) }}
+                                    {{ form_widget(form.inicio.time.minute) }}
+                                    {{ form_errors(form.inicio) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.fin) }}
+                            <div class="col-sm-10">
+                                <div id="novedad_fin" class="form-inline">
+                                    {{ form_widget(form.fin.date, { 'attr': { 'class': 'datepicker' } }) }}
+                                    {{ form_widget(form.fin.time.hour) }}
+                                    {{ form_widget(form.fin.time.minute) }}
+                                    {{ form_errors(form.fin) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.cantidadAlertas) }}
+                            <div class="col-sm-3">
+                                    {{ form_widget(form.cantidadAlertas) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.observaciones) }}
+
+                        <div style="display: none">{{ form_rest(form) }}</div>
+
+
+                        <div class="box-footer">
+                            <input class="btn btn-primary" type="submit" value="Registrar"/>
+                        </div>
+
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Listado últimas novedades</h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body table-responsive no-padding">
+
+                <table class="table table-hover">
+                    <tbody><tr>
+                        <th>ID</th>
+                        <th>Maniobra</th>
+                        <th>Fec. Inicio</th>
+                        <th>Fec. Fin</th>
+                        <th>Observaciones</th>
+                        <th>Generado auto.</th>
+                        <th>Cant. Alertas</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Creado Por</th>
+                        <th>Actualizado Por</th>
+                    </tr>
+                    {% if novedades is empty %}
+                        <tr>
+                            <td colspan="6">No se han registrado novedades</td>
+                        </tr>
+                    {% endif %}
+                    {% for novedad in novedades %}
+                        <tr>
+                            <td>{{ novedad.id }}</td>
+                            <td>{{ novedad.maniobra }}</td>
+                            <td>{{ novedad.inicio | date('d/m/Y H:i:s')}}</td>
+                            <td>{{ novedad.fin is empty ? "" : novedad.fin | date('d/m/Y H:i:s')}}</td>
+                            <td>{{ novedad.observaciones }}</td>
+                            <td>{{ novedad.generado }}</td>
+                            <td>{{ novedad.cantidadAlertas }}</td>
+                            <td>{{ novedad.fechaCreacion | date('d/m/Y H:i:s') }}</td>
+                            <td>{{ novedad.fechaActualizacion | date('d/m/Y H:i:s') }}</td>
+                            <td>{{ novedad.creadoPor }}</td>
+                            <td>{{ novedad.actualizadoPor }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div><!-- /.box-body -->
+        </div>
+        {{ knp_pagination_render(novedades) }}
+    {% endif %}
+{% endblock %}
