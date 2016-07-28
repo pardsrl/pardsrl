@@ -73,7 +73,7 @@ class Builder implements ContainerAwareInterface
                 $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
                     'Registra Novedades',
                     array('route' => 'novedad_nueva', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa  fa-cogs');
+                )->setExtra('icon', 'fa  fa-bell-o');
 
             }
         }
