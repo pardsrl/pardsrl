@@ -349,4 +349,15 @@ class Pozo extends BaseClass
 
         return $estado;
     }
+
+
+    public function estaAbierto(){
+        return !$this->getEstadoUltimaIntervencion();
+    }
+
+
+    public function __toString()
+    {
+        return $this->getNombre();
+    }
 }

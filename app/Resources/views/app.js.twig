@@ -102,3 +102,15 @@ $(document).ready(function () {
         autoclose: true
     });
 });
+
+/**
+ * Funcion que deja en estado cargando el box especificado.
+ * @param boxId
+ */
+function overlayBox(boxId){
+   $(boxId).append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+}
+
+function removeOverlayBox(boxId){
+    $(boxId).find('.overlay').remove();
+}

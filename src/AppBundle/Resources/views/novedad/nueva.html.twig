@@ -54,9 +54,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_label(form.cantidadAlertas) }}
+                            {{ form_label(form.parcialManiobra) }}
                             <div class="col-sm-3">
-                                    {{ form_widget(form.cantidadAlertas) }}
+                                    {{ form_widget(form.parcialManiobra) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.promedioUh) }}
+                            <div class="col-sm-3">
+                                    {{ form_widget(form.promedioUh) }}
                             </div>
                         </div>
 
@@ -91,6 +97,8 @@
                         <th>Observaciones</th>
                         <th>Generado auto.</th>
                         <th>Cant. Alertas</th>
+                        <th>Parcial Maniobras</th>
+                        <th>Premodio Uh</th>
                         <th>Creado</th>
                         <th>Actualizado</th>
                         <th>Creado Por</th>
@@ -108,8 +116,10 @@
                             <td>{{ novedad.inicio | date('d/m/Y H:i:s')}}</td>
                             <td>{{ novedad.fin is empty ? "" : novedad.fin | date('d/m/Y H:i:s')}}</td>
                             <td>{{ novedad.observaciones }}</td>
-                            <td>{{ novedad.generado }}</td>
+                            <td>{% if (novedad.generado) %} <i class="fa fa-fw fa-check"></i> {% else %} <i class="fa fa-fw fa-minus"></i> {% endif %}</td>
                             <td>{{ novedad.cantidadAlertas }}</td>
+                            <td>{{ novedad.parcialManiobra }}</td>
+                            <td>{{ novedad.promedioUh }}</td>
                             <td>{{ novedad.fechaCreacion | date('d/m/Y H:i:s') }}</td>
                             <td>{{ novedad.fechaActualizacion | date('d/m/Y H:i:s') }}</td>
                             <td>{{ novedad.creadoPor }}</td>

@@ -34,8 +34,9 @@ class NovedadType extends AbstractType
                 'required' => false
             ))
             ->add('observaciones')
+            ->add('parcialManiobra')
+            ->add('promedioUh')
             ->add('generado',HiddenType::class)
-            ->add('cantidadAlertas')
             ->add('intervencion')
         ;
     }

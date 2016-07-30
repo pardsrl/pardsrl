@@ -54,9 +54,25 @@ class Novedad extends BaseClass
     /**
      * @var int
      *
-     * @ORM\Column(name="cantidad_alertas", type="integer")
+     * @ORM\Column(name="cantidad_alertas", type="integer", nullable=true)
      */
     private $cantidadAlertas;
+
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="parcial_maniobra", type="float", nullable=false)
+     */
+    private $parcialManiobra;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="promedio_uh", type="float", nullable=false)
+     */
+    private $promedioUh;
+
 
     /**
      * @var
@@ -253,4 +269,53 @@ class Novedad extends BaseClass
     {
         return $this->maniobra;
     }
+
+    /**
+     * Set parcialManiobra
+     *
+     * @param float $parcialManiobra
+     *
+     * @return Novedad
+     */
+    public function setParcialManiobra($parcialManiobra)
+    {
+        $this->parcialManiobra = $parcialManiobra;
+
+        return $this;
+    }
+
+    /**
+     * Get parcialManiobra
+     *
+     * @return float
+     */
+    public function getParcialManiobra()
+    {
+        return $this->parcialManiobra;
+    }
+
+    /**
+     * Set promedioUh
+     *
+     * @param float $promedioUh
+     *
+     * @return Novedad
+     */
+    public function setPromedioUh($promedioUh)
+    {
+        $this->promedioUh = $promedioUh;
+
+        return $this;
+    }
+
+    /**
+     * Get promedioUh
+     *
+     * @return float
+     */
+    public function getPromedioUh()
+    {
+        return $this->promedioUh;
+    }
+
 }

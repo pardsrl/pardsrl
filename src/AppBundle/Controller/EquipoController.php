@@ -176,4 +176,89 @@ class EquipoController extends Controller
         ));
     }
 
+    /**
+     * Muestra los estadisticas del equipo
+     *
+     * @param Request $request
+     * @param Equipo $equipo
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function estadisticasAction(Request $request, Equipo $equipo)
+    {
+
+        return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
+            'equipo' => $equipo
+        ));
+    }
+
+    public function estadisticasDatosAction(Request $request, Equipo $equipo){
+        $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
+
+        $intervencionQb = $intervencionRepository->getUltimaIntervencionByEquipo($equipo);
+
+        $intervencion = $intervencionQb->getQuery()->getOneOrNullResult();
+
+        $datos = null;
+
+        $estadisticaManiobra = null;
+        //dump($intervencion);
+
+        if($intervencion && $intervencion->getPozo()->estaAbierto()){
+            $estadisticas = $intervencion->getEquipo()->getEstadisticas();
+
+            if(!$estadisticas->isEmpty()){
+                $datos = $estadisticas->first()->getDatos();
+            }
+
+            $novedadRepository = $this->getDoctrine()->getRepository('AppBundle:Novedad');
+
+            $maniobraActualAsistida = $novedadRepository->getActualAsistidaByIntervencion($intervencion)->getQuery()->getOneOrNullResult();
+
+            $maniobraActualAutomatica = $novedadRepository->getActualAutomaticaByIntervencion($intervencion)->getQuery()->getOneOrNullResult();
+
+            $estadisticaManiobra = [];
+
+            $fechaActual = new \DateTime();
+
+            if($maniobraActualAsistida){
+
+                $estadisticaManiobra['actual_asistida'] = array(
+                    'maniobra'          => $maniobraActualAsistida->getManiobra(),
+                    'iniciado'          => $maniobraActualAsistida->getInicio()->format('d/m/Y H:i:s'),
+                    'parcial_maniobra'  => $maniobraActualAsistida->getParcialManiobra(),
+                    'promedio_uh'       => $maniobraActualAsistida->getPromedioUh(),
+                    'cant_alertas'      => $maniobraActualAsistida->getCantidadAlertas(),
+                    'tiempo_parcial'    => $maniobraActualAsistida->getInicio()->diff($fechaActual)->format('%a %H:%I')
+                );
+
+            }
+
+            if($maniobraActualAutomatica){
+
+                $estadisticaManiobra['actual_automatica'] = array(
+                    'maniobra'          => $maniobraActualAutomatica->getManiobra(),
+                    'iniciado'          => $maniobraActualAutomatica->getInicio()->format('d/m/Y H:i:s'),
+                    'parcial_maniobra'  => $maniobraActualAutomatica->getParcialManiobra(),
+                    'promedio_uh'       => $maniobraActualAutomatica->getPromedioUh(),
+                    'cant_alertas'      => $maniobraActualAutomatica->getCantidadAlertas(),
+                    'tiempo_parcial'    => $maniobraActualAutomatica->getInicio()->diff($fechaActual)->format('%a %H:%I')
+                );
+
+            }
+
+        }else{
+            //Puede ser que exista una intervencion pero haya sido un cierre
+            $intervencion = null;
+            $this->get('session')->getFlashBag()->add('error', 'Inicie una intervención para visualizar las estadísticas del pozo actual.');
+        }
+
+
+        return $this->render('AppBundle:equipo:estadisticas_datos.html.twig', array(
+            'equipo' => $equipo,
+            'intervencion' => $intervencion,
+            'datos' => $datos,
+            'estadistica_maniobra' => $estadisticaManiobra,
+        ));
+    }
+
 }

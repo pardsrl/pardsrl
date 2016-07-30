@@ -26,9 +26,19 @@ equipo_delete:
 equipo_graficas:
     path: /{id}/graficas
     defaults: { _controller: "AppBundle:Equipo:graficas"}
-    methods: [GET, POST]
+    methods: [GET]
 
 equipo_instrumentos:
     path: /{id}/instrumentos
     defaults: { _controller: "AppBundle:Equipo:instrumentos"}
-    methods: [GET, POST]
+    methods: [GET]
+
+equipo_estadisticas:
+    path: /{id}/estadisticas
+    defaults: { _controller: "AppBundle:Equipo:estadisticas"}
+    methods: [GET]
+
+equipo_estadisticas_datos:
+    path: /{id}/estadisticas_datos
+    defaults: { _controller: "AppBundle:Equipo:estadisticasDatos"}
+    methods: [GET]

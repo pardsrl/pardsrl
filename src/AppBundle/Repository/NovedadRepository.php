@@ -21,8 +21,39 @@ class NovedadRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->where('nov.intervencion = :intervencion')
             ->orderBy('nov.fin', 'ASC')
+            ->addOrderBy('nov.fechaCreacion', 'DESC')
             ->setParameter('intervencion', $intervencion);
 
+
+        return $qb;
+    }
+
+    public function getActualAsistidaByIntervencion($intervencion){
+
+        $qb = $this->getQb();
+
+        $qb->where('nov.intervencion = :intervencion')
+            ->andWhere('nov.generado = 0')
+            ->andWhere('nov.fin IS NULL')
+            ->orderBy('nov.fechaCreacion', 'DESC')
+            ->addOrderBy('nov.fechaActualizacion', 'DESC')
+            ->setParameter('intervencion', $intervencion)
+            ->setMaxResults(1);
+
+        return $qb;
+    }
+
+    public function getActualAutomaticaByIntervencion($intervencion){
+
+        $qb = $this->getQb();
+
+        $qb->where('nov.intervencion = :intervencion')
+            ->andWhere('nov.generado = 1')
+            ->andWhere('nov.fin IS NULL')
+            ->orderBy('nov.fechaCreacion', 'DESC')
+            ->addOrderBy('nov.fechaActualizacion', 'DESC')
+            ->setParameter('intervencion', $intervencion)
+            ->setMaxResults(1);
 
         return $qb;
     }
