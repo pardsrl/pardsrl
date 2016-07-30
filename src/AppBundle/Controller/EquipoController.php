@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Intervencion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -186,12 +187,6 @@ class EquipoController extends Controller
     public function estadisticasAction(Request $request, Equipo $equipo)
     {
 
-        return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
-            'equipo' => $equipo
-        ));
-    }
-
-    public function estadisticasDatosAction(Request $request, Equipo $equipo){
         $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
 
         $intervencionQb = $intervencionRepository->getUltimaIntervencionByEquipo($equipo);
@@ -203,7 +198,28 @@ class EquipoController extends Controller
         $estadisticaManiobra = null;
         //dump($intervencion);
 
-        if($intervencion && $intervencion->getPozo()->estaAbierto()){
+        if ($intervencion && $intervencion->getPozo()->estaAbierto()) {
+
+        } else {
+            //Puede ser que exista una intervencion pero haya sido un cierre
+            $intervencion = null;
+            $this->get('session')->getFlashBag()->add('error',
+                'Inicie una intervención para visualizar las estadísticas del pozo actual.');
+        }
+
+
+        return $this->render('AppBundle:equipo:estadisticas.html.twig', array(
+            'equipo'       => $equipo,
+            'intervencion' => $intervencion
+        ));
+    }
+
+    public function estadisticasDatosAction(Request $request, $equipo_id, $intervencion_id){
+
+            $equipo = $this->getDoctrine()->getManager()->find('AppBundle:Equipo',$equipo_id);
+
+            $intervencion = $this->getDoctrine()->getManager()->find('AppBundle:Intervencion',$intervencion_id);
+
             $estadisticas = $intervencion->getEquipo()->getEstadisticas();
 
             if(!$estadisticas->isEmpty()){
@@ -246,11 +262,6 @@ class EquipoController extends Controller
 
             }
 
-        }else{
-            //Puede ser que exista una intervencion pero haya sido un cierre
-            $intervencion = null;
-            $this->get('session')->getFlashBag()->add('error', 'Inicie una intervención para visualizar las estadísticas del pozo actual.');
-        }
 
 
         return $this->render('AppBundle:equipo:estadisticas_datos.html.twig', array(

@@ -1,151 +1,148 @@
-{% if intervencion %}
+<div class="row">
+    <div class="col-md-12">
+        <div id="estadisticas-datos" class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ intervencion.pozo | upper }} </h3>
+                <div class=" pull-right">
+                    <strong>Fecha
+                        Inicio: </strong>{{ intervencion.fecha is empty ? "" : intervencion.fecha | date('d/m/Y H:i:s') }}
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="col-md-12" style="margin-bottom: 10px;">
+                            <div style="text-align: center">ESTADO GENERAL</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div id="estadisticas-datos" class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ intervencion.pozo | upper }} </h3>
-                    <div class=" pull-right">
-                        <strong>Fecha
-                            Inicio: </strong>{{ intervencion.fecha is empty ? "" : intervencion.fecha | date('d/m/Y H:i:s') }}
+                            {% set class = (datos.estado_general.luminicas.nina) ? 'bg-green' : 'bg-red' %}
+
+                            <div class="col-md-4">NINA: <span class="badge {{ class }}">&nbsp;</span></div>
+
+                            {% set class = (datos.estado_general.luminicas.online) ? 'bg-green' : 'bg-red' %}
+
+                            <div class="col-md-4">ONLINE: <span class="badge bg-green">&nbsp;</span></div>
+
+                            <div class="col-md-4">ÚLTIMO DATO: {{ datos.estado_general.texto.udato }}</div>
+                            <div class="col-md-6">
+                                <ul class="nav nav-pills nav-stacked">
+
+                                    {% set class = (datos.estado_general.luminicas.peso) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">Peso:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+
+                                    {% set class = (datos.estado_general.luminicas.llave) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">Llave:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+
+                                    {% set class = (datos.estado_general.luminicas.b_pozo) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">B Pozo:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                </ul>
+                            </div><!-- /.col -->
+                            <div class="col-md-6">
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% set class = (datos.estado_general.luminicas.viento) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">Viento:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+
+                                    {% set class = (datos.estado_general.luminicas.h2sp) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">H2SP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+
+                                    {% set class = (datos.estado_general.luminicas.h2sbp) ? 'bg-green' : 'bg-red' %}
+
+                                    <li><a href="#">H2SBP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                </ul>
+                            </div><!-- /.col -->
+                        </div>
+                        <div class="col-md-6">
+                            <div style="text-align: center">ACTUAL AUTOMÁTICO</div>
+                            <ul class="nav nav-pills nav-stacked">
+                                {% set valor = (estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
+                                <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_automatica.iniciado) ? estadistica_maniobra.actual_automatica.iniciado : "-" %}
+                                <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_automatica.parcial_maniobra) ? estadistica_maniobra.actual_automatica.parcial_maniobra : "-" %}
+                                <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_automatica.tiempo_parcial) ? estadistica_maniobra.actual_automatica.tiempo_parcial : "-" %}
+                                <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_automatica.cant_alertas) ? estadistica_maniobra.actual_automatica.cant_alertas : "-" %}
+                                <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_automatica.promedio_uh) ? estadistica_maniobra.actual_automatica.promedio_uh : "-" %}
+                                <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+
+                            </ul>
+                        </div><!-- /.col -->
+                        <div class="col-md-6">
+                            <div style="text-align: center">ACTUAL ASISTIDO</div>
+                            <ul class="nav nav-pills nav-stacked">
+                                {% set valor = (estadistica_maniobra.actual_asistida.maniobra) ? estadistica_maniobra.actual_asistida.maniobra : "-" %}
+                                <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_asistida.iniciado) ? estadistica_maniobra.actual_asistida.iniciado : "-" %}
+                                <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_asistida.parcial_maniobra) ? estadistica_maniobra.actual_asistida.parcial_maniobra : "-" %}
+                                <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_asistida.tiempo_parcial) ? estadistica_maniobra.actual_asistida.tiempo_parcial : "-" %}
+                                <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_asistida.cant_alertas) ? estadistica_maniobra.actual_asistida.cant_alertas : "-" %}
+                                <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                                {% set valor = (estadistica_maniobra.actual_asistida.promedio_uh) ? estadistica_maniobra.actual_asistida.promedio_uh : "-" %}
+                                <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
+
+                            </ul>
+                        </div><!-- /.col -->
                     </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <div style="text-align: center">ESTADO GENERAL</div>
+                    <div class="col-md-5" style="margin-top: 10px">
+                        <div style="text-align: center">HISTORICO POZO ACTUAL</div>
+                        <div class="col-md-6">
+                            <ul class="nav nav-pills nav-stacked">
+                                {% if datos.historico.t_total is defined %}
+                                    <li><a href="#">Tiempo Total:<span class="pull-right text-green"><strong>{{ datos.historico.t_total }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.ftu is defined %}
+                                    <li><a href="#">Factor tiempo útil: <span class="pull-right text-green"><strong>{{ datos.historico.ftu }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.t_maniobras is defined %}
+                                    <li><a href="#">Tiempo Maniobras: <span class="pull-right text-green"><strong>{{ datos.historico.t_maniobras }}</strong></span></a></li>
+                                {% endif %}
+                            </ul>
+                        </div><!-- /.col -->
+                        <div class="col-md-6">
+                            <ul class="nav nav-pills nav-stacked">
 
-                                {% set class = (datos.estado_general.luminicas.nina) ? 'bg-green' : 'bg-red' %}
-
-                                <div class="col-md-4">NINA: <span class="badge {{ class }}">&nbsp;</span></div>
-
-                                {% set class = (datos.estado_general.luminicas.online) ? 'bg-green' : 'bg-red' %}
-
-                                <div class="col-md-4">ONLINE: <span class="badge bg-green">&nbsp;</span></div>
-
-                                <div class="col-md-4">ÚLTIMO DATO: {{ datos.estado_general.texto.udato }}</div>
-                                <div class="col-md-6">
-                                    <ul class="nav nav-pills nav-stacked">
-
-                                        {% set class = (datos.estado_general.luminicas.peso) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">Peso:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                        {% set class = (datos.estado_general.luminicas.llave) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">Llave:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                        {% set class = (datos.estado_general.luminicas.b_pozo) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">B Pozo:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-                                    </ul>
-                                </div><!-- /.col -->
-                                <div class="col-md-6">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        {% set class = (datos.estado_general.luminicas.viento) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">Viento:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                        {% set class = (datos.estado_general.luminicas.h2sp) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">H2SP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                        {% set class = (datos.estado_general.luminicas.h2sbp) ? 'bg-green' : 'bg-red' %}
-
-                                        <li><a href="#">H2SBP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-                                    </ul>
-                                </div><!-- /.col -->
-                            </div>
-                            <div class="col-md-6">
-                                <div style="text-align: center">ACTUAL AUTOMÁTICO</div>
-                                <ul class="nav nav-pills nav-stacked">
-                                    {% set valor = (estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
-                                    <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_automatica.iniciado) ? estadistica_maniobra.actual_automatica.iniciado : "-" %}
-                                    <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_automatica.parcial_maniobra) ? estadistica_maniobra.actual_automatica.parcial_maniobra : "-" %}
-                                    <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_automatica.tiempo_parcial) ? estadistica_maniobra.actual_automatica.tiempo_parcial : "-" %}
-                                    <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_automatica.cant_alertas) ? estadistica_maniobra.actual_automatica.cant_alertas : "-" %}
-                                    <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_automatica.promedio_uh) ? estadistica_maniobra.actual_automatica.promedio_uh : "-" %}
-                                    <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-
-                                </ul>
-                            </div><!-- /.col -->
-                            <div class="col-md-6">
-                                <div style="text-align: center">ACTUAL ASISTIDO</div>
-                                <ul class="nav nav-pills nav-stacked">
-                                    {% set valor = (estadistica_maniobra.actual_asistida.maniobra) ? estadistica_maniobra.actual_asistida.maniobra : "-" %}
-                                    <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_asistida.iniciado) ? estadistica_maniobra.actual_asistida.iniciado : "-" %}
-                                    <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_asistida.parcial_maniobra) ? estadistica_maniobra.actual_asistida.parcial_maniobra : "-" %}
-                                    <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_asistida.tiempo_parcial) ? estadistica_maniobra.actual_asistida.tiempo_parcial : "-" %}
-                                    <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_asistida.cant_alertas) ? estadistica_maniobra.actual_asistida.cant_alertas : "-" %}
-                                    <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                    {% set valor = (estadistica_maniobra.actual_asistida.promedio_uh) ? estadistica_maniobra.actual_asistida.promedio_uh : "-" %}
-                                    <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
-
-                                </ul>
-                            </div><!-- /.col -->
-                        </div>
-                        <div class="col-md-5" style="margin-top: 10px">
-                            <div style="text-align: center">HISTORICO POZO ACTUAL</div>
-                            <div class="col-md-6">
-                                <ul class="nav nav-pills nav-stacked">
-                                    {% if datos.historico.t_total is defined %}
-                                        <li><a href="#">Tiempo Total:<span class="pull-right text-green"><strong>{{ datos.historico.t_total }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.ftu is defined %}
-                                        <li><a href="#">Factor tiempo útil: <span class="pull-right text-green"><strong>{{ datos.historico.ftu }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.t_maniobras is defined %}
-                                        <li><a href="#">Tiempo Maniobras: <span class="pull-right text-green"><strong>{{ datos.historico.t_maniobras }}</strong></span></a></li>
-                                    {% endif %}
-                                </ul>
-                            </div><!-- /.col -->
-                            <div class="col-md-6">
-                                <ul class="nav nav-pills nav-stacked">
-
-                                    {% if datos.historico.cant_vb is defined %}
-                                        <li><a href="#">Cant Vb:<span class="pull-right text-green"><strong> {{ datos.historico.cant_vb }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.prom_vb is defined %}
-                                        <li><a href="#">Prom Vb:<span class="pull-right text-green"><strong> {{ datos.historico.prom_vb }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.cant_tbg is defined %}
-                                        <li><a href="#">Cant Tbg:<span class="pull-right text-green"><strong> {{ datos.historico.cant_tbg }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.prom_tbg is defined %}
-                                        <li><a href="#">Prom Tbg:<span class="pull-right text-green"><strong> {{ datos.historico.prom_tbg }}</strong></span></a></li>
-                                    {% endif %}
-                                    {% if datos.historico.cant_alertas is defined %}
-                                        <li><a href="#">Cant Alertas:<span class="pull-right text-green"><strong> {{ datos.historico.cant_alertas }} </strong></span></a></li>
-                                    {% endif %}
-                                </ul>
-                            </div><!-- /.col -->
-                        </div>
-                    </div><!-- /.row -->
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div>
+                                {% if datos.historico.cant_vb is defined %}
+                                    <li><a href="#">Cant Vb:<span class="pull-right text-green"><strong> {{ datos.historico.cant_vb }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.prom_vb is defined %}
+                                    <li><a href="#">Prom Vb:<span class="pull-right text-green"><strong> {{ datos.historico.prom_vb }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.cant_tbg is defined %}
+                                    <li><a href="#">Cant Tbg:<span class="pull-right text-green"><strong> {{ datos.historico.cant_tbg }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.prom_tbg is defined %}
+                                    <li><a href="#">Prom Tbg:<span class="pull-right text-green"><strong> {{ datos.historico.prom_tbg }}</strong></span></a></li>
+                                {% endif %}
+                                {% if datos.historico.cant_alertas is defined %}
+                                    <li><a href="#">Cant Alertas:<span class="pull-right text-green"><strong> {{ datos.historico.cant_alertas }} </strong></span></a></li>
+                                {% endif %}
+                            </ul>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
     </div>
-{% endif %}
+</div>
 
 

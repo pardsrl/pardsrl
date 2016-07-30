@@ -3,33 +3,39 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="application/javascript" language="JavaScript">
-        $(document).ready(function () {
+    {% if intervencion %}
+        <script type="application/javascript" language="JavaScript">
 
-            //configuro para que se recargue cada 1 minuto.
-            setInterval(function() { recargarEstadisticas(); },90000);
 
-        });
+            $(document).ready(function () {
 
-        function recargarEstadisticas(){
+                //configuro para que se recargue cada 1 minuto.
+                setInterval(function() { recargarEstadisticas(); },90000);
 
-            overlayBox('#estadisticas-datos');
-
-            $('#estadisticas-container').load("{{ path('equipo_estadisticas_datos', { 'id': equipo.id }) }}", function() {
-                removeOverlayBox('#estadisticas-datos');
             });
 
-        }
+            function recargarEstadisticas(){
 
-    </script>
+                overlayBox('#estadisticas-datos');
+
+                $('#estadisticas-container').load("{{ path('equipo_estadisticas_datos', { 'equipo_id': equipo.id , 'intervencion_id' : intervencion.id }) }}", function() {
+                    removeOverlayBox('#estadisticas-datos');
+                });
+
+            }
+
+        </script>
+    {% endif %}
 {% endblock %}
 
 {% set __title = 'Estadísticas del pozo actual' %}
 
 {% block content %}
 
-    <div id="estadisticas-container">
-        {{ render(controller('AppBundle:Equipo:estadisticasDatos', { 'id': equipo.id })) }}
-    <div>
+    {% if intervencion %}
+        <div id="estadisticas-container">
+            {{ render(controller('AppBundle:Equipo:estadisticasDatos', { 'equipo_id': equipo.id , 'intervencion_id' : intervencion.id})) }}
+        <div>
+    {% endif %}
 
 {% endblock %}
