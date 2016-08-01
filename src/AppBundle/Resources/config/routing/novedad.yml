@@ -6,6 +6,8 @@ novedad_nueva:
     path:     /nueva/equipo/{id}
     defaults: { _controller: AppBundle:Novedad:nueva }
 
-novedad_editar:
-    path:     /editar
-    defaults: { _controller: AppBundle:Novedad:editar }
+novedad_cerrar:
+    path:     /cerrar/{id}
+    defaults: { _controller: AppBundle:Novedad:cerrarNovedad }
+    methods: [GET,POST]
+

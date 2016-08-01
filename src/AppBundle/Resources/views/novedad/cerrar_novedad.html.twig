@@ -1,0 +1,57 @@
+{% set mostrar_form = true %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-dismissable alert-success">
+        <i class="fa fa-check"></i>
+        {{ flashMessage }}
+    </div>
+
+    <div class="box-footer">
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Cerrar</button>
+    </div>
+
+    <input type="hidden" class="novedad-cerrada" data-novedad-id="{{ novedad.id }}" data-novedad-fin="{{ novedad.fin | date('d/m/Y H:i:s')}}" data-novedad-observaciones="{{ novedad.observaciones }}"/>
+    {% set mostrar_form = false %}
+{% endfor %}
+
+{% if mostrar_form  %}
+<div class="novedad-form-cierre">
+    {{ form_start(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.fin) }}
+        <div class="col-sm-10">
+            <div id="novedad_fin" class="form-inline">
+                {{ form_widget(form.fin.date, { 'attr': { 'class': 'datepicker' } }) }}
+                {{ form_widget(form.fin.time.hour) }}
+                {{ form_widget(form.fin.time.minute) }}
+                {{ form_errors(form.fin) }}
+            </div>
+        </div>
+    </div>
+
+
+    {{ form_row(form.observaciones) }}
+
+    <div style="display: none">{{ form_rest(form) }}</div>
+
+    <div class="box-footer">
+        <input id="registrar-cierre" class="btn btn-primary pull-right" type="submit" value="Registrar"/>
+    </div>
+
+
+    {{ form_end(form) }}
+</div>
+
+
+<script type="text/javascript">
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'es',
+        autoclose: true
+    });
+
+
+</script>
+{% endif %}

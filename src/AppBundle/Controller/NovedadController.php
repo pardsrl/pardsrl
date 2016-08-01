@@ -82,10 +82,29 @@ class NovedadController extends Controller
     }
 
 
-    public function editarAction()
+    public function cerrarNovedadAction(Request $request, Novedad $novedad)
     {
-        return $this->render('AppBundle:novedad:editar.html.twig', array(
-            // ...
+        $form = $this->createForm(NovedadType::class, $novedad, array(
+            'action' => $this->generateUrl('novedad_cerrar', array('id' => $novedad->getId())),
+            'method' => 'POST',
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($novedad);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Se ha cerrado la novedad Satisfactoriamente');
+
+        }
+
+        return $this->render('AppBundle:novedad:cerrar_novedad.html.twig', array(
+            'form' => $form->createView(),
+            'novedad' => $novedad
         ));
     }
 
