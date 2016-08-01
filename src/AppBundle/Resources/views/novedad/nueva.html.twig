@@ -15,7 +15,67 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+
             $('.select2').select2();
+
+            $('.cerrar-novedad').click(function(e){
+
+                overlayBox('.box-primary');
+
+                var href = e.currentTarget.href;
+
+                $.get( href, function( data ) {
+
+                    $('#modal-cerrar-novedad .modal-body').html(data);
+
+                    removeOverlayBox('.box-primary');
+
+                    $('#modal-cerrar-novedad').modal('show',this);
+                });
+
+                return false;
+
+            });
+
+            $("body").on("click", "#registrar-cierre", function(){
+
+                var form_data = $('.novedad-form-cierre form').serialize();
+
+                var form_action  = $('.novedad-form-cierre form').attr('action');
+
+                if( $('.novedad-form-cierre form')[0].checkValidity()){
+
+                    $.post(form_action, form_data)
+                    .done(function(data) {
+                        $('#modal-cerrar-novedad .modal-body').html(data);
+                    });
+
+                    $('#registrar-cierre').attr('disabled', true);
+
+                    $('#registrar-cierre').val('Registrando...')
+
+                    return false;
+                }
+            });
+
+            $('#modal-cerrar-novedad').on('hidden.bs.modal', function () {
+
+                var novedad = $('.novedad-cerrada');
+
+                //si se actualizo la novedad
+                if(novedad.length){
+                    var id = novedad.data('novedad-id');
+                    var fin = novedad.data('novedad-fin');
+                    var observaciones = novedad.data('novedad-observaciones');
+
+                    $("#novedad-"+id).find('.fin').html(fin);
+                    $("#novedad-"+id).find('.observaciones').html(observaciones);
+                    $("#novedad-"+id).find('.acciones').html("");
+                }else{
+
+                }
+            })
+
         });
     </script>
 {% endblock %}
@@ -99,10 +159,11 @@
                         <th>Cant. Alertas</th>
                         <th>Parcial Maniobras</th>
                         <th>Promedio U/H</th>
-                        <th>Creado</th>
-                        <th>Actualizado</th>
-                        <th>Creado Por</th>
-                        <th>Actualizado Por</th>
+                        {#<th>Creado</th>#}
+                        {#<th>Actualizado</th>#}
+                        {#<th>Creado Por</th>#}
+                        {#<th>Actualizado Por</th>#}
+                        <th>Acciones</th>
                     </tr>
                     {% if novedades is empty %}
                         <tr>
@@ -110,20 +171,25 @@
                         </tr>
                     {% endif %}
                     {% for novedad in novedades %}
-                        <tr>
+                        <tr id="novedad-{{ novedad.id }}">
                             <td>{{ novedad.id }}</td>
                             <td>{{ novedad.maniobra }}</td>
                             <td>{{ novedad.inicio | date('d/m/Y H:i:s')}}</td>
-                            <td>{{ novedad.fin is empty ? "" : novedad.fin | date('d/m/Y H:i:s')}}</td>
-                            <td>{{ novedad.observaciones }}</td>
+                            <td class="fin">{{ novedad.fin is empty ? "" : novedad.fin | date('d/m/Y H:i:s')}}</td>
+                            <td class="observaciones">{{ novedad.observaciones }}</td>
                             <td>{% if (novedad.generado) %} <i class="fa fa-fw fa-check"></i> {% else %} <i class="fa fa-fw fa-minus"></i> {% endif %}</td>
                             <td>{{ novedad.cantidadAlertas }}</td>
                             <td>{{ novedad.parcialManiobra }}</td>
                             <td>{{ novedad.promedioUh }}</td>
-                            <td>{{ novedad.fechaCreacion | date('d/m/Y H:i:s') }}</td>
-                            <td>{{ novedad.fechaActualizacion | date('d/m/Y H:i:s') }}</td>
-                            <td>{{ novedad.creadoPor }}</td>
-                            <td>{{ novedad.actualizadoPor }}</td>
+                            {#<td>{{ novedad.fechaCreacion | date('d/m/Y H:i:s') }}</td>#}
+                            {#<td>{{ novedad.fechaActualizacion | date('d/m/Y H:i:s') }}</td>#}
+                            {#<td>{{ novedad.creadoPor }}</td>#}
+                            {#<td>{{ novedad.actualizadoPor }}</td>#}
+                            <td class="acciones">
+                                {%  if novedad.fin is empty%}
+                                    <a title="Registrar cierre"  class="btn btn-default btn-sm cerrar-novedad" href="{{ path('novedad_cerrar', {'id': novedad.id}) }}"><i class="glyphicon glyphicon-stop"></i></a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
 
@@ -133,5 +199,18 @@
             </div><!-- /.box-body -->
         </div>
         {{ knp_pagination_render(novedades) }}
+
+
+        <div id="modal-cerrar-novedad" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">Cerrar Novedad</h4>
+                    </div>
+                    <div class="modal-body"></div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
     {% endif %}
 {% endblock %}
