@@ -35,7 +35,9 @@ class NovedadType extends AbstractType
             ))
             ->add('observaciones')
             ->add('parcialManiobra')
-            ->add('promedioUh')
+            ->add('promedioUh',null,array(
+                'label' => 'Promedio U/H'
+            ))
             ->add('generado',HiddenType::class)
             ->add('intervencion')
         ;
