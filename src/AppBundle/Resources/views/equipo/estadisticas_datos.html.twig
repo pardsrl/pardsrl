@@ -14,44 +14,28 @@
                         <div class="col-md-12" style="margin-bottom: 10px;">
                             <div style="text-align: center">ESTADO GENERAL</div>
 
-                            {% set class = (datos.estado_general.luminicas.nina) ? 'bg-green' : 'bg-red' %}
+                            {{  _self.generarIndicadorLuminico('NINA',datos.estado_general.luminicas.nina,'div') }}
 
-                            <div class="col-md-4">NINA: <span class="badge {{ class }}">&nbsp;</span></div>
-
-                            {% set class = (datos.estado_general.luminicas.online) ? 'bg-green' : 'bg-red' %}
-
-                            <div class="col-md-4">ONLINE: <span class="badge bg-green">&nbsp;</span></div>
+                            {{  _self.generarIndicadorLuminico('NINA',datos.estado_general.luminicas.online,'div') }}
 
                             <div class="col-md-4">ÚLTIMO DATO: {{ datos.estado_general.texto.udato }}</div>
                             <div class="col-md-6">
                                 <ul class="nav nav-pills nav-stacked">
 
-                                    {% set class = (datos.estado_general.luminicas.peso) ? 'bg-green' : 'bg-red' %}
+                                    <li>{{  _self.generarIndicadorLuminico('Peso',datos.estado_general.luminicas.peso,'a') }}</li>
 
-                                    <li><a href="#">Peso:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                    <li>{{  _self.generarIndicadorLuminico('Llave',datos.estado_general.luminicas.llave,'a') }}</li>
 
-                                    {% set class = (datos.estado_general.luminicas.llave) ? 'bg-green' : 'bg-red' %}
-
-                                    <li><a href="#">Llave:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                    {% set class = (datos.estado_general.luminicas.b_pozo) ? 'bg-green' : 'bg-red' %}
-
-                                    <li><a href="#">B Pozo:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                    <li>{{  _self.generarIndicadorLuminico('B Pozo',datos.estado_general.luminicas.b_pozo,'a') }}</li>
                                 </ul>
                             </div><!-- /.col -->
                             <div class="col-md-6">
                                 <ul class="nav nav-pills nav-stacked">
-                                    {% set class = (datos.estado_general.luminicas.viento) ? 'bg-green' : 'bg-red' %}
+                                    <li>{{  _self.generarIndicadorLuminico('Viento',datos.estado_general.luminicas.viento,'a') }}</li>
 
-                                    <li><a href="#">Viento:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                    <li>{{  _self.generarIndicadorLuminico('H2SP',datos.estado_general.luminicas.h2sp,'a') }}</li>
 
-                                    {% set class = (datos.estado_general.luminicas.h2sp) ? 'bg-green' : 'bg-red' %}
-
-                                    <li><a href="#">H2SP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
-
-                                    {% set class = (datos.estado_general.luminicas.h2sbp) ? 'bg-green' : 'bg-red' %}
-
-                                    <li><a href="#">H2SBP:<span class="pull-right badge {{ class }}">&nbsp;</span></a></li>
+                                    <li>{{  _self.generarIndicadorLuminico('H2SBP',datos.estado_general.luminicas.h2sbp,'a') }}</li>
                                 </ul>
                             </div><!-- /.col -->
                         </div>
@@ -144,5 +128,23 @@
         </div><!-- /.box -->
     </div>
 </div>
+
+{% macro generarIndicadorLuminico(nombre, valor, tipo) %}
+
+    {% if  valor == 0 %}
+        {% set class = 'bg-red' %}
+    {% elseif valor == 1 %}
+        {% set class = 'bg-green' %}
+    {% elseif valor == 2 %}
+        {% set class = 'bg-yellow' %}
+    {% endif %}
+
+
+    {% if tipo == 'a' %}
+        <a href="#">{{ nombre }}:<span class="pull-right badge {{ class }}">&nbsp;</span></a>
+    {% else %}
+        <div class="col-md-4">{{ nombre }}: <span class="badge {{ class }}">&nbsp;</span></div>
+    {% endif %}
+{% endmacro %}
 
 
