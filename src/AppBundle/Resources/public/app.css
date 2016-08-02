@@ -13,6 +13,6 @@
     color: red;
 }
 
-.datepicker{
+.datepicker.dropdown-menu{
     z-index: 999999 !important;
 }
