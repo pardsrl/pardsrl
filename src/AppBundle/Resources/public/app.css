@@ -12,3 +12,7 @@
 .help-block{
     color: red;
 }
+
+.datepicker{
+    z-index: 999999 !important;
+}
