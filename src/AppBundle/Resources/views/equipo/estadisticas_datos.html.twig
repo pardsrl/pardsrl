@@ -42,22 +42,22 @@
                         <div class="col-md-6">
                             <div style="text-align: center">ACTUAL AUTOMÁTICO</div>
                             <ul class="nav nav-pills nav-stacked">
-                                {% set valor = (estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
+                                    {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
                                 <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_automatica.iniciado) ? estadistica_maniobra.actual_automatica.iniciado : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.iniciado) ? estadistica_maniobra.actual_automatica.iniciado : "-" %}
                                 <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_automatica.parcial_maniobra) ? estadistica_maniobra.actual_automatica.parcial_maniobra : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.parcial_maniobra) ? estadistica_maniobra.actual_automatica.parcial_maniobra : "-" %}
                                 <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_automatica.tiempo_parcial) ? estadistica_maniobra.actual_automatica.tiempo_parcial : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.tiempo_parcial) ? estadistica_maniobra.actual_automatica.tiempo_parcial : "-" %}
                                 <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_automatica.cant_alertas) ? estadistica_maniobra.actual_automatica.cant_alertas : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.cant_alertas) ? estadistica_maniobra.actual_automatica.cant_alertas : "-" %}
                                 <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_automatica.promedio_uh) ? estadistica_maniobra.actual_automatica.promedio_uh : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.promedio_uh) ? estadistica_maniobra.actual_automatica.promedio_uh : "-" %}
                                 <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
 
@@ -66,22 +66,22 @@
                         <div class="col-md-6">
                             <div style="text-align: center">ACTUAL ASISTIDO</div>
                             <ul class="nav nav-pills nav-stacked">
-                                {% set valor = (estadistica_maniobra.actual_asistida.maniobra) ? estadistica_maniobra.actual_asistida.maniobra : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.maniobra ) ? estadistica_maniobra.actual_asistida.maniobra : "-" %}
                                 <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_asistida.iniciado) ? estadistica_maniobra.actual_asistida.iniciado : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.iniciado) ? estadistica_maniobra.actual_asistida.iniciado : "-" %}
                                 <li><a href="#">Inicio:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_asistida.parcial_maniobra) ? estadistica_maniobra.actual_asistida.parcial_maniobra : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.parcial_maniobra) ? estadistica_maniobra.actual_asistida.parcial_maniobra : "-" %}
                                 <li><a href="#">Parcial de maniobras:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_asistida.tiempo_parcial) ? estadistica_maniobra.actual_asistida.tiempo_parcial : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.tiempo_parcial) ? estadistica_maniobra.actual_asistida.tiempo_parcial : "-" %}
                                 <li><a href="#">Tiempo parcial:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_asistida.cant_alertas) ? estadistica_maniobra.actual_asistida.cant_alertas : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.cant_alertas) ? estadistica_maniobra.actual_asistida.cant_alertas : "-" %}
                                 <li><a href="#">Cant. Alertas:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
-                                {% set valor = (estadistica_maniobra.actual_asistida.promedio_uh) ? estadistica_maniobra.actual_asistida.promedio_uh : "-" %}
+                                {% set valor = (estadistica_maniobra.actual_asistida is defined and estadistica_maniobra.actual_asistida.promedio_uh) ? estadistica_maniobra.actual_asistida.promedio_uh : "-" %}
                                 <li><a href="#">Prom. Unidad/h:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
                             </ul>
