@@ -7,7 +7,9 @@ var io          = require('socket.io')(server);
 var watch       = require('node-watch');
 var fs          = require('fs');
 var compression = require('compression')
+var request     = require('request');
 
+var config      = require('./config');
 
 const BASE_ARCHIVOS = '/srv/data/';
 
@@ -28,29 +30,29 @@ app.use(compression());
  * @param grafica El tipo de grafica que se busca
  *
  */
-app.get('/:equipo/:grafica', function (req, res) {
+app.get('/historico', function (req, res) {
 
-  var equipo  = req.params.equipo;
-  var grafica = req.params.grafica;
+  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Cache-Control', 'no-cache');
 
-  var archivo = BASE_ARCHIVOS+grafica+'.'+equipo;
+  //console.log(req.query);
 
-  fs.readFile(archivo, 'utf8', function(err, data) {
+  request({
+    uri: config.historico_script,
+    method: "POST",
+    form: req.query
+  }, function(error, response, body) {
 
-    res.setHeader('Content-Type', 'application/json')
-    res.setHeader('Cache-Control', 'no-cache');
+      if (!error && response.statusCode == 200){
+        res.write(body);
 
-    if( err ){
-      console.log(err)
-    }
-    else{
-      res.write(data);
+        // !!! this is the important part
+        res.flush()
 
-      // !!! this is the important part
-      res.flush()
-
-      res.end();
-    }
+        res.end();
+      }else{
+        res.status(500).send('{ "status": "error" , "error" : "'+ error + '" }');
+      }
   });
 
 });

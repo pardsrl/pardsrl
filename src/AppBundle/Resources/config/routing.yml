@@ -34,13 +34,14 @@ app_intervencion:
         resource: "@AppBundle/Resources/config/routing/intervencion.yml"
         prefix:   /intervenciones
 
-#app_mensajes:
-#        resource: "@AppBundle/Resources/config/routing/mensajes.yml"
-#        prefix:   /mensajes
 
 app_novedades:
         resource: "@AppBundle/Resources/config/routing/novedad.yml"
         prefix:   /novedades
+
+app_estadisticas:
+        resource: "@AppBundle/Resources/config/routing/estadistica.yml"
+        prefix:   /estadisticas
 
 dashboard:
     path: /

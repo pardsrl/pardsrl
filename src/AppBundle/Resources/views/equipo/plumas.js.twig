@@ -41,19 +41,23 @@ function cargarDatosTrPl(event) {
 
 }
 
-function cargarDatosHstpl(event){
+const URL_HISTORICO  = "http://"+server.getBaseWs()+"/historico";
 
-    var hstpl = event.target;
+const desde_original = {{ fechaInicioIntervencion | date('U') }} * 1000;
 
-    recargarHstpl(hstpl);
+const hasta_original = {{ "now" |date("U") }} * 1000;
 
-    //consfiguro para que se recargue cada 5 minutos.
-    setInterval(function() { recargarHstpl(hstpl); },300000);
+var params = {
+    "equipo"     : "{{ equipo.webSocketNamespace }}",
+    "tipo"       : 0,
+    "condicion"  : 1,
+    "resolucion" : 200,
+    "fecha_pozo" : {{ fechaInicioIntervencion | date('Ymdhi') }},
+    "desde"      : desde_original,
+    "hasta"      : hasta_original
+};
 
-}
-
-
-function recargarHstpl(hstpl){
+function recargarHstpl(hstpl,min,max){
 
     var anemometro_serie = hstpl.series[0];
     var aparejo_serie    = hstpl.series[1];
@@ -62,14 +66,21 @@ function recargarHstpl(hstpl){
 
     //console.log(websocket_connection);
 
+    params.desde = min;
+
+    params.hasta = max;
+
     hstpl.showLoading('Cargando datos del servidor...');
 
-    $.getJSON("http://"+websocket_connection+"/hstpl", function( data ) {
+    $.getJSON(URL_HISTORICO, params, function( data ) {
 
         anemometro_serie.setData(data.datos.anem,false,false,true);
         aparejo_serie.setData(data.datos.hta,false,false,true);
         llave_serie.setData(data.datos.llave,false,false,true);
         boca_pozo_serie.setData(data.datos.bpozo,false,false,true);
+
+        hstpl.options.navigator.adaptToUpdatedData = false;
+        hstpl.options.navigator.series.data = data.datos.anem;
 
         hstpl.redraw();
         hstpl.hideLoading();
@@ -77,91 +88,146 @@ function recargarHstpl(hstpl){
     });
 }
 
+function afterSetExtremes(e){
+
+    var hstpl = $('#hstpl').highcharts();
+
+    var desde = Math.round(e.min);
+
+    var hasta = Math.round(e.max);
+
+    recargarHstpl(hstpl,desde,hasta);
+}
+
+function cargarDatosHstpl(event){
+
+    var hstpl = event.target;
+
+    recargarHstpl(hstpl,desde_original,hasta_original);
+
+    //configuro para que se recargue cada 5 minutos.
+    //setInterval(function() { recargarHstpl(hstpl); },300000);
+
+}
+
+function inicializarHistoricoPlumas(){
+
+    overlayBox('#hstpl');
+
+    $.getJSON(URL_HISTORICO, params, function( data ) {
+
+        console.log(data.datos.anem.length);
+
+        $('#hstpl').highcharts('StockChart', {
+
+            chart: {
+                events: {
+                    //load: cargarDatosHstpl
+                },
+            },
+            plotOptions: {
+                turboThreshold: 10
+            },
+            rangeSelector: {
+                selected: 2,
+                allButtonsEnabled: true,
+                buttons: [
+                    {
+                        type: 'second',
+                        count: 30,
+                        text: 'sec'
+                    }, {
+                        type: 'minute',
+                        count: 10,
+                        text: 'min'
+                    }, {
+                        type: 'day',
+                        count: 1,
+                        text: 'día'
+                    }, {
+                        type: 'day',
+                        count: 5,
+                        text: '5d'
+                    }
+                ]
+            },
+            xAxis: {
+                events: {
+                    afterSetExtremes: afterSetExtremes
+                },
+                minRange: 900 * 1000 //un minuto
+            },
+            credits: {
+                enabled: false
+            },
+            scrollbar: {
+                liveRedraw: false
+            },
+            navigator: {
+                adaptToUpdatedData: false,
+                series: {
+                    data: data.datos.anem
+                }
+            },
+            series: [
+                {
+                    name: 'Anemómetro',
+                    type: 'line',
+                    dashStyle: 'Dot',
+                    color: '#D8D8D8',
+                    lineWidth: 1,
+                    data: data.datos.anem,
+                    tooltip: {
+                        valueSuffix: ' km/h',
+                        valueDecimals: 2
+                    }
+                }, {
+                    name: 'Aparejo',
+                    data: data.datos.hta,
+                    type: 'line',
+                    color: Highcharts.getOptions().colors[1],
+                    lineWidth: 1,
+                    tooltip: {
+                        valueSuffix: ' klb',
+                        valueDecimals: 2
+                    }
+                }, {
+
+                    name: 'Llave',
+                    data: data.datos.llave,
+                    type: 'line',
+                    marker: {
+                        enabled: false
+                    },
+                    color: Highcharts.getOptions().colors[2],
+                    lineWidth: 1,
+                    dashStyle: 'spline',
+                    tooltip: {
+                        valueSuffix: ' psi',
+                        valueDecimals: 2
+                    }
+
+                }, {
+                    name: 'Boca Pozo',
+                    data: data.datos.bpozo,
+                    type: 'line',
+                    tooltip: {
+                        valueSuffix: ' psi',
+                        valueDecimals: 2
+                    }
+                }
+            ]
+        });
+
+        removeOverlayBox('#hstpl');
+
+    });
+}
 
 $(document).ready(function(){
 
 
-    $('#hstpl').highcharts('StockChart', {
-
-        chart: {
-            events: {
-                load: cargarDatosHstpl
-            },
-        },
-        plotOptions:{
-            turboThreshold: 10
-        },
-        rangeSelector: {
-            selected: 2,
-            allButtonsEnabled: true,
-            buttons: [
-                {
-                    type: 'second',
-                    count: 30,
-                    text: 'sec'
-                },{
-                    type: 'minute',
-                    count: 10,
-                    text: 'min'
-                },{
-                    type: 'day',
-                    count: 1,
-                    text: 'día'
-                },{
-                    type: 'day',
-                    count: 5,
-                    text: '5d'
-                }
-            ]
-        },
-        credits: {
-            enabled: false
-        },
-        series: [
-            {
-                name: 'Anemómetro',
-                type: 'line',
-                dashStyle: 'Dot',
-                color: '#D8D8D8',
-                lineWidth: 1,
-                tooltip: {
-                    valueSuffix: ' km/h',
-                    valueDecimals: 2
-                }
-            }, {
-                name: 'Aparejo',
-                type: 'line',
-                color: Highcharts.getOptions().colors[1],
-                lineWidth: 1,
-                tooltip: {
-                    valueSuffix: ' klb',
-                    valueDecimals: 2
-                }
-            }, {
-
-                name: 'Llave',
-                type: 'line',
-                marker: {
-                    enabled: false
-                },
-                color: Highcharts.getOptions().colors[2],
-                lineWidth: 1,
-                dashStyle: 'spline',
-                tooltip: {
-                    valueSuffix: ' psi',
-                    valueDecimals: 2
-                }
-
-            }, {
-                name: 'Boca Pozo',
-                type: 'line',
-                tooltip: {
-                    valueSuffix: ' psi',
-                    valueDecimals: 2
-                }
-            }
-        ]
-    });
+    inicializarHistoricoPlumas();
 
     $('#trpl').highcharts({
         chart: {

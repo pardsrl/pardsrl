@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Intervencion;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -158,8 +159,41 @@ class EquipoController extends Controller
      */
     public function graficasAction(Request $request, Equipo $equipo){
 
+
+        $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
+
+        $intervencionQb = $intervencionRepository->getUltimasIntervencionesByEquipo($equipo);
+
+        $intervenciones = $intervencionQb->getQuery()->getResult();
+
+
+        $intervenciones = new ArrayCollection($intervenciones);
+
+        $fechaInicioIntervencion = null;
+
+        if(!$intervenciones->isEmpty()){
+
+            $intervencionActual = $intervenciones->first();
+
+            if($intervencionActual->getPozo()->estaAbierto()){
+
+                $fechaInicioIntervencion = $intervencionActual->getFecha();
+
+            }else{
+                //si está cerrado busco la intervencion de apertura
+                $intervencion = $intervenciones->get(1);
+
+                if($intervencion){
+                    $fechaInicioIntervencion = $intervencion->getFecha();
+                }
+
+            }
+
+        }
+
         return $this->render('AppBundle:equipo:graficas.html.twig', array(
-            'equipo'           => $equipo
+            'equipo'           => $equipo,
+            'fechaInicioIntervencion' => $fechaInicioIntervencion
         ));
     }
 

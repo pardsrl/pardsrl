@@ -1,0 +1,19 @@
+estadistica_operaciones_por_equipo:
+    path:     operaciones_por_equipo
+    defaults: { _controller: AppBundle:estadisticaController:operacionesPorEquipo }
+    methods: [GET]
+
+estadistica_operaciones_por_yacimiento:
+    path:     operaciones_por_yacimiento
+    defaults: { _controller: AppBundle:estadisticaController:operacionesPorYacimiento }
+    methods: [GET]
+
+estadistica_promedios_canos_hora:
+    path:     promedios_canos_hora
+    defaults: { _controller: AppBundle:estadisticaController:promediosCanosHora }
+    methods: [GET]
+
+estadistica_factor_tiempo_util:
+    path:     factor_tiempo_util
+    defaults: { _controller: AppBundle:estadisticaController:factorTiempoUtil }
+    methods: [GET]

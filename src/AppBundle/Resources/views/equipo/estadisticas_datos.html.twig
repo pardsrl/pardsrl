@@ -42,7 +42,8 @@
                         <div class="col-md-6">
                             <div style="text-align: center">ACTUAL AUTOMÁTICO</div>
                             <ul class="nav nav-pills nav-stacked">
-                                    {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
+
+                                {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.maniobra) ? estadistica_maniobra.actual_automatica.maniobra : "-" %}
                                 <li><a href="#">Maniobra:<span class="pull-right text-green"><strong> {{ valor }}</strong></span></a></li>
 
                                 {% set valor = (estadistica_maniobra.actual_automatica is defined and estadistica_maniobra.actual_automatica.iniciado) ? estadistica_maniobra.actual_automatica.iniciado : "-" %}
