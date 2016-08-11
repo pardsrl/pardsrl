@@ -57,7 +57,11 @@ var params = {
     "hasta"      : hasta_original
 };
 
-function recargarHstpl(hstpl,min,max){
+var pausado  = false;
+
+function recargarHstpl(min,max){
+
+    var hstpl = $('#hstpl').highcharts();
 
     var anemometro_serie = hstpl.series[0];
     var aparejo_serie    = hstpl.series[1];
@@ -74,39 +78,53 @@ function recargarHstpl(hstpl,min,max){
 
     $.getJSON(URL_HISTORICO, params, function( data ) {
 
+
         anemometro_serie.setData(data.datos.anem,false,false,true);
         aparejo_serie.setData(data.datos.hta,false,false,true);
         llave_serie.setData(data.datos.llave,false,false,true);
         boca_pozo_serie.setData(data.datos.bpozo,false,false,true);
 
-        hstpl.options.navigator.adaptToUpdatedData = false;
-        hstpl.options.navigator.series.data = data.datos.anem;
-
         hstpl.redraw();
         hstpl.hideLoading();
 
+    }).fail(function(jqxhr){
+        //console.log(jqxhr);
     });
 }
 
 function afterSetExtremes(e){
 
-    var hstpl = $('#hstpl').highcharts();
+
+    if (e.trigger){
+        pausado = true;
+        //si la seleccion se originó desde un boton
+        if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
+            pausado = false;
+        }
+    }
+
+
+    //console.log(pausado);
 
     var desde = Math.round(e.min);
 
     var hasta = Math.round(e.max);
 
-    recargarHstpl(hstpl,desde,hasta);
+    recargarHstpl(desde,hasta);
 }
 
-function cargarDatosHstpl(event){
-
-    var hstpl = event.target;
-
-    recargarHstpl(hstpl,desde_original,hasta_original);
+function establecerIntervaloRecarga(event){
 
     //configuro para que se recargue cada 5 minutos.
-    //setInterval(function() { recargarHstpl(hstpl); },300000);
+    setInterval(function() {
+        if(!pausado) {
+            var tiempo_actual = new Date().getTime();
+
+            //console.log(tiempo_actual);
+
+            recargarHstpl(desde_original, tiempo_actual);
+        }
+    },300000);
 
 }
 
@@ -122,14 +140,14 @@ function inicializarHistoricoPlumas(){
 
             chart: {
                 events: {
-                    //load: cargarDatosHstpl
+                    load: establecerIntervaloRecarga
                 },
             },
             plotOptions: {
                 turboThreshold: 10
             },
             rangeSelector: {
-                selected: 2,
+                selected: 4,
                 allButtonsEnabled: true,
                 buttons: [
                     {
@@ -148,8 +166,15 @@ function inicializarHistoricoPlumas(){
                         type: 'day',
                         count: 5,
                         text: '5d'
+                    },
+                    {
+                        type: 'all',
+                        text: 'completo'
                     }
-                ]
+                ],
+                buttonTheme: {
+                    width: null
+                }
             },
             xAxis: {
                 events: {
@@ -220,7 +245,6 @@ function inicializarHistoricoPlumas(){
         });
 
         removeOverlayBox('#hstpl');
-
     });
 }
 
