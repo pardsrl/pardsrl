@@ -244,13 +244,17 @@ function inicializarHistoricoManiobras() {
                     data: data.datos.mtv,
                     yAxis: 0,
                     tooltip: {
-                        valueSuffix: ' '
+                        valueSuffix: ' ',
+                        valueDecimals: 2
                     }
                 }, {
                     name: 'Presion en B Pozo',
                     data: data.datos.pbp,
                     type: 'line',
                     yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }, {
 
                     name: 'Viento mayor a 45 Km/h',
@@ -266,6 +270,9 @@ function inicializarHistoricoManiobras() {
                     type: 'line',
                     data: data.datos.adef,
                     yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }, {
                     name: 'Ajuste exesivo',
                     type: 'line',
@@ -276,11 +283,17 @@ function inicializarHistoricoManiobras() {
                     type: 'line',
                     data: data.datos.tmay,
                     yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }, {
                     name: 'Presion en B Pozo elevada',
                     type: 'line',
                     data: data.datos.ppel,
                     yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }
             ]
         });
