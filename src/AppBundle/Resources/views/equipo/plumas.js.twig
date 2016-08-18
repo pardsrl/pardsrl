@@ -41,23 +41,17 @@ function cargarDatosTrPl(event) {
 
 }
 
-const URL_HISTORICO  = "http://"+server.getBaseWs()+"/historico";
-
-const desde_original = {{ fechaInicioIntervencion | date('U') }} * 1000;
-
-const hasta_original = {{ "now" |date("U") }} * 1000;
-
-var params = {
+var paramsHstpl = {
     "equipo"     : "{{ equipo.webSocketNamespace }}",
-    "tipo"       : 0,
+    "tipo"       : PARAM_PLUMAS,
     "condicion"  : 1,
     "resolucion" : 200,
     "fecha_pozo" : {{ fechaInicioIntervencion | date('Ymdhi') }},
-    "desde"      : desde_original,
-    "hasta"      : hasta_original
+    "desde"      : DESDE_ORIGINAL,
+    "hasta"      : HASTA_ORIGINAL
 };
 
-var pausado  = false;
+var pausadoHstpl  = false;
 
 function recargarHstpl(min,max){
 
@@ -70,13 +64,13 @@ function recargarHstpl(min,max){
 
     //console.log(websocket_connection);
 
-    params.desde = min;
+    paramsHstpl.desde = min;
 
-    params.hasta = max;
+    paramsHstpl.hasta = max;
 
     hstpl.showLoading('Cargando datos del servidor...');
 
-    $.getJSON(URL_HISTORICO, params, function( data ) {
+    $.getJSON(URL_HISTORICO, paramsHstpl, function( data ) {
 
 
         anemometro_serie.setData(data.datos.anem,false,false,true);
@@ -92,19 +86,19 @@ function recargarHstpl(min,max){
     });
 }
 
-function afterSetExtremes(e){
+function afterSetExtremesHstpl(e){
 
 
     if (e.trigger){
-        pausado = true;
+        pausadoHstpl = true;
         //si la seleccion se originó desde un boton
         if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
-            pausado = false;
+            pausadoHstpl = false;
         }
     }
 
 
-    //console.log(pausado);
+    //console.log(pausadoHstpl);
 
     var desde = Math.round(e.min);
 
@@ -113,16 +107,16 @@ function afterSetExtremes(e){
     recargarHstpl(desde,hasta);
 }
 
-function establecerIntervaloRecarga(event){
+function establecerIntervaloRecargaHstpl(event){
 
     //configuro para que se recargue cada 5 minutos.
     setInterval(function() {
-        if(!pausado) {
+        if(!pausadoHstpl) {
             var tiempo_actual = new Date().getTime();
 
             //console.log(tiempo_actual);
 
-            recargarHstpl(desde_original, tiempo_actual);
+            recargarHstpl(DESDE_ORIGINAL, tiempo_actual);
         }
     },300000);
 
@@ -132,15 +126,15 @@ function inicializarHistoricoPlumas(){
 
     overlayBox('#hstpl');
 
-    $.getJSON(URL_HISTORICO, params, function( data ) {
+    $.getJSON(URL_HISTORICO, paramsHstpl, function( data ) {
 
-        console.log(data.datos.anem.length);
+        //console.log(data.datos.anem.length);
 
         $('#hstpl').highcharts('StockChart', {
 
             chart: {
                 events: {
-                    load: establecerIntervaloRecarga
+                    load: establecerIntervaloRecargaHstpl
                 },
             },
             plotOptions: {
@@ -151,10 +145,6 @@ function inicializarHistoricoPlumas(){
                 allButtonsEnabled: true,
                 buttons: [
                     {
-                        type: 'second',
-                        count: 30,
-                        text: 'sec'
-                    }, {
                         type: 'minute',
                         count: 10,
                         text: 'min'
@@ -178,7 +168,7 @@ function inicializarHistoricoPlumas(){
             },
             xAxis: {
                 events: {
-                    afterSetExtremes: afterSetExtremes
+                    afterSetExtremes: afterSetExtremesHstpl
                 },
                 minRange: 900 * 1000 //un minuto
             },

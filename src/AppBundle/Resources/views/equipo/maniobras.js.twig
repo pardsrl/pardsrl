@@ -1,6 +1,6 @@
-var trman;
+function cargarDatosTrMan(event){
 
-function cargarDatosTrMan(){
+    var trman = event.target;
 
     socket.on('trman', function (data) {
 
@@ -32,7 +32,7 @@ function cargarDatosTrMan(){
                 var ajuste_def = item.adef;
                 var ajuste_exc = item.aexe;
                 var tension    = item.tmay;
-                //var prb_elev   = Number(item.);
+                var prb_elev   = item.ppel;
 
 
                 vb_serie.addPoint([tiempo,vb],false,shift_vb);
@@ -41,7 +41,7 @@ function cargarDatosTrMan(){
                 ajuste_def_serie.addPoint([tiempo,ajuste_def],false,shift_ajuste_def);
                 ajuste_exc_serie.addPoint([tiempo,ajuste_exc],false,shift_ajuste_exc);
                 tension_serie.addPoint([tiempo,tension],false,shift_tension);
-                //prb_elev_serie.addPoint([tiempo,prb_elev],false,shift_prb_elev);
+                prb_elev_serie.addPoint([tiempo,prb_elev],false,shift_prb_elev);
 
             });
 
@@ -54,13 +54,244 @@ function cargarDatosTrMan(){
     });
 }
 
+var paramsHstman = {
+    "equipo"     : "{{ equipo.webSocketNamespace }}",
+    "tipo"       : PARAM_MANIOBRAS,
+    "condicion"  : 1,
+    "resolucion" : 200,
+    "fecha_pozo" : {{ fechaInicioIntervencion | date('Ymdhi') }},
+    "desde"      : DESDE_ORIGINAL,
+    "hasta"      : HASTA_ORIGINAL
+};
+
+var pausadoHstman  = false;
+
+function recargarHstman(min,max){
+
+    var hstman = $('#hstman').highcharts();
+
+    var vb_serie            = hstman.series[0];
+    var prb_pozo_serie      = hstman.series[1];
+    var viento_serie        = hstman.series[2];
+    var ajuste_def_serie    = hstman.series[3];
+    var ajuste_exc_serie    = hstman.series[4];
+    var tension_serie       = hstman.series[5];
+    var prb_elev_serie      = hstman.series[6];
+
+    //console.log(websocket_connection);
+
+    paramsHstman.desde = min;
+
+    paramsHstman.hasta = max;
+
+    hstman.showLoading('Cargando datos del servidor...');
+
+    $.getJSON(URL_HISTORICO, paramsHstman, function( data ) {
+
+        vb_serie.setData(data.datos.mtv,false,false,true);
+        prb_pozo_serie.setData(data.datos.pbp,false,false,true);
+        viento_serie.setData(data.datos.vto,false,false,true);
+        ajuste_def_serie.setData(data.datos.adef,false,false,true);
+        ajuste_exc_serie.setData(data.datos.aexe,false,false,true);
+        tension_serie.setData(data.datos.tmay,false,false,true);
+        prb_elev_serie.setData(data.datos.ppel,false,false,true);
+
+
+        hstman.redraw();
+        hstman.hideLoading();
+
+    }).fail(function(jqxhr){
+        //console.log(jqxhr);
+    });
+}
+
+function afterSetExtremesHstman(e){
+
+
+    if (e.trigger){
+        pausadoHstman = true;
+        //si la seleccion se originó desde un boton
+        if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
+            pausadoHstman = false;
+        }
+    }
+
+    //console.log(pausadoHstman);
+
+    var desde = Math.round(e.min);
+
+    var hasta = Math.round(e.max);
+
+    recargarHstman(desde,hasta);
+}
+
+function establecerIntervaloRecargaHstman(event){
+
+    //configuro para que se recargue cada 5 minutos.
+    setInterval(function() {
+        if(!pausadoHstman) {
+            var tiempo_actual = new Date().getTime();
+
+            //console.log(tiempo_actual);
+
+            recargarHstman(DESDE_ORIGINAL, tiempo_actual);
+        }
+    },300000);
+
+}
+
+function inicializarHistoricoManiobras() {
+
+    overlayBox('#hstman');
+
+    $.getJSON(URL_HISTORICO, paramsHstman, function (data) {
+
+        $('#hstman').highcharts('StockChart', {
+
+            chart: {
+                events: {
+                    load: establecerIntervaloRecargaHstman
+                }
+            },
+            rangeSelector: {
+                selected: 4,
+                allButtonsEnabled: true,
+                buttons: [
+                    {
+                        type: 'minute',
+                        count: 10,
+                        text: 'min'
+                    }, {
+                        type: 'day',
+                        count: 1,
+                        text: 'día'
+                    }, {
+                        type: 'day',
+                        count: 5,
+                        text: '5d'
+                    },
+                    {
+                        type: 'all',
+                        text: 'completo'
+                    }
+                ],
+                buttonTheme: {
+                    width: null
+                }
+            },
+            plotOptions: {
+                turboThreshold: 10,
+                series: {
+                    lineWidth: 2,
+                    states: {
+                        hover: {
+                            lineWidth: 3,
+                        },
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            scrollbar: {
+                liveRedraw: false
+            },
+            navigator: {
+                adaptToUpdatedData: false,
+                series: {
+                    data: data.datos.anem
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                events: {
+                    afterSetExtremes: afterSetExtremesHstman
+                },
+                minRange: 900 * 1000 //un minuto
+            },
+            yAxis: [
+                { // Primary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Valores',
+                        enabled: false
+                    },
+                    labels: {
+                        format: '{value}',
+                        enabled: false
+                    },
+                    min: 0,
+                    max: 60
+                }
+            ],
+            tooltip: {
+                shared: true
+            },
+
+            series: [
+                {
+                    name: 'Mov Tbg o Vb',
+                    type: 'line',
+                    data: data.datos.mtv,
+                    yAxis: 0,
+                    tooltip: {
+                        valueSuffix: ' '
+                    }
+                }, {
+                    name: 'Presion en B Pozo',
+                    data: data.datos.pbp,
+                    type: 'line',
+                    yAxis: 0,
+                }, {
+
+                    name: 'Viento mayor a 45 Km/h',
+                    type: 'line',
+                    data: data.datos.vto,
+                    yAxis: 0,
+                }, {
+                    name: 'Ajuste deficiente',
+                    type: 'line',
+                    data: data.datos.adef,
+                    yAxis: 0,
+                }, {
+                    name: 'Ajuste exesivo',
+                    type: 'line',
+                    data: data.datos.aexe,
+                    yAxis: 0,
+                }, {
+                    name: 'Tension mayor a 120 Klb',
+                    type: 'line',
+                    data: data.datos.tmay,
+                    yAxis: 0,
+                }, {
+                    name: 'Presion en B Pozo elevada',
+                    type: 'line',
+                    data: data.datos.ppel,
+                    yAxis: 0,
+                }
+            ]
+        });
+
+        removeOverlayBox('#hstman');
+    });
+}
 
 $(document).ready(function(){
 
-    trman = new Highcharts.Chart({
+    inicializarHistoricoManiobras();
+
+    $('#trman').highcharts({
         chart: {
             zoomType: 'xy',
-            renderTo: 'trman',
             animation: false,
             events: {
                 load: cargarDatosTrMan
@@ -125,6 +356,7 @@ $(document).ready(function(){
             {
                 name: 'Mov Tbg o Vb',
                 type: 'line',
+                color: '#000000',
                 yAxis: 0,
                 tooltip: {
                     valueSuffix: ' '
@@ -132,27 +364,33 @@ $(document).ready(function(){
             }, {
                 name: 'Presion en B Pozo',
                 type: 'line',
+                color: '#40DFFF',
                 yAxis: 0,
             }, {
 
                 name: 'Viento mayor a 45 Km/h',
                 type: 'line',
+                color: '#CBD2D4',
                 yAxis: 0,
             }, {
                 name: 'Ajuste deficiente',
                 type: 'line',
+                color: '#FFBB00',
                 yAxis: 0,
             }, {
                 name: 'Ajuste exesivo',
                 type: 'line',
+                color: '#FC3A1C',
                 yAxis: 0,
             }, {
                 name: 'Tension mayor a 120 Klb',
                 type: 'line',
+                color: '#8612A6',
                 yAxis: 0,
             }, {
                 name: 'Presion en B Pozo elevada',
                 type: 'line',
+                color: '#197082',
                 yAxis: 0,
             }
         ]
