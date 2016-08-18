@@ -181,18 +181,18 @@ function inicializarHistoricoManiobras() {
             },
             plotOptions: {
                 turboThreshold: 10,
-                series: {
-                    lineWidth: 2,
-                    states: {
-                        hover: {
-                            lineWidth: 3,
-                        },
-                    },
-                    marker: {
-                        enabled: false
-                    },
-                    enableMouseTracking: false
-                }
+                {#series: {#}
+                    {#lineWidth: 2,#}
+                    {#states: {#}
+                        {#hover: {#}
+                            {#lineWidth: 3,#}
+                        {#},#}
+                    {#},#}
+                    {#marker: {#}
+                        {#enabled: false#}
+                    {#},#}
+                    {#enableMouseTracking: false#}
+                {#}#}
             },
             title: {
                 text: ''
@@ -257,6 +257,10 @@ function inicializarHistoricoManiobras() {
                     type: 'line',
                     data: data.datos.vto,
                     yAxis: 0,
+                    tooltip: {
+                        valueSuffix: ' Km/h',
+                        valueDecimals: 2
+                    }
                 }, {
                     name: 'Ajuste deficiente',
                     type: 'line',
