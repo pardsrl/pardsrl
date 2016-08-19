@@ -241,58 +241,64 @@ function inicializarHistoricoManiobras() {
                 {
                     name: 'Mov Tbg o Vb',
                     type: 'line',
+                    color: '#000000',
                     data: data.datos.mtv,
                     yAxis: 0,
                     tooltip: {
                         valueSuffix: ' ',
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }, {
                     name: 'Presion en B Pozo',
                     data: data.datos.pbp,
                     type: 'line',
+                    color: '#40DFFF',
                     yAxis: 0,
                     tooltip: {
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }, {
 
                     name: 'Viento mayor a 45 Km/h',
                     type: 'line',
+                    color: '#CBD2D4',
                     data: data.datos.vto,
                     yAxis: 0,
                     tooltip: {
-                        valueSuffix: ' Km/h',
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }, {
                     name: 'Ajuste deficiente',
                     type: 'line',
+                    color: '#FFBB00',
                     data: data.datos.adef,
                     yAxis: 0,
                     tooltip: {
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }, {
                     name: 'Ajuste exesivo',
                     type: 'line',
+                    color: '#FC3A1C',
                     data: data.datos.aexe,
                     yAxis: 0,
                 }, {
                     name: 'Tension mayor a 120 Klb',
                     type: 'line',
+                    color: '#8612A6',
                     data: data.datos.tmay,
                     yAxis: 0,
                     tooltip: {
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }, {
                     name: 'Presion en B Pozo elevada',
                     type: 'line',
+                    color: '#197082',
                     data: data.datos.ppel,
                     yAxis: 0,
                     tooltip: {
-                        valueDecimals: 2
+                        valueDecimals: 0
                     }
                 }
             ]
