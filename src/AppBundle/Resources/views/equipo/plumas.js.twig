@@ -88,13 +88,15 @@ function recargarHstpl(min,max){
 
 function afterSetExtremesHstpl(e){
 
-
     if (e.trigger){
         pausadoHstpl = true;
         //si la seleccion se originó desde un boton
         if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
             pausadoHstpl = false;
         }
+    }else{
+        //en el caso de que se lance sin ningun evento permitido (boton,navigator, etc)
+        return false;
     }
 
 
@@ -136,6 +138,9 @@ function inicializarHistoricoPlumas(){
                 events: {
                     load: establecerIntervaloRecargaHstpl
                 },
+            },
+            legend: {
+                enabled: true
             },
             plotOptions: {
                 turboThreshold: 10

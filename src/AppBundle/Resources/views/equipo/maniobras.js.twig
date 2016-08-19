@@ -114,6 +114,9 @@ function afterSetExtremesHstman(e){
         if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
             pausadoHstman = false;
         }
+    }else{
+        //en el caso de que se lance sin ningun evento permitido (boton,navigator, etc)
+        return false;
     }
 
     //console.log(pausadoHstman);
@@ -152,6 +155,9 @@ function inicializarHistoricoManiobras() {
                 events: {
                     load: establecerIntervaloRecargaHstman
                 }
+            },
+            legend: {
+                enabled: true
             },
             rangeSelector: {
                 selected: 4,
