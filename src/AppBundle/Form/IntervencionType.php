@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -36,10 +37,9 @@ class IntervencionType extends AbstractType
                 'date_format' => 'dd/MM/yyyy',
                 'label' => 'Fecha'
             ))
-            ->add('equipo')
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
             $intervencion = $event->getData();
 
             $form = $event->getForm();
@@ -54,13 +54,20 @@ class IntervencionType extends AbstractType
                     'class' => 'AppBundle\Entity\Equipo',
                     'data' => $equipoUltimaIntervencion
                 ))
-                ->add('equipoDesc', TextType::class,array(
-                    'label'    => 'Equipo',
-                    'disabled' => true,
-                    'mapped'   => false,
-                    'data'     => $equipoUltimaIntervencion->getNombreCompleto()
+                    ->add('equipoDesc', TextType::class,array(
+                        'label'    => 'Equipo',
+                        'disabled' => true,
+                        'mapped'   => false,
+                        'data'     => $equipoUltimaIntervencion->getNombreCompleto()
+                    ));
+            }else{
+                $form->add('equipo',EntityType::class,array(
+                    'class' => 'AppBundle\Entity\Equipo',
+                    'choices' => $options['equipos_elegibles']
                 ));
             }
+
+
         });
     }
 
@@ -70,7 +77,8 @@ class IntervencionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Intervencion'
+            'data_class' => 'AppBundle\Entity\Intervencion',
+            'equipos_elegibles' => null
         ));
     }
 }

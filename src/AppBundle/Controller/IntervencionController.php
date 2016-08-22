@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Intervencion;
 use AppBundle\Entity\Pozo;
 use AppBundle\Form\IntervencionType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +24,25 @@ class IntervencionController extends Controller
     public function indexAction(Request $request, Pozo $pozo)
     {
 
+        $intervencionRep = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
+
         $intervencion = $this->inicializarIntervencion($pozo);
 
+        $equiposActivos = $this->getDoctrine()->getRepository('AppBundle:Equipo')->findBy(array('activo' => true));
+
+        $equiposElegibles = new ArrayCollection();
+
+        foreach ($equiposActivos as $equipo){
+            $ultimaIntervencion = $intervencionRep->getUltimaIntervencionByEquipo($equipo)->getQuery()->getOneOrNullResult();
+
+            //si el equipo no tiene intervenciones o si la intervencion que tiene fue un cierre
+            if(!$ultimaIntervencion || $ultimaIntervencion->getAccion() == 1){
+                $equiposElegibles->add($equipo);
+            }
+        }
+
         $form = $this->createForm(IntervencionType::class, $intervencion, array(
+            'equipos_elegibles' => $equiposElegibles,
             'action' => $this->generateUrl('intervencion_nueva', array('id' => $pozo->getId())),
             'method' => 'POST',
         ));
