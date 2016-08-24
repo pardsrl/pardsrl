@@ -52,5 +52,26 @@ class IntervencionRepository extends \Doctrine\ORM\EntityRepository
         return $intervencionesQb;
     }
 
+    public function getIntervencionesByEquipos($equipos){
+
+        $qb = $this->getQb()
+            ->innerJoin('interv.equipo','equipo')
+            ->where('equipo IN (:equipos)')
+            ->orderBy('interv.fecha','DESC')
+            ->orderBy('interv.fechaCreacion','DESC');
+
+        $qb->setParameter('equipos',$equipos);
+
+        return $qb;
+    }
+
+    public function getIntervencionesCerradasByEquipo($equipos){
+
+        $qb = $this->getIntervencionesByEquipos($equipos);
+
+        $qb->andWhere('interv.accion = 1');
+
+        return $qb;
+    }
 
 }

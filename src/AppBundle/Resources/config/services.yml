@@ -1,0 +1,4 @@
+services:
+    manager.estadistica:
+        class:        AppBundle\Services\EstadisticaManager
+        arguments:    [@doctrine.orm.entity_manager]

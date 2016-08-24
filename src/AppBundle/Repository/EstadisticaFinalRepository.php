@@ -10,4 +10,104 @@ namespace AppBundle\Repository;
  */
 class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getQb()
+    {
+        return $this->createQueryBuilder('ef');
+    }
+
+
+    public function getDistribucionOperacionesPorEquipo($equipos,$desde,$hasta){
+
+        $qb = $this->getQb()
+            ->select('equipo.id','equipo.nombre','compania.acronimo','count(interv.id) cant')
+            ->innerJoin('ef.intervencion','interv')
+            ->innerJoin('interv.equipo','equipo')
+            ->innerJoin('equipo.compania','compania')
+            ->where('equipo IN (:equipos)')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('interv.equipo')
+            ->setParameter('equipos',$equipos)
+            ->setParameter('desde',$desde)
+            ->setParameter('hasta',$hasta);
+
+        return $qb;
+    }
+
+
+    public function getDistribucionOperacionesPorYacimiento($equipos,$desde,$hasta){
+
+        $qb = $this->getQb()
+            ->select('equipo.id','yacimiento.nombre','count(interv.id) cant')
+            ->innerJoin('ef.intervencion','interv')
+            ->innerJoin('interv.pozo','pozo')
+            ->innerJoin('interv.equipo','equipo')
+            ->innerJoin('pozo.yacimiento','yacimiento')
+            ->where('equipo IN (:equipos)')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('pozo.yacimiento')
+            ->setParameter('equipos',$equipos)
+            ->setParameter('desde',$desde)
+            ->setParameter('hasta',$hasta);
+
+        return $qb;
+
+    }
+
+    public function getPromediosCanosHora($equipos, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.promTbg) promTbg')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('equipo.compania', 'compania')
+            ->where('equipo IN (:equipos)')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('interv.equipo')
+            ->setParameter('equipos', $equipos)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
+
+    public function getPromedioVarillasHora($equipos, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.promVb) promVb')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('equipo.compania', 'compania')
+            ->where('equipo IN (:equipos)')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('interv.equipo')
+            ->setParameter('equipos', $equipos)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
+    public function getFactorTiempoUtil($equipos, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.ftu) ftu')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('equipo.compania', 'compania')
+            ->where('equipo IN (:equipos)')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('interv.equipo')
+            ->setParameter('equipos', $equipos)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
+
 }
