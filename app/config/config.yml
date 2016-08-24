@@ -37,6 +37,8 @@ framework:
 twig:
     globals:
          node_server: "%node_server%"
+         mapbox_access_token: "%mapbox_access_token%"
+
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
