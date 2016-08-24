@@ -1,11 +1,71 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+
+    <script type="application/javascript">
+
+        $(document).ready(function(){
+
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(dibujarMapa);
+            } else {
+                alert('Por favor utilice un navegador que soporte geolocalización.');
+            }
+
+
+            function dibujarMapa(position) {
+
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+
+                L.mapbox.accessToken = "{{ mapbox_access_token }}";
+
+                var map = L.mapbox.map('map', 'mapbox.streets')
+                        .setView([lat, long], 4);
+
+                var latlng = L.latLng(350, 350);
+
+                var pozoMarker = new L.marker(latlng).addTo(map);
+
+
+                $('.lat-selector').blur(function(){
+                    latlng.lat = $(this).val();
+                    pozoMarker.update();
+                    map.setView(latlng, 13);
+                });
+
+                $('.lng-selector').blur(function(){
+                    latlng.lng = $(this).val();
+                    pozoMarker.update();
+                    map.setView(latlng, 13);
+                });
+
+
+            }
+
+
+
+        });
+    </script>
+
+{% endblock %}
 
 {% set __title = 'Nuevo Pozo' %}
 
 {% block content %}
     <div class="box box-default">
         <div class="box-body">
+
             <div class="row">
                 <div class="col-md-6">
                     <!-- form start -->
@@ -18,8 +78,13 @@
 
                     {{ form_end(form) }}
                 </div>
+                <div class="col-md-6" style="height: 400px">
+                    <div id='map' style='width: 90%; height: 90%;'></div>
+                </div>
             </div>
         </div>
+
+
     </div>
 
 {% endblock %}

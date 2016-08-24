@@ -30,8 +30,12 @@ class PozoType extends AbstractType
                 'choices_as_values' => true,
                 'label' => 'Sistema de extracción'
             ))
-            ->add('latitud')
-            ->add('longitud')
+            ->add('latitud',null,array(
+                'attr' => array('class'=>'lat-selector')
+            ))
+            ->add('longitud',null,array(
+                'attr' => array('class'=>'lng-selector')
+            ))
             ->add('activo')
         ;
     }
