@@ -49,6 +49,13 @@
     <script src="{{ asset('dashboard/ie8/respond.min.js') }}"></script>
     <![endif]-->
     {% block stylesheets %}{% endblock %}
+
+    {% block header_javascript %}
+        <!-- jQuery 2.1.4 -->
+        <script src="{{ asset('dashboard_v2/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="{{ asset('dashboard_v2/bootstrap/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
 </head>
 
 
@@ -78,38 +85,8 @@
                 <ul class="nav navbar-nav">
 
                     {% set avatar = (app.user.persona.sexo == 'M') ? 'avatar5.png' : 'avatar2.png' %}
-                    <!-- Messages: style can be found in dropdown.less-->
-                    {#<li class="dropdown messages-menu">#}
-                        {#<!-- Menu toggle button -->#}
-                        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
-                            {#<i class="fa fa-envelope-o"></i>#}
-                            {#<span class="label label-success">4</span>#}
-                        {#</a>#}
-                        {#<ul class="dropdown-menu">#}
-                            {#<li class="header">Tienes 4 mensajes</li>#}
-                            {#<li>#}
-                                {#<!-- inner menu: contains the messages -->#}
-                                {#<ul class="menu">#}
-                                    {#<li><!-- start message -->#}
-                                        {#<a href="#">#}
-                                            {#<div class="pull-left">#}
-                                                {#<!-- User Image -->#}
-                                                {#<img src="{{ asset('dashboard_v2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">#}
-                                            {#</div>#}
-                                            {#<!-- Message title and timestamp -->#}
-                                            {#<h4>#}
-                                                {#Equipo de soporte#}
-                                                {#<small><i class="fa fa-clock-o"></i> 5 mins</small>#}
-                                            {#</h4>#}
-                                            {#<!-- The message -->#}
-                                            {#<p>Que tal les ha parecido la demo?<br> Creo que les va a gustar ;)</p>#}
-                                        {#</a>#}
-                                    {#</li><!-- end message -->#}
-                                {#</ul><!-- /.menu -->#}
-                            {#</li>#}
-                            {#<li class="footer"><a href="#">Ver todos los mensajes</a></li>#}
-                        {#</ul>#}
-                    {#</li><!-- /.messages-menu -->#}
+
+                    {#{{ render(controller('AppBundle:Mensajes:notificaciones')) }}#}
 
                     {#<!-- Notifications Personales Menu -->#}
                     {#{{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}#}
@@ -150,6 +127,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
+                                    {#<a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>#}
                                     <a href="#" class="btn btn-default btn-flat">Mi Perfil</a>
                                 </div>
                                 <div class="pull-right">
@@ -180,16 +158,16 @@
                 </div>
             </div>
 
-            <!-- search form (Optional) -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Buscar...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-                </div>
-            </form>
-            <!-- /.search form -->
+            {#<!-- search form (Optional) -->#}
+            {#<form action="#" method="get" class="sidebar-form">#}
+                {#<div class="input-group">#}
+                    {#<input type="text" name="q" class="form-control" placeholder="Buscar...">#}
+              {#<span class="input-group-btn">#}
+                {#<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>#}
+              {#</span>#}
+                {#</div>#}
+            {#</form>#}
+            {#<!-- /.search form -->#}
 
             <!-- Sidebar Menu -->
             {{ knp_menu_render('AppBundle:Builder:mainMenu', {'currentClass': 'active', 'ancestorClass':'active','template': 'AppBundle:Menu:knp_menu.html.twig'}) }}
@@ -208,10 +186,10 @@
                     {{ __title }} {% if __descripcion_opcional is defined %}<small>{{ __descripcion_opcional }}</small>{%  endif %}
                 </h1>
             {% endif %}
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
-            </ol>
+            {#<ol class="breadcrumb">#}
+                {#<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>#}
+                {#<li class="active">Here</li>#}
+            {#</ol>#}
         </section>
 
         <!-- Main content -->
@@ -237,10 +215,7 @@
 </div><!-- ./wrapper -->
 
 {% block javascripts %}
-    <!-- jQuery 2.1.4 -->
-    <script src="{{ asset('dashboard_v2/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="{{ asset('dashboard_v2/bootstrap/js/bootstrap.min.js') }}"></script>
+
     <!-- bootstrap timepicker -->
     <script src="{{ asset('dashboard_v2/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('dashboard_v2/plugins/datepicker/locales/bootstrap-datepicker.es.js') }}"></script>
@@ -254,8 +229,6 @@
 
 
     <script type="text/javascript">{% include 'app.js.twig' %} </script>
-    {#<script src="{{ asset('bundles/app/app.js') }}"></script>#}
-
 
 {% endblock %}
 </body>
