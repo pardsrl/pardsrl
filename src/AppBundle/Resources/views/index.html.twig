@@ -19,20 +19,22 @@
         <div class="col-md-12">
             <div class="box box-warning">
                 <!-- form start -->
-                <form class="form-inline">
+                <form class="form-inline" name="{{ form.vars.name }}" >
                     <div class="box-body">
                         <div id="form-rangos-intervenciones">
                             <div class="form-group">
-                                <label for="exampleInputName2">Desde</label>
-                                <input ype="text" class="datepicker" id="exampleInputName2" placeholder="">
+                                <label for="">Desde</label>
+                                {{ form_widget(form.desde) }}
+                                {#<input ype="text" class="datepicker" id="exampleInputName2" placeholder="">#}
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail2">Hasta</label>
-                                <input type="text" class="datepicker" id="exampleInputEmail2" placeholder="">
+                                <label for="">Hasta</label>
+                                {{ form_widget(form.hasta) }}
                             </div>
                             <button type="submit" class="btn btn-primary">Filtrar</button>
                         </div>
                     </div>
+                    {{ form_end(form) }}
                 </form>
             </div>
         </div>
@@ -41,15 +43,15 @@
 
     <div class="row">
 
-        {{ render(controller('AppBundle:Estadistica:operacionesPorEquipo')) }}
+        {{ render(controller('AppBundle:Estadistica:operacionesPorEquipo', { 'desde': fecha_desde , 'hasta': fecha_hasta } )) }}
 
-        {{ render(controller('AppBundle:Estadistica:operacionesPorYacimiento')) }}
+        {{ render(controller('AppBundle:Estadistica:operacionesPorYacimiento', { 'desde': fecha_desde , 'hasta': fecha_hasta })) }}
 
-        {{ render(controller('AppBundle:Estadistica:promediosCanosHora')) }}
+        {{ render(controller('AppBundle:Estadistica:promediosCanosHora', { 'desde': fecha_desde , 'hasta': fecha_hasta })) }}
 
-        {{ render(controller('AppBundle:Estadistica:factorTiempoUtil')) }}
+        {{ render(controller('AppBundle:Estadistica:factorTiempoUtil', { 'desde': fecha_desde , 'hasta': fecha_hasta })) }}
 
-        {{ render(controller('AppBundle:Estadistica:promediosVarillasHora')) }}
+        {{ render(controller('AppBundle:Estadistica:promediosVarillasHora', { 'desde': fecha_desde , 'hasta': fecha_hasta })) }}
 
     </div><!-- /.row -->
 {% endblock %}

@@ -34,6 +34,9 @@ app_intervencion:
         resource: "@AppBundle/Resources/config/routing/intervencion.yml"
         prefix:   /intervenciones
 
+#app_mensajes:
+#        resource: "@AppBundle/Resources/config/routing/mensajes.yml"
+#        prefix:   /mensajes
 
 app_novedades:
         resource: "@AppBundle/Resources/config/routing/novedad.yml"
@@ -46,7 +49,7 @@ app_estadisticas:
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}
-    methods: [GET]
+    methods: [GET,POST]
 
 #datos_en_vivo:
 #    path:     ajax/datos_en_vivo
