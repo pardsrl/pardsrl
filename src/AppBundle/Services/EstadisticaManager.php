@@ -208,7 +208,7 @@ class EstadisticaManager
 
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
-                    'name' => $promedio['fecha']->format('d-m-Y') . ' ' . $promedio['nombre'],
+                    'name' => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['nombre'],
                     'y'    => floatval($promedio['promTbg'])
                 );
             }
@@ -233,7 +233,7 @@ class EstadisticaManager
 
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
-                    'name' => $promedio['fecha']->format('d-m-Y') . ' ' . $promedio['nombre'],
+                    'name' => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['nombre'],
                     'y'    => floatval($promedio['promVb'])
                 );
             }
@@ -259,7 +259,7 @@ class EstadisticaManager
 
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
-                    'name' => $promedio['fecha']->format('d-m-Y') . ' ' . $promedio['nombre'],
+                    'name' => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['nombre'],
                     'y'    => floatval($promedio['ftu'])
                 );
             }
