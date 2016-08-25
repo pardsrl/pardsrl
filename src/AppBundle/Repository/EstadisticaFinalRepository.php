@@ -133,7 +133,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('interv.fecha','pozo.nombre', 'ef.promTbg promTbg')
+            ->select('interv.fecha','pozo.acronimo', 'ef.promTbg promTbg')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('interv.pozo', 'pozo')
@@ -150,7 +150,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('interv.fecha','pozo.nombre', 'ef.promVb promVb')
+            ->select('interv.fecha','pozo.acronimo', 'ef.promVb promVb')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('interv.pozo', 'pozo')
@@ -167,7 +167,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('interv.fecha','pozo.nombre', 'ef.ftu ftu')
+            ->select('interv.fecha','pozo.acronimo', 'ef.ftu ftu')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('interv.pozo', 'pozo')
