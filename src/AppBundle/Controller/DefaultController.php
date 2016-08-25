@@ -24,7 +24,7 @@ class DefaultController extends Controller
         );
 
         $form = $this->createForm(EstadisticaGeneralFechaFilterType::class,$rangoFechas, array(
-            'method'        => 'GET'
+            'method'        => 'POST'
         ));
 
         $form->handleRequest($request);
