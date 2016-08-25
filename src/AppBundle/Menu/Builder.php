@@ -71,8 +71,13 @@ class Builder implements ContainerAwareInterface
                 )->setExtra('icon', 'fa  fa-cogs');
 
                 $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Estadísticas',
+                    'Estadística Actual',
                     array('route' => 'equipo_estadisticas', 'routeParameters' => array('id' => $equipo->getId()))
+                )->setExtra('icon', 'fa  fa-line-chart');
+
+                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
+                    'Estadísticas Individuales',
+                    array('route' => 'equipo_estadisticas_individuales', 'routeParameters' => array('id' => $equipo->getId()))
                 )->setExtra('icon', 'fa  fa-line-chart');
 
                 $menu[strtoupper($equipo->getNombreCompleto())]->addChild(

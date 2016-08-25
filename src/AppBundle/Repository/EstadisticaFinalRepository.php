@@ -110,4 +110,74 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    public function getDistribucionOperacionesIndividualesPorYacimiento($equipo,$desde,$hasta){
+
+        $qb = $this->getQb()
+            ->select('yacimiento.nombre','count(interv.id) cant')
+            ->innerJoin('ef.intervencion','interv')
+            ->innerJoin('interv.pozo','pozo')
+            ->innerJoin('interv.equipo','equipo')
+            ->innerJoin('pozo.yacimiento','yacimiento')
+            ->where('equipo = :equipo')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->groupBy('pozo.yacimiento')
+            ->setParameter('equipo',$equipo)
+            ->setParameter('desde',$desde)
+            ->setParameter('hasta',$hasta);
+
+        return $qb;
+
+    }
+
+    public function getPromediosIndividualesCanosHora($equipo, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('interv.fecha','pozo.nombre', 'ef.promTbg promTbg')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('interv.pozo', 'pozo')
+            ->where('equipo = :equipo')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->setParameter('equipo', $equipo)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
+    public function getPromediosIndividualesVarillasHora($equipo, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('interv.fecha','pozo.nombre', 'ef.promVb promVb')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('interv.pozo', 'pozo')
+            ->where('equipo = :equipo')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->setParameter('equipo', $equipo)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
+    public function getIndividualesFactorTiempoUtil($equipo, $desde, $hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select('interv.fecha','pozo.nombre', 'ef.ftu ftu')
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('interv.pozo', 'pozo')
+            ->where('equipo = :equipo')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->setParameter('equipo', $equipo)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
 }

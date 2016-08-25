@@ -42,3 +42,9 @@ equipo_estadisticas_datos:
     path: /{equipo_id}/{intervencion_id}/estadisticas_datos
     defaults: { _controller: "AppBundle:Equipo:estadisticasDatos"}
     methods: [GET]
+
+equipo_estadisticas_individuales:
+    path: /{id}/estadisticas_individuales
+    defaults: { _controller: "AppBundle:Equipo:estadisticasIndividuales"}
+    methods: [GET,POST]
+

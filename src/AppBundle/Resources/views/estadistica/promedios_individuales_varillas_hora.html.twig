@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var data = {{ data | raw }};
+
+        $('#prom-varillas-hora').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: ' '
+            },
+            subtitle: {
+                text: ' '
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: ' '
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.1f}'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b><br/>'
+            },
+
+            series: [{
+                name: 'Promedio',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+
+    });
+</script>
+
+<div class="col-md-6">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Promedios de varillas/hora</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="chart">
+                <div id="prom-varillas-hora" style="width:100%; height:300px;"></div>
+            </div>
+        </div><!-- /.box-body -->
+    </div>
+</div><!-- /.col -->

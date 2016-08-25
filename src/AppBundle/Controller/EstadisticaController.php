@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Equipo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -81,6 +82,68 @@ class EstadisticaController extends Controller
 
         return $this->render('AppBundle:estadistica:promedios_varillas_hora.html.twig', array(
             'data' => json_encode($promediosVarillasHora)
+        ));
+    }
+
+
+    public function operacionesIndividualesPorYacimientoAction(Request $request, Equipo $equipo)
+    {
+        $estadisticaManager = $this->get('manager.estadistica');
+
+        $desde = $request->get('desde');
+
+        $hasta = $request->get('hasta');
+
+        $promediosVarillasHora = $estadisticaManager->getDistribucionOperacionesIndividualesPorYacimiento($equipo,$desde,$hasta);
+
+        return $this->render('AppBundle:estadistica:operaciones_individuales_yaciemiento.html.twig', array(
+            'data' => json_encode($promediosVarillasHora)
+        ));
+    }
+
+
+    public function promediosIndividualesCanosHoraAction(Request $request, Equipo $equipo)
+    {
+        $estadisticaManager = $this->get('manager.estadistica');
+
+        $desde = $request->get('desde');
+
+        $hasta = $request->get('hasta');
+
+        $promediosCanosHora = $estadisticaManager->getPromediosIndividualesCanoHora($equipo,$desde,$hasta);
+
+        return $this->render('AppBundle:estadistica:promedios_individuales_canos_hora.html.twig', array(
+            'data' => json_encode($promediosCanosHora)
+        ));
+    }
+
+    public function promediosIndividualesVarillasHoraAction(Request $request, Equipo $equipo)
+    {
+        $estadisticaManager = $this->get('manager.estadistica');
+
+        $desde = $request->get('desde');
+
+        $hasta = $request->get('hasta');
+
+        $promediosCanosHora = $estadisticaManager->getPromediosIndividualesVarillasHora($equipo,$desde,$hasta);
+
+        return $this->render('AppBundle:estadistica:promedios_varillas_hora.html.twig', array(
+            'data' => json_encode($promediosCanosHora)
+        ));
+    }
+
+    public function individualesFactorTiempoUtilAction(Request $request, Equipo $equipo)
+    {
+        $estadisticaManager = $this->get('manager.estadistica');
+
+        $desde = $request->get('desde');
+
+        $hasta = $request->get('hasta');
+
+        $factorTiempoUtil = $estadisticaManager->getIndividualesFactorTiempoUtil($equipo,$desde,$hasta);
+
+        return $this->render('AppBundle:estadistica:individuales_factor_tiempo_util.html.twig', array(
+            'data' => json_encode($factorTiempoUtil)
         ));
     }
 
