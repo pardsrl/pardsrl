@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Intervencion;
+use AppBundle\Form\EstadisticaGeneralFechaFilterType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -304,6 +305,46 @@ class EquipoController extends Controller
             'datos' => $datos,
             'estadistica_maniobra' => $estadisticaManiobra,
         ));
+    }
+
+    /**
+     * Muestra la pantalla de graficas individuales estadisticas para un equipo
+     */
+    public function estadisticasIndividualesAction(Request $request, Equipo $equipo){
+
+        $desde = new \DateTime('now');
+
+        $desde = $desde->modify('-1 year');
+
+        $hasta = new \DateTime('now');
+
+        $rangoFechas = array(
+            'desde' => $desde,
+            'hasta' => $hasta
+        );
+
+        $form = $this->createForm(EstadisticaGeneralFechaFilterType::class,$rangoFechas, array(
+            'method'        => 'POST'
+        ));
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $data = $form->getData();
+
+            $desde = $data['desde'];
+
+            $hasta = $data['hasta'];
+        }
+
+        return $this->render('AppBundle:equipo:estadisticas_individuales.html.twig',array(
+            'form'        => $form->createView(),
+            'equipo'      => $equipo,
+            'fecha_desde' => $desde->format('Y-m-d'),
+            'fecha_hasta' => $hasta->format('Y-m-d')
+        ));
+
     }
 
 }
