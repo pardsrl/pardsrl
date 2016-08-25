@@ -109,20 +109,14 @@ class EstadisticaManager
 
         $promediosCanosHora = $promediosCanosHoraQb->getQuery()->getResult();
 
-        $total = 0;
-
         $data =  array();
 
         if($promediosCanosHora) {
 
             foreach ($promediosCanosHora as $promedio) {
-                $total = $total + $promedio['promTbg'];
-            }
-
-            foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
                     'name' => $promedio['acronimo'] . ' ' . $promedio['nombre'],
-                    'y' => ($promedio['promTbg'] / $total) * 100
+                    'y'    => floatval($promedio['promTbg'])
                 );
             }
 
@@ -143,20 +137,15 @@ class EstadisticaManager
 
         $promediosVarillasHora = $promediosVarillasHoraQb->getQuery()->getResult();
 
-        $total = 0;
-
         $data =  array();
 
         if($promediosVarillasHora) {
 
-            foreach ($promediosVarillasHora as $promedio) {
-                $total = $total + $promedio['promVb'];
-            }
 
             foreach ($promediosVarillasHora as $promedio) {
                 $data[] = array(
                     'name' => $promedio['acronimo'] . ' ' . $promedio['nombre'],
-                    'y' => ($promedio['promVb'] / $total) * 100
+                    'y'    => floatval($promedio['promVb'])
                 );
             }
 
@@ -177,20 +166,14 @@ class EstadisticaManager
 
         $factorTiempoUtil = $factorTiempoUtilQb->getQuery()->getResult();
 
-        $total = 0;
-
         $data =  array();
 
         if($factorTiempoUtil) {
 
             foreach ($factorTiempoUtil as $promedio) {
-                $total = $total + $promedio['ftu'];
-            }
-
-            foreach ($factorTiempoUtil as $promedio) {
                 $data[] = array(
                     'name' => $promedio['acronimo'] . ' ' . $promedio['nombre'],
-                    'y' => ($promedio['ftu'] / $total) * 100
+                    'y'    => floatval($promedio['ftu'])
                 );
             }
 

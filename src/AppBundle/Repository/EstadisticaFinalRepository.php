@@ -58,7 +58,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.promTbg) promTbg')
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'avg(ef.promTbg) promTbg')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('equipo.compania', 'compania')
@@ -77,7 +77,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.promVb) promVb')
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'avg(ef.promVb) promVb')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('equipo.compania', 'compania')
@@ -95,7 +95,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $qb = $this->getQb()
-            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'sum(ef.ftu) ftu')
+            ->select('equipo.id', 'equipo.nombre', 'compania.acronimo', 'avg(ef.ftu) ftu')
             ->innerJoin('ef.intervencion', 'interv')
             ->innerJoin('interv.equipo', 'equipo')
             ->innerJoin('equipo.compania', 'compania')
