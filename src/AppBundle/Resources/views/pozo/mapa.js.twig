@@ -1,0 +1,63 @@
+$(document).ready(function(){
+
+    L.mapbox.accessToken = "{{ mapbox_access_token }}";
+
+    var lat = {{ pozo.latitud | default('null') | raw }};
+
+    var lng = {{ pozo.longitud | default('null') | raw}};
+
+    var pozoMarker = null;
+
+    var latLng = null;
+
+    var zoom = null;
+
+    var map = L.mapbox.map('map', 'mapbox.streets');
+
+
+    if(lat != null && lng != null){
+
+        latLng = new L.latLng(lat,lng);
+
+        pozoMarker = new L.marker(latLng).addTo(map);
+
+        zoom = 13;
+
+    }else{
+
+        latLng = L.latLng(-45.866666666667, -67.5);
+
+        zoom = 4;
+
+    }
+
+    map.setView(latLng,zoom);
+
+
+
+    $('.lat-selector').blur(function(){
+
+        latlng.lat = $(this).val();
+
+        if (pozoMarker){
+            pozoMarker.update();
+        }else{
+            pozoMarker = new L.marker(latlng).addTo(map);
+        }
+
+        map.setView(latlng, 13);
+    });
+
+    $('.lng-selector').blur(function(){
+        latlng.lng = $(this).val();
+
+        if (pozoMarker){
+            pozoMarker.update();
+        }else{
+            pozoMarker = new L.marker(latlng).addTo(map);
+        }
+
+        map.setView(latlng, 13);
+    });
+
+});

@@ -1,5 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+
+    <script type="application/javascript">
+
+        {{ include('AppBundle:pozo:mapa.js.twig') }}
+
+    </script>
+
+{% endblock %}
 
 {% set __title = 'Editar Pozo' %}
 
@@ -17,6 +35,9 @@
                 </div>
 
                 {{ form_end(edit_form) }}
+            </div>
+            <div class="col-md-6" style="height: 400px">
+                <div id='map' style='width: 90%; height: 90%;'></div>
             </div>
         </div>
     </div>

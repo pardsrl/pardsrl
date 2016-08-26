@@ -13,45 +13,7 @@
 
     <script type="application/javascript">
 
-        $(document).ready(function(){
-
-
-            L.mapbox.accessToken = "{{ mapbox_access_token }}";
-
-            var latlng = L.latLng(-45.866666666667, -67.5);
-
-            var map = L.mapbox.map('map', 'mapbox.streets')
-                    .setView(latlng, 4);
-
-            var pozoMarker = null;
-
-
-            $('.lat-selector').blur(function(){
-
-                latlng.lat = $(this).val();
-
-                if (pozoMarker){
-                    pozoMarker.update();
-                }else{
-                    pozoMarker = new L.marker(latlng).addTo(map);
-                }
-
-                map.setView(latlng, 13);
-            });
-
-            $('.lng-selector').blur(function(){
-                latlng.lng = $(this).val();
-
-                if (pozoMarker){
-                    pozoMarker.update();
-                }else{
-                    pozoMarker = new L.marker(latlng).addTo(map);
-                }
-
-                map.setView(latlng, 13);
-            });
-
-        });
+        {{ include('AppBundle:pozo:mapa.js.twig') }}
 
     </script>
 
