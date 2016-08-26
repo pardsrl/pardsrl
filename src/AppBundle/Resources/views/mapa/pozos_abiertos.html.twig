@@ -1,0 +1,52 @@
+<script type="application/javascript">
+
+    $(document).ready(function() {
+
+        var pozos = {{ pozo_data | raw }};
+
+        L.mapbox.accessToken = "{{ mapbox_access_token }}";
+
+        var map = L.mapbox.map('pozos-abiertos-mapa', 'mapbox.streets').setView([-45,-67],5);
+
+
+        pozos.forEach(function(item){
+
+            console.log(item);
+
+            var latlng = L.latLng(item.pozo.lat, item.pozo.lng);
+
+            var pozoMarker = new L.marker(latlng).addTo(map);
+
+            var popup = L.popup()
+                    .setLatLng(latlng)
+                    .setContent('<p class="tooltip-html">' +
+                            '<strong>Equipo:</strong> '+item.equipo.nombre+'<br>' +
+                            '<strong>Fecha Intervencion:</strong> '+item.pozo.interv+'<br>' +
+                            '<strong>Lat:</strong> '+item.pozo.lat+' <strong>Lng:</strong> '+item.pozo.lng+
+                            '</p>');
+
+            pozoMarker.bindPopup(popup);
+
+            map.setView(latlng, 6);
+        });
+
+
+    });
+</script>
+
+<div class="col-md-6">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Pozos abiertos actualmente</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="chart">
+                <div id="pozos-abiertos-mapa" style="width:100%; height:300px;"></div>
+            </div>
+        </div><!-- /.box-body -->
+    </div>
+</div><!-- /.col -->

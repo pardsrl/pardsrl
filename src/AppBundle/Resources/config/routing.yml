@@ -46,6 +46,11 @@ app_estadisticas:
         resource: "@AppBundle/Resources/config/routing/estadistica.yml"
         prefix:   /estadisticas
 
+app_mapas:
+    resource: "@AppBundle/Resources/config/routing/mapas.yml"
+    prefix:   /maps
+
+
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}

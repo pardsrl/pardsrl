@@ -16,3 +16,7 @@
 .datepicker.dropdown-menu{
     z-index: 999999 !important;
 }
+
+.tooltip-html{
+    font-size: 12px !important;
+}

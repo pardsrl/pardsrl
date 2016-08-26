@@ -1,0 +1,5 @@
+mapa_index:
+    path:     /pozos_abiertos
+    defaults: { _controller: "AppBundle:Mapa:pozosAbiertos" }
+    methods:  GET
+

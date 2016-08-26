@@ -320,6 +320,12 @@ class Equipo extends BaseClass
         return $this->getNombreCompleto();
     }
 
+
+    /**
+     * Get nombreCompleto
+     *
+     * @return string
+     */
     public function getNombreCompleto(){
         return $this->getCompania()->getAcronimo().' '.$this->getNombre();
     }

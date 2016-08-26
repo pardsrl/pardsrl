@@ -318,7 +318,7 @@ class Pozo extends BaseClass
     /**
      *
      *
-     * @return mixed|null
+     * @return Intervencion|null
      */
     public function getUltimaIntervencion(){
 
