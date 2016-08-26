@@ -2,11 +2,20 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
+
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+
+    <script type="application/javascript">
+
+        L.mapbox.accessToken = "{{ mapbox_access_token }}";
+
+    </script>
 {% endblock %}
 
 {#{%  set __title = 'Mi Dashboard' %}#}
@@ -42,6 +51,8 @@
 </div><!-- /.row -->
 
 <div class="row">
+
+    {{ render(controller('AppBundle:Mapa:trazadoPozosPorEquipo', {'id': equipo.id, 'desde': fecha_desde , 'hasta': fecha_hasta } )) }}
 
     {{ render(controller('AppBundle:Estadistica:operacionesIndividualesPorYacimiento', {'id': equipo.id, 'desde': fecha_desde , 'hasta': fecha_hasta } )) }}
 

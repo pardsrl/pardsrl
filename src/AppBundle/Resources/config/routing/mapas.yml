@@ -1,5 +1,9 @@
-mapa_index:
+mapa_pozos_abiertos:
     path:     /pozos_abiertos
     defaults: { _controller: "AppBundle:Mapa:pozosAbiertos" }
     methods:  GET
 
+mapa_trazado_pozos:
+    path:     /trazado_pozo/{id}
+    defaults: { _controller: "AppBundle:Mapa:trazadoPozosPorEquipo" }
+    methods:  GET

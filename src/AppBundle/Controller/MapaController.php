@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Equipo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,4 +59,56 @@ class MapaController extends Controller
             'pozo_data' => json_encode($pozosData)
         ));
     }
+
+    public function trazadoPozosPorEquipoAction(Request $request, Equipo $equipo)
+    {
+        $desde = $request->get('desde');
+
+        $hasta = $request->get('hasta');
+
+        $trazadoQb = $this->getDoctrine()->getRepository('AppBundle:EstadisticaFinal')->getTrazadoPozosPorEquipo($equipo,$desde,$hasta);
+
+        $trazado = $trazadoQb->getQuery()->getArrayResult();
+
+        $pozos = array();
+
+        $i = 0;
+
+        foreach ($trazado as $traza){
+
+
+            if($i == 0){
+                $pozos[] = array(
+                    'acronimo'        => $traza['pozo_acr'],
+                    'lat'             => $traza['pozo_lat'],
+                    'lng'             => $traza['pozo_lng'],
+                    "intervenciones"  => array($traza['interv_fecha']->format('d-m-Y H:i:s'))
+                );
+            }else{
+
+                if( in_array($traza['pozo_acr'],$pozos[$i-1])){
+                    $pozos[$i-1]["intervenciones"][] =  $traza['interv_fecha']->format('d-m-Y H:i:s');
+                }else{
+                    $pozos[] = array(
+                        'acronimo'        => $traza['pozo_acr'],
+                        'lat'             => $traza['pozo_lat'],
+                        'lng'             => $traza['pozo_lng'],
+                        "intervenciones"  => array($traza['interv_fecha']->format('d-m-Y H:i:s'))
+                    );
+                }
+            }
+
+
+            $i++;
+
+        }
+
+        return $this->render('AppBundle:mapa:trazado_pozos_equipo.html.twig', array(
+            'pozos' => json_encode($pozos)
+        ));
+
+    }
+
+
+
 }

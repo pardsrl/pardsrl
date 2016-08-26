@@ -1,0 +1,57 @@
+<script type="application/javascript">
+
+    $(document).ready(function() {
+
+        var pozos = {{ pozos | raw }};
+
+        var map = L.mapbox.map('trazados-pozos-mapa', 'mapbox.streets').setView([-45,-67],5);
+
+        pozos.forEach(function(pozo){
+
+            var latlng = L.latLng(pozo.lat, pozo.lng);
+
+            var pozoMarker = new L.marker(latlng).addTo(map);
+
+            var intervenciones_html = '<ul>';
+
+            pozo.intervenciones.forEach(function(interv){
+                intervenciones_html +=  '<li>Fecha: '+interv+'</li>';
+            });
+
+            intervenciones_html += '</ul>';
+
+            var popup = L.popup()
+                    .setLatLng(latlng)
+                    .setContent('<p class="tooltip-html">' +
+                            '<strong>Pozo:</strong> '+pozo.acronimo+'<br>' +
+                            '<strong>Intervenciones:</strong>'+intervenciones_html +
+                            '<strong>Lat:</strong> '+pozo.lat+' <strong>Lng:</strong> '+pozo.lng+
+                            '</p>');
+
+            pozoMarker.bindPopup(popup);
+
+            map.setView(latlng, 6);
+        });
+
+
+    });
+</script>
+
+{{ dump(pozos) }}
+
+<div class="col-md-6">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Pozos Intervenidos</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="chart">
+                <div id="trazados-pozos-mapa" style="width:100%; height:300px;"></div>
+            </div>
+        </div><!-- /.box-body -->
+    </div>
+</div><!-- /.col -->

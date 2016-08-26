@@ -180,4 +180,31 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
         return $qb;
     }
 
+    public function getTrazadoPozosPorEquipo($equipo,$desde,$hasta)
+    {
+
+        $qb = $this->getQb()
+            ->select(
+                'pozo.acronimo pozo_acr',
+                'pozo.nombre pozo_nombre',
+                'pozo.latitud pozo_lat',
+                'pozo.longitud pozo_lng',
+                'interv.fecha interv_fecha'
+            )
+            ->innerJoin('ef.intervencion', 'interv')
+            ->innerJoin('interv.equipo', 'equipo')
+            ->innerJoin('equipo.compania', 'compania')
+            ->innerJoin('interv.pozo', 'pozo')
+            ->where('equipo = :equipo')
+            ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
+            ->orderBy('interv.pozo','DESC')
+            ->addOrderBy('interv.fecha','ASC')
+            //->groupBy('interv.pozo')
+            ->setParameter('equipo', $equipo)
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta);
+
+        return $qb;
+    }
+
 }
