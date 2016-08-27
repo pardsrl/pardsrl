@@ -11,7 +11,7 @@ class MapaController extends Controller
     /**
      * Renderiza un mapa con los pozos donde existan intervenciones actuales
      */
-    public function pozosAbiertosAction(Request $request)
+    public function pozosIntervenidosActualmenteAction(Request $request)
     {
 
         $persona = $this->getUser()->getPersona();
@@ -39,6 +39,7 @@ class MapaController extends Controller
                         );
 
                         $aPozo = array(
+                            'acronimo'=> $pozo->getAcronimo(),
                             'lat' => $pozo->getLatitud(),
                             'lng' => $pozo->getLongitud(),
                             'interv' => $pozo->getUltimaIntervencion()->getFecha()->format('d-m-Y H:i:s')
@@ -55,7 +56,7 @@ class MapaController extends Controller
 
         }
 
-        return $this->render('AppBundle:mapa:pozos_abiertos.html.twig', array(
+        return $this->render('AppBundle:mapa:pozos_intervenidos_actualmente.html.twig', array(
             'pozo_data' => json_encode($pozosData)
         ));
     }

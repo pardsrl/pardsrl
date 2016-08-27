@@ -1,6 +1,6 @@
-mapa_pozos_abiertos:
-    path:     /pozos_abiertos
-    defaults: { _controller: "AppBundle:Mapa:pozosAbiertos" }
+mapa_pozos_intervenidos_actualmente:
+    path:     /pozos_intervenidos_actualmente
+    defaults: { _controller: "AppBundle:Mapa:pozosIntervenidosActualmente" }
     methods:  GET
 
 mapa_trazado_pozos:
