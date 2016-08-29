@@ -6,8 +6,9 @@
 
         L.mapbox.accessToken = "{{ mapbox_access_token }}";
 
-        var map = L.mapbox.map('pozos-intervenidos-actualmente', 'mapbox.streets').setView([-45,-67],5);
+        var map = L.mapbox.map('pozos-intervenidos-actualmente').setView([-45,-67],5);
 
+        L.mapbox.styleLayer('{{ mapbox_default_style_url }}').addTo(map);
 
         pozos.forEach(function(item){
 

@@ -12,8 +12,9 @@ $(document).ready(function(){
 
     var zoom = null;
 
-    var map = L.mapbox.map('map', 'mapbox.streets');
+    var map = L.mapbox.map('map');
 
+    L.mapbox.styleLayer('{{ mapbox_default_style_url }}').addTo(map);
 
     if(lat != null && lng != null){
 
@@ -37,27 +38,27 @@ $(document).ready(function(){
 
     $('.lat-selector').blur(function(){
 
-        latlng.lat = $(this).val();
+        latLng.lat = $(this).val();
 
         if (pozoMarker){
             pozoMarker.update();
         }else{
-            pozoMarker = new L.marker(latlng).addTo(map);
+            pozoMarker = new L.marker(latLng).addTo(map);
         }
 
-        map.setView(latlng, 13);
+        map.setView(latLng, 13);
     });
 
     $('.lng-selector').blur(function(){
-        latlng.lng = $(this).val();
+        latLng.lng = $(this).val();
 
         if (pozoMarker){
             pozoMarker.update();
         }else{
-            pozoMarker = new L.marker(latlng).addTo(map);
+            pozoMarker = new L.marker(latLng).addTo(map);
         }
 
-        map.setView(latlng, 13);
+        map.setView(latLng, 13);
     });
 
 });
