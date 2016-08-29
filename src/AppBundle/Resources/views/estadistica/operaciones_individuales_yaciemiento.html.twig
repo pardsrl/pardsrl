@@ -8,7 +8,12 @@
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                type: 'pie'
+                type: 'pie',
+                options3d:{
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
             },
             title: {
                 text: ''
@@ -23,6 +28,7 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
+                    depth: 35,
                     dataLabels: {
                         enabled: false
                     },
