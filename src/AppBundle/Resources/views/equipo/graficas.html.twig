@@ -8,23 +8,26 @@
     <script src="{{ asset('highstock-4.2.5/js/highstock.js') }}"></script>
 
     <script type="application/javascript" language="JavaScript">
-        
+
         var server = $.LiveData.server;
 
         var websocket_connection = server.getBaseWs()+'/{{ equipo.webSocketNamespace }}';
 
         var socket = io(websocket_connection);
 
+        const URL_HISTORICO    = "http://"+server.getBaseWs()+"/historico";
 
-        const URL_HISTORICO   = "http://"+server.getBaseWs()+"/historico";
+        const DESDE_ORIGINAL   = {{ fechaInicioIntervencion | date('U') }} * 1000;
 
-        const DESDE_ORIGINAL  = {{ fechaInicioIntervencion | date('U') }} * 1000;
+        const HASTA_ORIGINAL   = {{ "now" |date("U") }} * 1000;
 
-        const HASTA_ORIGINAL  = {{ "now" |date("U") }} * 1000;
+        const PARAM_FECHA_POZO = {{ fechaInicioIntervencion | date('Ymdhi') }}
 
-        const PARAM_PLUMAS    = 0;
+        const PARAM_CONDICION  = 1;
 
-        const PARAM_MANIOBRAS = 1;
+        const PARAM_PLUMAS     = 0;
+
+        const PARAM_MANIOBRAS  = 1;
 
         $(document).ready(function () {
 

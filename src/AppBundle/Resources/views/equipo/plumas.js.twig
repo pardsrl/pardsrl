@@ -44,9 +44,9 @@ function cargarDatosTrPl(event) {
 var paramsHstpl = {
     "equipo"     : "{{ equipo.webSocketNamespace }}",
     "tipo"       : PARAM_PLUMAS,
-    "condicion"  : 1,
-    "resolucion" : 200,
-    "fecha_pozo" : {{ fechaInicioIntervencion | date('Ymdhi') }},
+    "condicion"  : PARAM_CONDICION,
+    "resolucion" : 5000,
+    "fecha_pozo" : PARAM_FECHA_POZO,
     "desde"      : DESDE_ORIGINAL,
     "hasta"      : HASTA_ORIGINAL
 };
@@ -111,16 +111,20 @@ function afterSetExtremesHstpl(e){
 
 function establecerIntervaloRecargaHstpl(event){
 
-    //configuro para que se recargue cada 5 minutos.
-    setInterval(function() {
-        if(!pausadoHstpl) {
-            var tiempo_actual = new Date().getTime();
+    //si la condición es actual == 1
+    if(paramsHstpl.condicion){
 
-            //console.log(tiempo_actual);
+        //configuro para que se recargue cada 5 minutos.
+        setInterval(function() {
+            if(!pausadoHstpl) {
+                var tiempo_actual = new Date().getTime();
 
-            recargarHstpl(DESDE_ORIGINAL, tiempo_actual);
-        }
-    },300000);
+                //console.log(tiempo_actual);
+
+                recargarHstpl(DESDE_ORIGINAL, tiempo_actual);
+            }
+        },300000);
+    }
 
 }
 
