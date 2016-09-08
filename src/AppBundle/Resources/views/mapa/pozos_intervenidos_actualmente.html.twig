@@ -12,8 +12,6 @@
 
         pozos.forEach(function(item){
 
-            console.log(item);
-
             var latlng = L.latLng(item.pozo.lat, item.pozo.lng);
 
             var pozoMarker = new L.marker(latlng).addTo(map);
