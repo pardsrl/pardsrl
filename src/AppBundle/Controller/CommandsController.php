@@ -19,7 +19,7 @@ class CommandsController extends Controller
     public function postReceiveGitAction()
     {
 
-	    if($this->getParameter('produccion')) {
+	    if($this->has('produccion') && $this->getParameter('produccion')) {
 
 
 		    try {
@@ -31,9 +31,7 @@ class CommandsController extends Controller
 			    $process->setWorkingDirectory( $rootDir );
 
 			    $process->setTimeout( 3600 );
-
-//		    $salida = shell_exec( 'cd /home/golfocom/www/demo/  && git reset --hard HEAD && git pull && php app/console cac:cle --env=prod' );
-
+			    
 			    $process->run();
 
 			    if ( $process->isSuccessful() ) {
