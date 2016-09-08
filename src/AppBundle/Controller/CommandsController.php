@@ -23,7 +23,7 @@ class CommandsController extends Controller
 
 		    try {
 
-			    $process = new Process('git reset --hard HEAD && git pull && php app/console cac:cle --env=prod');
+			    $process = new Process('git reset --hard HEAD && git pull');
 
 			    $rootDir = $this->getParameter( 'kernel.root_dir' ) . '/../';
 
