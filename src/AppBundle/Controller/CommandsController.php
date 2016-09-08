@@ -19,7 +19,7 @@ class CommandsController extends Controller
     public function postReceiveGitAction()
     {
 
-	    if($this->has('produccion') && $this->getParameter('produccion')) {
+	    if($this->getParameter('produccion')) {
 
 
 		    try {
@@ -31,7 +31,7 @@ class CommandsController extends Controller
 			    $process->setWorkingDirectory( $rootDir );
 
 			    $process->setTimeout( 3600 );
-			    
+
 			    $process->run();
 
 			    if ( $process->isSuccessful() ) {
