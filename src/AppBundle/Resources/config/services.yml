@@ -2,3 +2,8 @@ services:
     manager.estadistica:
         class:        AppBundle\Services\EstadisticaManager
         arguments:    [@doctrine.orm.entity_manager]
+
+    app.cache.clear:
+        class: Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
