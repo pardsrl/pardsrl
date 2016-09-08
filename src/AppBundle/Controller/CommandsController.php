@@ -24,7 +24,7 @@ class CommandsController extends Controller
 
 		    try {
 
-			    $process = new Process('git reset --hard HEAD && git pull');
+			    $process = new Process('git fetch && git reset --hard origin/master');
 
 			    $rootDir = $this->getParameter( 'kernel.root_dir' ) . '/../';
 
