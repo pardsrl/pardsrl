@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Process\Process;
@@ -16,9 +14,10 @@ class CommandsController extends Controller
     /**
      * @Route("/post-receive-git")
      */
-    public function postReceiveGitAction()
+    public function postReceiveGitAction(Request $request)
     {
 
+//	    if($this->getParameter('produccion') && $request->request->get('payload')) {
 	    if($this->getParameter('produccion')) {
 
 
@@ -30,7 +29,7 @@ class CommandsController extends Controller
 
 			    $process->setWorkingDirectory( $rootDir );
 
-			    $process->setTimeout( 3600 );
+			    $process->setTimeout( 60 );
 
 			    $process->run();
 
