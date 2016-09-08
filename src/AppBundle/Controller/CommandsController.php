@@ -19,48 +19,51 @@ class CommandsController extends Controller
     public function postReceiveGitAction()
     {
 
-	    try{
+	    if($this->getParameter('produccion')) {
 
-	    	$process = new Process('git reset --hard HEAD && git pull && php app/console cac:cle --env=prod');
 
-		    //$process = new Process('ls -l');
+		    try {
 
-		    $rootDir = $this->getParameter('kernel.root_dir').'/../';
+			    $process = new Process('git reset --hard HEAD && git pull && php app/console cac:cle --env=prod');
 
-		    $process->setWorkingDirectory($rootDir);
+			    $rootDir = $this->getParameter( 'kernel.root_dir' ) . '/../';
+
+			    $process->setWorkingDirectory( $rootDir );
+
+			    $process->setTimeout( 3600 );
 
 //		    $salida = shell_exec( 'cd /home/golfocom/www/demo/  && git reset --hard HEAD && git pull && php app/console cac:cle --env=prod' );
 
-		    $process->run();
+			    $process->run();
 
-		    if ($process->isSuccessful()) {
+			    if ( $process->isSuccessful() ) {
 
-		    	$cacheClearCmd = $this->get('app.cache.clear');
+				    $cacheClearCmd = $this->get( 'app.cache.clear' );
 
-			    $input = new ArgvInput(array('--env=' . $this->container->getParameter('kernel.environment')));
+				    $input = new ArgvInput( array( '--env=' . $this->container->getParameter( 'kernel.environment' ) ) );
 
-			    $output = new BufferedOutput();
+				    $output = new BufferedOutput();
 
-			    $cacheClearCmd->run($input,$output);
+				    $cacheClearCmd->run( $input, $output );
 
-			    //$msg = 'Comando ejecutado satisfactoriamente';
-			    $msg = $output;
+				    $msg = 'Comando ejecutado satisfactoriamente';
+				    //$msg = $output;
 
 
-		    }else{
+			    } else {
 
-			    throw new ProcessFailedException($process);
+				    throw new ProcessFailedException( $process );
 
+			    }
+
+
+		    } catch ( \Exception $exception ) {
+			    $msg = $exception->getMessage();
 		    }
 
-
-
+	    }else{
+	    	$msg = 'No está permitido realizar esta accion en un servidor distinto a producción.';
 	    }
-	    catch (\Exception $exception){
-	    	$msg = $exception->getMessage();
-	    }
-
-
 
 	    return $this->render('AppBundle:Commands:post_receive_git.html.twig', array(
             'msg' => $msg
