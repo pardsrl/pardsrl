@@ -1,16 +1,16 @@
 estadistica_operaciones_por_equipo:
     path:     operaciones_por_equipo
-    defaults: { _controller: AppBundle:estadistica:operacionesPorEquipo }
+    defaults: { _controller: AppBundle:Estadistica:operacionesPorEquipo }
     methods: [GET]
 
 estadistica_operaciones_por_yacimiento:
     path:     operaciones_por_yacimiento
-    defaults: { _controller: AppBundle:estadistica:operacionesPorYacimiento }
+    defaults: { _controller: AppBundle:Estadi:operacionesPorYacimiento }
     methods: [GET]
 
 estadistica_promedios_canos_hora:
     path:     promedios_canos_hora
-    defaults: { _controller: AppBundle:estadistica:promediosCanosHora }
+    defaults: { _controller: AppBundle:Estadistica:promediosCanosHora }
     methods: [GET]
 
 estadistica_promedios_varillas_hora:
@@ -20,7 +20,7 @@ estadistica_promedios_varillas_hora:
 
 estadistica_factor_tiempo_util:
     path:     factor_tiempo_util
-    defaults: { _controller: AppBundle:estadistica:factorTiempoUtil }
+    defaults: { _controller: AppBundle:Estadistica:factorTiempoUtil }
     methods: [GET]
 
 
@@ -41,5 +41,5 @@ estadistica_promedios_individuales_varillas_hora:
 
 estadistica_individuales_factor_tiempo_util:
     path:     individuales_factor_tiempo_util
-    defaults: { _controller: AppBundle:estadistica:individualesFactorTiempoUtil }
+    defaults: { _controller: AppBundle:Estadistica:individualesFactorTiempoUtil }
     methods: [GET]

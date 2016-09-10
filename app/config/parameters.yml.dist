@@ -19,7 +19,11 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     #node_config
-        node_server:
-           ip: 127.0.0.1
-           port:  9999
-           notifications_namespace : 'notificaciones'
+    node_server:
+       ip: 'golfo.com.ar'
+       port:  5140
+       notifications_namespace : 'notificaciones'
+
+
+    mapbox_access_token: null
+    mapbox_default_style_url: null
