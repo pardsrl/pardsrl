@@ -33,7 +33,7 @@ class Yacimiento extends BaseClass
     /**
      * @var string
      *
-     * @ORM\Column(name="ccronimo", type="string", length=25)
+     * @ORM\Column(name="acronimo", type="string", length=25)
      */
     private $acronimo;
 
