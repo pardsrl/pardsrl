@@ -134,7 +134,16 @@ function inicializarHistoricoPlumas(){
 
     $.getJSON(URL_HISTORICO, paramsHstpl, function( data ) {
 
-        //console.log(data.datos.anem.length);
+        if(data.status == 'error'){
+            removeOverlayBox('#hstpl');
+
+            $('#hstpl').html('<div class="callout callout-warning">' +
+                '<p>'+data.mensaje+'</p>' +
+                '</div>'
+            );
+
+            return false;
+        }
 
         $('#hstpl').highcharts('StockChart', {
 

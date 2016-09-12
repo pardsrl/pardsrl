@@ -152,6 +152,19 @@ function inicializarHistoricoManiobras() {
 
     $.getJSON(URL_HISTORICO, paramsHstman, function (data) {
 
+
+        if(data.status == 'error'){
+            removeOverlayBox('#hstman');
+
+            $('#hstman').html('<div class="callout callout-warning">' +
+                    '<p>'+data.mensaje+'</p>' +
+                    '</div>'
+            );
+
+            return false;
+        }
+
+
         $('#hstman').highcharts('StockChart', {
 
             chart: {
