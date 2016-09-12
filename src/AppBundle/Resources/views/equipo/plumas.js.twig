@@ -190,9 +190,43 @@ function inicializarHistoricoPlumas(){
                 },
                 minRange: 900 * 1000 //un minuto
             },
-            yAxis: {
-                min: 0
-            },
+            yAxis: [
+                { // Primary yAxis
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    title: {
+                        text: ' ',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    min: 0,
+                    max: 180,
+                    tickInterval: 30,
+
+                }, { // Tertiary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Presión (psi)',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true,
+                    min: 0,
+                    max: 3000
+                }
+            ],
             credits: {
                 enabled: false
             },
@@ -212,6 +246,7 @@ function inicializarHistoricoPlumas(){
                     dashStyle: 'Dot',
                     color: '#D8D8D8',
                     lineWidth: 1,
+                    yAxis: 0,
                     data: data.datos.anem,
                     tooltip: {
                         valueSuffix: ' km/h',
@@ -223,6 +258,7 @@ function inicializarHistoricoPlumas(){
                     type: 'line',
                     color: Highcharts.getOptions().colors[1],
                     lineWidth: 1,
+                    yAxis: 0,
                     tooltip: {
                         valueSuffix: ' klb',
                         valueDecimals: 2
@@ -238,6 +274,7 @@ function inicializarHistoricoPlumas(){
                     color: Highcharts.getOptions().colors[2],
                     lineWidth: 1,
                     dashStyle: 'spline',
+                    yAxis: 1,
                     tooltip: {
                         valueSuffix: ' psi',
                         valueDecimals: 2
@@ -247,6 +284,7 @@ function inicializarHistoricoPlumas(){
                     name: 'Boca Pozo',
                     data: data.datos.bpozo,
                     type: 'line',
+                    yAxis: 1,
                     tooltip: {
                         valueSuffix: ' psi',
                         valueDecimals: 2
