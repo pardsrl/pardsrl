@@ -198,6 +198,25 @@ class EquipoController extends Controller
         ));
     }
 
+
+    /**
+     * Muestra graficas históricas del equipo
+     *
+     * @param Request $request
+     * @param Equipo $equipo
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function graficasHistoricasAction(Request $request, Equipo $equipo,$fintervencion,$fdesde,$fhasta){
+
+
+        return $this->render('AppBundle:equipo:graficas_historicas.html.twig', array(
+            'equipo'        => $equipo,
+            'fdesde'        => $fdesde,
+            'fhasta'        => $fhasta,
+            'fintervencion' => $fintervencion
+        ));
+    }
+
     /**
      * Muestra los instrumentos del equipo
      *
@@ -256,6 +275,8 @@ class EquipoController extends Controller
             $intervencion = $this->getDoctrine()->getManager()->find('AppBundle:Intervencion',$intervencion_id);
 
             $estadisticas = $intervencion->getEquipo()->getEstadisticas();
+
+	        $datos = null;
 
             if(!$estadisticas->isEmpty()){
                 $datos = $estadisticas->first()->getDatos();

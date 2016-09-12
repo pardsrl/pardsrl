@@ -3,6 +3,8 @@
 
         var data = {{ data | raw }};
 
+        var url = '{{ path('equipo_graficas_historicas', { 'id': equipo.id , 'fdesde': fdesde , 'fhasta': fhasta }) }}';
+
         $('#prom-canos-hora').highcharts({
             chart: {
                 type: 'column'
@@ -33,6 +35,21 @@
                     dataLabels: {
                         enabled: true,
                         format: '{point.y:.1f}'
+                    },
+                    data: data,
+                    point: {
+                        events: {
+                            click: function () {
+
+                                url = url.replace(/__fintervencion__/g, this.fintervencion);
+
+                                window.open(
+                                        url,
+                                        '_blank'
+                                );
+
+                            }
+                        }
                     }
                 }
             },

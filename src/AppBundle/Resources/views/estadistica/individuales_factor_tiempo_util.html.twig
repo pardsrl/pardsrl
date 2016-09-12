@@ -3,6 +3,8 @@
 
         var data = {{ data | raw }};
 
+        var url = '{{ path('equipo_graficas_historicas', { 'id': equipo.id , 'fdesde': fdesde , 'fhasta': fhasta }) }}';
+
         $('#factor-tiempo-util').highcharts({
             chart: {
                 type: 'column'
@@ -45,7 +47,21 @@
             series: [{
                 name: 'Promedio',
                 colorByPoint: true,
-                data: data
+                data: data,
+                point: {
+                    events: {
+                        click: function () {
+
+                            url = url.replace(/__fintervencion__/g, this.fintervencion);
+
+                            window.open(
+                                    url,
+                                    '_blank'
+                            );
+
+                        }
+                    }
+                }
             }]
         });
 

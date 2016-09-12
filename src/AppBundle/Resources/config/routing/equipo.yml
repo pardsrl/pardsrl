@@ -28,6 +28,11 @@ equipo_graficas:
     defaults: { _controller: "AppBundle:Equipo:graficas"}
     methods: [GET]
 
+equipo_graficas_historicas:
+    path: /{id}/graficas_historicas/{fintervencion}/{fdesde}/{fhasta}
+    defaults: { _controller: "AppBundle:Equipo:graficasHistoricas", fintervencion: __fintervencion__ }
+    methods: [GET]
+
 equipo_instrumentos:
     path: /{id}/instrumentos
     defaults: { _controller: "AppBundle:Equipo:instrumentos"}
