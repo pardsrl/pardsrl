@@ -115,8 +115,8 @@ class EstadisticaController extends Controller
         return $this->render('AppBundle:estadistica:promedios_individuales_canos_hora.html.twig', array(
             'data'   => json_encode($promediosCanosHora),
             'equipo' => $equipo,
-	        'fdesde'  => strtotime($desde),
-	        'fhasta'  => strtotime($hasta)
+	        'fdesde'  => strtotime($desde)*1000,
+	        'fhasta'  => strtotime($hasta)*1000
         ));
     }
 
@@ -133,8 +133,8 @@ class EstadisticaController extends Controller
         return $this->render('AppBundle:estadistica:promedios_individuales_varillas_hora.html.twig', array(
             'data' => json_encode($promediosCanosHora),
             'equipo' => $equipo,
-            'fdesde'  => strtotime($desde),
-            'fhasta'  => strtotime($hasta)
+            'fdesde'  => strtotime($desde)*1000,
+            'fhasta'  => strtotime($hasta)*1000
         ));
     }
 
@@ -151,8 +151,8 @@ class EstadisticaController extends Controller
         return $this->render('AppBundle:estadistica:individuales_factor_tiempo_util.html.twig', array(
             'data' => json_encode($factorTiempoUtil),
             'equipo' => $equipo,
-            'fdesde'  => strtotime($desde),
-            'fhasta'  => strtotime($hasta)
+            'fdesde'  => strtotime($desde)*1000,
+            'fhasta'  => strtotime($hasta)*1000
         ));
     }
 
