@@ -42,3 +42,6 @@
 #custom node
 /node/node_modules/
 /rt/node_modules/
+/doc/*
+/node/*
+npm-debug.log

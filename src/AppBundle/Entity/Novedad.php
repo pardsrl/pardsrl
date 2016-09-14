@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Base\BaseClass;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Novedad
@@ -317,5 +319,23 @@ class Novedad extends BaseClass
     {
         return $this->promedioUh;
     }
+
+
+	/**
+	 * @Assert\Callback
+	 */
+	public function esFechaFinValida(ExecutionContextInterface $context)
+	{
+		if ( $this->getFin() != ""){
+
+			if ($this->getFin() < $this->getInicio()) {
+				$context->buildViolation('La fecha de finalización debe ser mayor a la fecha de inicio.')
+				        ->atPath('fin')
+				        ->addViolation();
+			}
+			
+		}
+
+	}
 
 }
