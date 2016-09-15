@@ -22,7 +22,8 @@ class NotificacionRepository extends \Doctrine\ORM\EntityRepository
     public function getSistema()
     {
         $qb = $this->getQb()
-            ->where('notif.sistema = true');
+            ->where('notif.sistema = true')
+	        ->orderBy('notif.fechaCreacion','DESC');
 
         return $qb;
     }
@@ -92,6 +93,15 @@ class NotificacionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
 
+    }
+
+    public function getCantidadSistemaNoLeidas(){
+
+        $qb = $this->getSistema();
+
+        $qb->select($qb->expr()->count('notif'));
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 

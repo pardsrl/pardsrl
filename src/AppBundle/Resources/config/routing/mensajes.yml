@@ -1,0 +1,11 @@
+mensajes_notificaciones:
+    path:     /mensajes_notificaciones
+    defaults: { _controller: AppBundle:Mensajes:notificaciones }
+
+mensajes_mailbox:
+    path:     /mailbox
+    defaults: { _controller: AppBundle:Mensajes:mailbox }
+
+mensajes_redactar:
+    path:     /redactar
+    defaults: { _controller: AppBundle:Mensajes:redactar }

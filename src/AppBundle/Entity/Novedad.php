@@ -333,7 +333,7 @@ class Novedad extends BaseClass
 				        ->atPath('fin')
 				        ->addViolation();
 			}
-			
+
 		}
 
 	}

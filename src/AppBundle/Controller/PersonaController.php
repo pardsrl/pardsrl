@@ -153,4 +153,17 @@ class PersonaController extends Controller
             ->getForm()
         ;
     }
+
+
+
+    /**
+     * Lists all Persona entities.
+     *
+     */
+    public function perfilAction(Request $request)
+    {
+
+        return $this->render('AppBundle:persona:perfil.html.twig', array(
+        ));
+    }
 }

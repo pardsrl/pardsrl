@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+
+{% set __title = 'Mis Mensajes' %}
+{% set __descripcion_opcional = '13 mensajes nuevos' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/select2/select2.min.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('dashboard_v2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script src="{{ asset('dashboard_v2/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.es-AR.js') }}"></script>
+    <script src="{{ asset('dashboard_v2/plugins/select2/select2.min.js') }}"></script>
+    <script>
+        $(function () {
+            //Add text editor
+            $('#compose-textarea').wysihtml5({
+                toolbar: {
+                    "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+                    "emphasis": true, //Italics, bold, etc. Default true
+                    "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                    "html": false, //Button which allows you to edit the generated HTML. Default false
+                    "link": false, //Button to insert a link. Default true
+                    "image": false, //Button to insert an image. Default true,
+                    "color": false, //Button to change color of font
+                    "blockquote": true, //Blockquote
+                    "file": false
+                },
+                locale: "es-AR"
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{{ path('mensajes_mailbox') }}" class="btn btn-primary btn-block margin-bottom">Volver al Inbox</a>
+            {% include 'AppBundle:mensajes:carpetas.html.twig' %}
+        </div><!-- /.col -->
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Redactar Nuevo Mensaje</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Para:">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Asunto:">
+                    </div>
+                    <div class="form-group">
+                    <textarea id="compose-textarea" class="form-control" style="height: 300px">
+
+                    </textarea>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Enviar</button>
+                    </div>
+                    <button class="btn btn-default"><i class="fa fa-times"></i> Descartar</button>
+                </div><!-- /.box-footer -->
+            </div><!-- /. box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+
+
+
+{% endblock %}

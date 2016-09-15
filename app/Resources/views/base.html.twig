@@ -89,10 +89,10 @@
                     {#{{ render(controller('AppBundle:Mensajes:notificaciones')) }}#}
 
                     {#<!-- Notifications Personales Menu -->#}
-                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}#}
+                    {{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}
 
                     {#<!-- Notifications Sistema Menu -->#}
-                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesSistema')) }}#}
+                    {{ render(controller('AppBundle:Notificaciones:notificacionesSistema')) }}
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
@@ -209,7 +209,7 @@
             {#Anything you want#}
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">PardSRL</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright &copy; {{ 'now' | date('Y') }} <a href="#">PardSRL</a>.</strong> Todos los derechos reservados.
     </footer>
 
 </div><!-- ./wrapper -->

@@ -1,34 +1,64 @@
-<li class="dropdown tasks-menu">
-    <!-- Menu Toggle Button -->
+<li class="dropdown notifications-menu">
+    <!-- Menu toggle button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-flag-o"></i>
-        <span class="label label-danger">9</span>
+        <i class="fa fa-bell-o"></i>
+        {% if cant_notificaiones  %}<span class="label label-danger">{{ cant_notificaiones }}</span> {% endif %}
     </a>
     <ul class="dropdown-menu">
-        <li class="header">Tienes 9 Tareas</li>
+        <li class="header">Tienes {{ cant_notificaiones }} alertas</li>
         <li>
-            <!-- Inner menu: contains the tasks -->
+            <!-- Inner Menu: contains the notifications -->
             <ul class="menu">
-                <li><!-- Task item -->
-                    <a href="#">
-                        <!-- Task title and progress text -->
-                        <h3>
-                            Diseñar algunos graáficos
-                            <small class="pull-right">20%</small>
-                        </h3>
-                        <!-- The progress bar -->
-                        <div class="progress xs">
-                            <!-- Change the css width attribute to simulate progress -->
-                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                <span class="sr-only">80% Completado</span>
-                            </div>
-                        </div>
-                    </a>
-                </li><!-- end task item -->
+                {% if not cant_notificaiones %}
+                    <li><!-- start notification -->
+                        <a href="#">
+                            <i class="fa  fa-thumbs-up text-aqua"></i> No Tienes alertas pendientes.
+                        </a>
+                    </li><!-- end notification -->
+                {% else %}
+                    {% for notificacion in ultimas_notificaciones %}
+
+                        <li><!-- start notification -->
+                            <a href="#">
+                                <i class="fa fa-warning text-yellow"></i> {{ notificacion.notificacion }}
+                            </a>
+                        </li><!-- end notification -->
+                    {% endfor %}
+                {% endif %}
             </ul>
         </li>
-        <li class="footer">
-            <a href="#">Ver Todas las Tareas</a>
-        </li>
+        {% if cant_notificaiones  %}<li class="footer"><a href="{{ path('notificaciones_timeline',{'filtro': 'alertas'}) }}">Ver todas mis alertas</a></li>{% endif %}
     </ul>
 </li>
+{#<li class="dropdown task-menu">#}
+    {#<!-- Menu toggle button -->#}
+    {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+        {#<i class="fa fa-bell-o"></i>#}
+        {#{% if cant_notificaiones  %}<span class="label label-danger">{{ cant_notificaiones }}</span> {% endif %}#}
+    {#</a>#}
+    {#<ul class="dropdown-menu">#}
+        {#<li class="header">Tienes {{ cant_notificaiones }} Notificaciones</li>#}
+        {#<li>#}
+            {#<!-- Inner Menu: contains the notifications -->#}
+            {#<ul class="menu">#}
+                {#{% if not cant_notificaiones %}#}
+                    {#<li><!-- start notification -->#}
+                        {#<a href="#">#}
+                            {#<i class="fa  fa-thumbs-up text-aqua"></i> No Tienes alertas pendientes.#}
+                        {#</a>#}
+                    {#</li><!-- end notification -->#}
+                {#{% else %}#}
+                    {#{% for notificacion in ultimas_notificaciones %}#}
+
+                        {#<li><!-- start notification -->#}
+                            {#<a href="#">#}
+                                {#<i class="fa fa-warning text-yellow "></i> {{ notificacion.notificacion }}#}
+                            {#</a>#}
+                        {#</li><!-- end notification -->#}
+                    {#{% endfor %}#}
+                {#{% endif %}#}
+            {#</ul>#}
+        {#</li>#}
+        {#{% if cant_notificaiones  %}<li class="footer"><a href="#">Ver todas mis notificaciones</a></li>{% endif %}#}
+    {#</ul>#}
+{#</li>#}

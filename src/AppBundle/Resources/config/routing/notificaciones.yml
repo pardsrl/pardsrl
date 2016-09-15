@@ -1,0 +1,13 @@
+notificaciones_personales:
+    path:     /personales
+    defaults: { _controller: AppBundle:Notificaciones:notificacionesPersonales }
+
+notificaciones_sistema:
+    path:     /sistema
+    defaults: { _controller: AppBundle:Notificaciones:notificacionesSistema }
+
+notificaciones_timeline:
+    path:     /timeline/{filtro}
+    defaults: { _controller: "AppBundle:Notificaciones:timeline" }
+    methods:  GET
+

@@ -50,22 +50,11 @@ app_mapas:
     resource: "@AppBundle/Resources/config/routing/mapas.yml"
     prefix:   /maps
 
+app_notificaciones:
+    resource: "@AppBundle/Resources/config/routing/notificaciones.yml"
+    prefix:   /notificaciones
 
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}
     methods: [GET,POST]
-
-#datos_en_vivo:
-#    path:     ajax/datos_en_vivo
-#    defaults: { _controller: AppBundle:Ajax:datosEnVivo }
-#    methods: [GET]
-
-notificaciones_personales:
-    path:     /notificaciones_personales
-    defaults: { _controller: AppBundle:Notificaciones:notificacionesPersonales }
-
-notificaciones_sistema:
-    path:     /notificaciones_sistema
-    defaults: { _controller: AppBundle:Notificaciones:notificacionesSistema }
-
