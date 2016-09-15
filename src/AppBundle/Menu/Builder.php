@@ -15,92 +15,111 @@ class Builder implements ContainerAwareInterface
     public function mainMenu(FactoryInterface $factory, array $options)
     {
 
-        $this->usuario = $this->container->get('security.token_storage')->getToken()->getUser();
-
-        $this->securityManager = $this->container->get('security.manager');
-
-        $em = $this->container->get('doctrine')->getManager();
-
-        $misEquipos = $this->usuario->getPersona()->getEquiposActivos();
-
-        $roles = $this->usuario->getRoles();
-
-        $this->rol = $roles[0];
-
-        $menu = $factory->createItem(
-            'root',
-            array(
-                'childrenAttributes' => array(
-                    'class' => 'sidebar-menu',
-                ),
-            )
-        );
 
 
-        if ($this->securityManager->isGranted($this->rol, 'dashboard') || $this->usuario->hasRole('ROLE_SUPER_ADMIN')) {
-            $menu->addChild('Dashboard', array('route' => 'dashboard'))->setExtra('icon', 'fa fa-area-chart');
-        }
 
-        //TODO siempre se están generando estas rutas si el usuario tiene asignado equipos
+	    $menu = $factory->createItem(
+		    'root',
+		    array(
+			    'childrenAttributes' => array(
+				    'class' => 'sidebar-menu',
+			    ),
+		    )
+	    );
 
-        if ($misEquipos->count()) {
-            $menu->addChild('MIS EQUIPOS')->setAttribute('class', 'header');
+	    $token = $this->container->get('security.token_storage')->getToken();
 
-            foreach ($misEquipos as $equipo) {
-
-                $menu->addChild(
-                    strtoupper($equipo->getNombreCompleto()),
-                    array(
-                        'childrenAttributes' => array(
-                            'class' => 'treeview-menu',
-                        ),
-                    )
-                )
-                    ->setUri('#')
-                    ->setExtra('icon', 'fa fa-circle-o text-aqua')
-                    ->setAttribute('class', 'treeview');
-
-                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Gráficas',
-                    array('route' => 'equipo_graficas', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa fa-bar-chart');
-
-                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Instrumentos',
-                    array('route' => 'equipo_instrumentos', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa  fa-cogs');
-
-                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Estadística Actual',
-                    array('route' => 'equipo_estadisticas', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa  fa-line-chart');
-
-                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Estadísticas Individuales',
-                    array('route' => 'equipo_estadisticas_individuales', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa  fa-line-chart');
-
-                $menu[strtoupper($equipo->getNombreCompleto())]->addChild(
-                    'Registra Novedades',
-                    array('route' => 'novedad_nueva', 'routeParameters' => array('id' => $equipo->getId()))
-                )->setExtra('icon', 'fa  fa-bell-o');
-
-            }
-        }
-
-        //Se genera  el resto del menu desde la tabla usr_menu
-
-        $itemsQuery = $em->getRepository('UsuarioBundle:Menu')->getRootsActivos()->getQuery();
-
-        $items = $itemsQuery->getResult();
+	    //si existe un token de usuario
+	    if($token) {
 
 
-        foreach ($items as $item) {
+		    $this->usuario = $token->getUser();
 
-            $this->generaMenu($item, $menu);
-        }
+		    $this->securityManager = $this->container->get( 'security.manager' );
 
-        return $menu;
+		    $em = $this->container->get( 'doctrine' )->getManager();
+
+		    $misEquipos = $this->usuario->getPersona()->getEquiposActivos();
+
+		    $roles = $this->usuario->getRoles();
+
+		    $this->rol = $roles[0];
+
+
+		    if ( $this->securityManager->isGranted( $this->rol,
+				    'dashboard' ) || $this->usuario->hasRole( 'ROLE_SUPER_ADMIN' )
+		    ) {
+			    $menu->addChild( 'Dashboard', array( 'route' => 'dashboard' ) )->setExtra( 'icon', 'fa fa-area-chart' );
+		    }
+
+		    //TODO siempre se están generando estas rutas si el usuario tiene asignado equipos
+
+		    if ( $misEquipos->count() ) {
+			    $menu->addChild( 'MIS EQUIPOS' )->setAttribute( 'class', 'header' );
+
+			    foreach ( $misEquipos as $equipo ) {
+
+				    $menu->addChild(
+					    strtoupper( $equipo->getNombreCompleto() ),
+					    array(
+						    'childrenAttributes' => array(
+							    'class' => 'treeview-menu',
+						    ),
+					    )
+				    )
+				         ->setUri( '#' )
+				         ->setExtra( 'icon', 'fa fa-circle-o text-aqua' )
+				         ->setAttribute( 'class', 'treeview' );
+
+				    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
+					    'Gráficas',
+					    array( 'route' => 'equipo_graficas', 'routeParameters' => array( 'id' => $equipo->getId() ) )
+				    )->setExtra( 'icon', 'fa fa-bar-chart' );
+
+				    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
+					    'Instrumentos',
+					    array( 'route'           => 'equipo_instrumentos',
+					           'routeParameters' => array( 'id' => $equipo->getId() )
+					    )
+				    )->setExtra( 'icon', 'fa  fa-cogs' );
+
+				    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
+					    'Estadística Actual',
+					    array( 'route'           => 'equipo_estadisticas',
+					           'routeParameters' => array( 'id' => $equipo->getId() )
+					    )
+				    )->setExtra( 'icon', 'fa  fa-line-chart' );
+
+				    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
+					    'Estadísticas Individuales',
+					    array( 'route'           => 'equipo_estadisticas_individuales',
+					           'routeParameters' => array( 'id' => $equipo->getId() )
+					    )
+				    )->setExtra( 'icon', 'fa  fa-line-chart' );
+
+				    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
+					    'Registra Novedades',
+					    array( 'route' => 'novedad_nueva', 'routeParameters' => array( 'id' => $equipo->getId() ) )
+				    )->setExtra( 'icon', 'fa  fa-bell-o' );
+
+			    }
+		    }
+
+		    //Se genera  el resto del menu desde la tabla usr_menu
+
+		    $itemsQuery = $em->getRepository( 'UsuarioBundle:Menu' )->getRootsActivos()->getQuery();
+
+		    $items = $itemsQuery->getResult();
+
+
+		    foreach ( $items as $item ) {
+
+			    $this->generaMenu( $item, $menu );
+		    }
+
+	    }
+
+	    return $menu;
     }
 
 

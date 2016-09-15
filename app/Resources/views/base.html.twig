@@ -80,6 +80,7 @@
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -127,6 +128,7 @@
                     </li>
                 </ul>
             </div>
+            {% endif %}
         </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -135,6 +137,7 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
 
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
@@ -146,7 +149,7 @@
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
-
+            {% endif %}
 
             <!-- Sidebar Menu -->
             {{ knp_menu_render('AppBundle:Builder:mainMenu', {'currentClass': 'active', 'ancestorClass':'active','template': 'AppBundle:Menu:knp_menu.html.twig'}) }}
