@@ -86,13 +86,6 @@
 
                     {% set avatar = (app.user.persona.sexo == 'M') ? 'avatar5.png' : 'avatar2.png' %}
 
-                    {#{{ render(controller('AppBundle:Mensajes:notificaciones')) }}#}
-
-                    {#<!-- Notifications Personales Menu -->#}
-                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesPersonales')) }}#}
-
-                    {#<!-- Notifications Sistema Menu -->#}
-                    {#{{ render(controller('AppBundle:Notificaciones:notificacionesSistema')) }}#}
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
@@ -126,10 +119,6 @@
                             {#</li>#}
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    {#<a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>#}
-                                    <a href="#" class="btn btn-default btn-flat">Mi Perfil</a>
-                                </div>
                                 <div class="pull-right">
                                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
                                 </div>
@@ -158,16 +147,6 @@
                 </div>
             </div>
 
-            {#<!-- search form (Optional) -->#}
-            {#<form action="#" method="get" class="sidebar-form">#}
-                {#<div class="input-group">#}
-                    {#<input type="text" name="q" class="form-control" placeholder="Buscar...">#}
-              {#<span class="input-group-btn">#}
-                {#<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>#}
-              {#</span>#}
-                {#</div>#}
-            {#</form>#}
-            {#<!-- /.search form -->#}
 
             <!-- Sidebar Menu -->
             {{ knp_menu_render('AppBundle:Builder:mainMenu', {'currentClass': 'active', 'ancestorClass':'active','template': 'AppBundle:Menu:knp_menu.html.twig'}) }}
