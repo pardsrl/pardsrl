@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Base\BaseClass;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -62,6 +63,7 @@ class Persona extends BaseClass
     protected $telefonoSecundario;
 
     /**
+     * @Assert\NotNull(message="Debe asociar un cargo de forma obligatoria.")
      *
      * @var String $cargo
      *
@@ -70,6 +72,8 @@ class Persona extends BaseClass
     protected $cargo;
 
     /**
+     * @Assert\NotNull(message="Debe asociar una compañia a la nueva persona.}")
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Compania")
      * @ORM\JoinColumn(name="compania_id", referencedColumnName="id")
      */
