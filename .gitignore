@@ -42,6 +42,7 @@
 #custom node
 /node/node_modules/
 /rt/node_modules/
+/rt/config.js
 /doc/*
 /node/*
 npm-debug.log
