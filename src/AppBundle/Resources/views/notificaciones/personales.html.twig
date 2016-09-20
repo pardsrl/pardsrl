@@ -25,7 +25,7 @@
                         {% endif %}
 
                         <li><!-- start notification -->
-                            <a href="#">
+                            <a href="{{ path('notificaciones_timeline') }}#notif-{{ notificacion.id }}">
                                 <i class="fa  {{ icon }} "></i> {{ notificacion.notificacion }}
                             </a>
                         </li><!-- end notification -->
@@ -33,6 +33,6 @@
                 {% endif %}
             </ul>
         </li>
-        {% if cant_notificaiones  %}<li class="footer"><a href="#">Ver todas mis notificaciones</a></li>{% endif %}
+        {% if cant_notificaiones  %}<li class="footer"><a href="{{ path('notificaciones_timeline',{ 'filtro' :'notificaciones'}) }}">Ver todas mis notificaciones</a></li>{% endif %}
     </ul>
 </li>

@@ -8,6 +8,6 @@ notificaciones_sistema:
 
 notificaciones_timeline:
     path:     /timeline/{filtro}
-    defaults: { _controller: "AppBundle:Notificaciones:timeline" }
+    defaults: { _controller: "AppBundle:Notificaciones:timeline", filtro: all }
     methods:  GET
 

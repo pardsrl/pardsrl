@@ -3,9 +3,10 @@
 
 {% set __title = 'Timeline' %}
 
+{% set __descripcion_opcional = '<strong><a href="'~path('notificaciones_timeline',{ 'filtro' :'all'})~'">Ver todo</a></strong>' %}
+
 {% block content %}
     <ul class="timeline">
-
 
         {% for k,evs in eventos  %}
 
@@ -16,13 +17,25 @@
                   </span>
             </li>
 
-            {% for item in evs.data %}
+            {% for item in evs %}
+
+                {%  if item.tipo == constant('\\AppBundle\\Entity\\Notificacion::PERSONAL_TYPE') %}
+                    {% set _class = 'fa-user bg-aqua' %}
+                    {% set _msg   = 'ha generado una alerta personal.' %}
+                {% elseif  item.tipo == constant('\\AppBundle\\Entity\\Notificacion::GRUPAL_TYPE') %}
+                    {% set _class = 'fa-cubes bg-blue' %}
+                    {% set _msg   = 'ha generado una notificacion a su equipo.' %}
+                {% elseif  item.tipo == constant('\\AppBundle\\Entity\\Notificacion::SISTEMA_TYPE') %}
+                    {% set _class = 'fa-warning bg-yellow' %}
+                    {% set _msg   = 'ha generado una alerta general.' %}
+
+                {% endif %}
                 <!-- timeline item -->
                 <li>
-                    <i class="fa fa-warning bg-yellow"></i>
-                    <div class="timeline-item">
+                    <i class="fa {{ _class }}"></i>
+                    <div class="timeline-item" id="notif-{{ item.id }}">
                         <span class="time"><i class="fa fa-clock-o"></i> {{ item.fechaCreacion | date('H:i') }}</span>
-                        <h3 class="timeline-header"><a href="#">Sistema</a> ha generado una alerta</h3>
+                        <h3 class="timeline-header"><a href="#">Sistema</a> {{ _msg }}</h3>
                         <div class="timeline-body">
                             {{ item.notificacion }}
                         </div>
@@ -34,90 +47,6 @@
         {% endfor %}
 
 
-        <!-- /.timeline-label -->
-        <!-- timeline item -->
-        <li>
-            <i class="fa fa-envelope bg-blue"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                <div class="timeline-body">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                    quora plaxo ideeli hulu weebly balihoo...
-                </div>
-                <div class="timeline-footer">
-                    <a class="btn btn-primary btn-xs">Read more</a>
-                    <a class="btn btn-danger btn-xs">Delete</a>
-                </div>
-            </div>
-        </li>
-        <!-- END timeline item -->
-        <!-- timeline item -->
-        <li>
-            <i class="fa fa-user bg-aqua"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-                <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-            </div>
-        </li>
-        <!-- END timeline item -->
-        <!-- timeline item -->
-        <li>
-            <i class="fa fa-comments bg-yellow"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-                <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                <div class="timeline-body">
-                    Take me to your leader!
-                    Switzerland is small and neutral!
-                    We are more like Germany, ambitious and misunderstood!
-                </div>
-                <div class="timeline-footer">
-                    <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                </div>
-            </div>
-        </li>
-        <!-- END timeline item -->
-        <!-- timeline time label -->
-        <li class="time-label">
-                  <span class="bg-green">
-                    3 Jan. 2014
-                  </span>
-        </li>
-        <!-- /.timeline-label -->
-        <!-- timeline item -->
-        <li>
-            <i class="fa fa-camera bg-purple"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-                <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                <div class="timeline-body">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                </div>
-            </div>
-        </li>
-        <!-- END timeline item -->
-        <!-- timeline item -->
-        <li>
-            <i class="fa fa-video-camera bg-maroon"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 5 days ago</span>
-                <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
-                <div class="timeline-body">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" allowfullscreen="" frameborder="0"></iframe>
-                    </div>
-                </div>
-                <div class="timeline-footer">
-                    <a href="#" class="btn btn-xs bg-maroon">See comments</a>
-                </div>
-            </div>
-        </li>
         <!-- END timeline item -->
         <li>
             <i class="fa fa-clock-o bg-gray"></i>

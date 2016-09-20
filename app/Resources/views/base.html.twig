@@ -127,6 +127,10 @@
                             {#</li>#}
                             <!-- Menu Footer-->
                             <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>
+                                </div>
+
                                 <div class="pull-right">
                                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
                                 </div>
@@ -172,7 +176,7 @@
         <section class="content-header">
             {% if __title is defined %}
                 <h1 class="page-header">
-                    {{ __title }} {% if __descripcion_opcional is defined %}<small>{{ __descripcion_opcional }}</small>{%  endif %}
+                    {{ __title }} {% if __descripcion_opcional is defined %}<small>{{ __descripcion_opcional | raw }}</small>{%  endif %}
                 </h1>
             {% endif %}
             {#<ol class="breadcrumb">#}

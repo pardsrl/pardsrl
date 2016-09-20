@@ -45,34 +45,44 @@ class NotificacionesController extends Controller
         ));
     }
 
-    public function timelineAction(Request $request,$filtro)
+    public function timelineAction(Request $request, $filtro)
     {
 
 	    $em = $this->getDoctrine()->getManager();
 
+	    $persona = $this->getUser()->getPersona();
+
 	    $notificacionRepository = $em->getRepository('AppBundle:Notificacion');
 
-	    $qb = $notificacionRepository->getSistema();
+	    switch ($filtro){
+
+		    case 'alertas':
+			    $qb = $notificacionRepository->getSistema();
+
+			    break;
+		    case 'notificaciones':
+			    $qb = $notificacionRepository->getByPersona($persona);
+
+			    break;
+		    default:
+			    $qb = $notificacionRepository->getTodasNotificaciones($persona);
+
+			    break;
+	    }
+
+
+	    $qb = $notificacionRepository->getUltimos($qb,30);
 
 		$eventos = array();
 
 	    foreach ($qb->getQuery()->getResult() as $evento){
 
-	    	$k = $evento->getFechaCreacion()->format('d M. Y');
+	    	$k = $evento->getfechaCreacion()->format('d M. Y');
 
-		    if(!array_key_exists($k,$eventos)){
+		    $type = null;
 
-		    	$eventos[$k] = array(
-		    		'type' => 'alerta',
-				    'data' => array($evento)
-			    );
-
-		    }else{
-		    	$eventos[$k]['data'][] = $evento;
-		    }
+			$eventos[$k][] = $evento;
 	    }
-
-	    //dump($eventos);
 
 	    return $this->render('AppBundle:notificaciones:timeline.html.twig', array(
 			'eventos' => $eventos

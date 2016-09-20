@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notificacion extends BaseClass
 {
+
+
+	const PERSONAL_TYPE = 'personal';
+
+	const GRUPAL_TYPE   = 'grupal';
+
+	const SISTEMA_TYPE  = 'alerta';
+
     /**
      * @var int
      *
@@ -202,5 +210,49 @@ class Notificacion extends BaseClass
     {
         return $this->estados;
     }
-    
+
+
+    public function esPersonal(){
+
+    	if (!$this->esSistema() && $this->getDistribucion()->getPersona()){
+    		return true;
+	    }
+
+	    return false;
+
+    }
+
+    public function esGrupal(){
+
+	    if (!$this->esSistema() && $this->getDistribucion()->getEquipo()){
+		    return true;
+	    }
+
+	    return false;
+    }
+
+
+    public function esSistema(){
+    	return $this->getSistema();
+    }
+
+	/**
+	 * Devuelve el tipo de notificacion en base a la distribucion de la misma.
+	 *
+	 * @return string
+	 */
+    public function getTipo(){
+
+	    if ($this->esSistema()){
+		    $type = self::SISTEMA_TYPE;
+	    }else{
+		    if($this->esPersonal()){
+			    $type = self::PERSONAL_TYPE;
+		    }else{
+			    $type = self::GRUPAL_TYPE;
+		    }
+	    }
+
+	    return $type;
+    }
 }

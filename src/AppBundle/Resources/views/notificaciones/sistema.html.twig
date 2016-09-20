@@ -19,7 +19,7 @@
                     {% for notificacion in ultimas_notificaciones %}
 
                         <li><!-- start notification -->
-                            <a href="#">
+                            <a href="{{ path('notificaciones_timeline') }}#notif-{{ notificacion.id }}">
                                 <i class="fa fa-warning text-yellow"></i> {{ notificacion.notificacion }}
                             </a>
                         </li><!-- end notification -->
@@ -27,7 +27,7 @@
                 {% endif %}
             </ul>
         </li>
-        {% if cant_notificaiones  %}<li class="footer"><a href="{{ path('notificaciones_timeline',{'filtro': 'alertas'}) }}">Ver todas mis alertas</a></li>{% endif %}
+        {% if cant_notificaiones  %}<li class="footer"><a href="{{ path('notificaciones_timeline',{ 'filtro' :'alertas'}) }}">Ver todas mis alertas</a></li>{% endif %}
     </ul>
 </li>
 {#<li class="dropdown task-menu">#}
