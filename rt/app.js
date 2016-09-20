@@ -11,8 +11,6 @@ var request     = require('request');
 
 var config      = require('./config');
 
-const BASE_ARCHIVOS = '/srv/data/';
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -61,19 +59,40 @@ app.get('/historico', function (req, res) {
  * WEBSOCKETS - TIEMPO REAL
  */
 
-const TRPL_SAI280   = BASE_ARCHIVOS+'trpl.sai280';
-const TRMAN_SAI280  = BASE_ARCHIVOS+'trman.sai280';
-const TRPL_WTI15    = BASE_ARCHIVOS+'trpl.wti15';
-const TRMAN_WTI15   = BASE_ARCHIVOS+'trman.wti15';
+var sockets = config.sockets;
 
-const WATCH_FILES = [TRPL_SAI280,TRMAN_SAI280,TRPL_WTI15,TRMAN_WTI15];
+var aSocketIO  = []; //array con las instancias de socket IO.
+var aWatchFile = []; //array con los archivos a evaluar
+var aEmitter   = []; //array con la configuracion de emision
 
-var sai280 = io.of('/sai280');
-var wti15  = io.of('/wti15');
+Object.keys(sockets).forEach(function(key) {
 
+    if(sockets[key].enable){
+        aSocketIO[key] = io.of(sockets[key].namespace); //guardo la instancia socket.IO
+
+        var channels = sockets[key].channels
+
+        for (channel in channels ){
+
+            var channel = channels[channel];
+
+            if(channel.watch){
+            	aWatchFile.push(channel.filename);
+                aEmitter[channel.filename] = {
+                    socket:  aSocketIO[key],
+                    channel: channel.alias
+                };
+            }
+        }
+    }
+});
+
+//console.log(aSocketIO);
+//console.log(aWatchFile);
+//console.log(aEmitter);
 
 try{
-  watch(WATCH_FILES, function(filename) {
+  watch(aWatchFile, function(filename) {
     //console.log(filename, ' changed.');
     push(filename);
   });
@@ -91,31 +110,10 @@ function push($filename) {
 
     if (err) console.log(err);
 
-    switch ($filename) {
+    var socket  = aEmitter[$filename].socket;
+    var channel = aEmitter[$filename].channel;
 
-      case TRPL_SAI280:
-        // Emite un evento al socket del tipo csvOutput
-        sai280.emit('trpl', data);
-        break;
-
-      case TRMAN_SAI280:
-        // Emite un evento al socket del tipo csvOutput
-        sai280.emit('trman', data);
-        break;
-
-      case TRPL_WTI15:
-        // Emite un evento al socket del tipo csvOutput
-        wti15.emit('trpl', data);
-        break;
-
-      case TRMAN_WTI15:
-        // Emite un evento al socket del tipo csvOutput
-        wti15.emit('trman', data);
-        break;
-
-      default:
-
-    }
+    socket.emit(channel,data);
 
   });
 
