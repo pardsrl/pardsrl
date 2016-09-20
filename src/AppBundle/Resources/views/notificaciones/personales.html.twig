@@ -1,7 +1,7 @@
 <li class="dropdown notifications-menu">
     <!-- Menu toggle button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-bell-o"></i>
+        <i class="fa fa-flag-o"></i>
         {% if cant_notificaiones  %}<span class="label label-warning">{{ cant_notificaiones }}</span> {% endif %}
     </a>
     <ul class="dropdown-menu">
@@ -25,7 +25,7 @@
                         {% endif %}
 
                         <li><!-- start notification -->
-                            <a href="#">
+                            <a href="{{ path('notificaciones_timeline') }}#notif-{{ notificacion.id }}">
                                 <i class="fa  {{ icon }} "></i> {{ notificacion.notificacion }}
                             </a>
                         </li><!-- end notification -->
@@ -33,6 +33,6 @@
                 {% endif %}
             </ul>
         </li>
-        {% if cant_notificaiones  %}<li class="footer"><a href="#">Ver todas mis notificaciones</a></li>{% endif %}
+        {% if cant_notificaiones  %}<li class="footer"><a href="{{ path('notificaciones_timeline',{ 'filtro' :'notificaciones'}) }}">Ver todas mis notificaciones</a></li>{% endif %}
     </ul>
 </li>

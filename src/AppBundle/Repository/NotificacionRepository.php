@@ -22,7 +22,8 @@ class NotificacionRepository extends \Doctrine\ORM\EntityRepository
     public function getSistema()
     {
         $qb = $this->getQb()
-            ->where('notif.sistema = true');
+            ->where('notif.sistema = true')
+	        ->orderBy('notif.fechaCreacion','DESC');
 
         return $qb;
     }
@@ -94,9 +95,40 @@ class NotificacionRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function getCantidadSistemaNoLeidas(){
+
+        $qb = $this->getSistema();
+
+        $qb->select($qb->expr()->count('notif'));
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 
     public function getUltimos(QueryBuilder $qb, $max)
     {
         return $qb->setMaxResults($max);
+    }
+
+	/**
+	 * Obtiene todas las notificaciones para una persona dada, incluso las que son de sistema.
+	 *
+	 * @param Persona $persona
+	 *
+	 * @return QueryBuilder
+	 */
+    public function getTodasNotificaciones(Persona $persona){
+    	$qb = $this->getQb()
+	               ->leftJoin('notif.distribucion', 'dist')
+	               ->leftJoin('dist.equipo', 'eq')
+	               ->leftJoin('eq.personas', 'personas')
+	               ->where('dist.persona = :persona')
+	               ->orWhere('personas = :persona')
+	               ->orWhere('notif.sistema = true')
+	               ->orderBy('notif.fechaCreacion', 'DESC');
+
+	    $qb->setParameter('persona', $persona);
+
+	    return $qb;
     }
 }

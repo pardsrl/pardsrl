@@ -22,3 +22,8 @@ persona_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Persona:delete" }
     methods:  DELETE
+
+persona_perfil:
+    path:     /perfil/
+    defaults: { _controller: "AppBundle:Persona:perfil" }
+    methods:  GET

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% set __title = 'Timeline' %}
+
+{% set __descripcion_opcional = '<strong><a href="'~path('notificaciones_timeline',{ 'filtro' :'all'})~'">Ver todo</a></strong>' %}
+
+{% block content %}
+    <ul class="timeline">
+
+        {% for k,evs in eventos  %}
+
+            <!-- timeline time label -->
+            <li class="time-label">
+                  <span class="bg-maroon">
+                    {{ k }}
+                  </span>
+            </li>
+
+            {% for item in evs %}
+
+                {%  if item.tipo == constant('\\AppBundle\\Entity\\Notificacion::PERSONAL_TYPE') %}
+                    {% set _class = 'fa-user bg-aqua' %}
+                    {% set _msg   = 'ha generado una alerta personal.' %}
+                {% elseif  item.tipo == constant('\\AppBundle\\Entity\\Notificacion::GRUPAL_TYPE') %}
+                    {% set _class = 'fa-cubes bg-blue' %}
+                    {% set _msg   = 'ha generado una notificacion a su equipo.' %}
+                {% elseif  item.tipo == constant('\\AppBundle\\Entity\\Notificacion::SISTEMA_TYPE') %}
+                    {% set _class = 'fa-warning bg-yellow' %}
+                    {% set _msg   = 'ha generado una alerta general.' %}
+
+                {% endif %}
+                <!-- timeline item -->
+                <li>
+                    <i class="fa {{ _class }}"></i>
+                    <div class="timeline-item" id="notif-{{ item.id }}">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{ item.fechaCreacion | date('H:i') }}</span>
+                        <h3 class="timeline-header"><a href="#">Sistema</a> {{ _msg }}</h3>
+                        <div class="timeline-body">
+                            {{ item.notificacion }}
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+            {% endfor %}
+
+        {% endfor %}
+
+
+        <!-- END timeline item -->
+        <li>
+            <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+    </ul>
+{% endblock %}
