@@ -5,7 +5,12 @@
         {% if cant_notificaiones  %}<span class="label label-danger">{{ cant_notificaiones }}</span> {% endif %}
     </a>
     <ul class="dropdown-menu">
-        <li class="header">Tienes {{ cant_notificaiones }} alertas</li>
+        {% if cant_notificaiones == 1 %}
+            {% set texto_notificaciones = 'Notificación sin leer'%}
+        {% else %}
+            {% set texto_notificaciones = 'Notificaciones no leídas'%}
+        {% endif %}
+        <li class="header">Tienes {{ cant_notificaiones }} {{ texto_notificaciones }}</li>
         <li>
             <!-- Inner Menu: contains the notifications -->
             <ul class="menu">

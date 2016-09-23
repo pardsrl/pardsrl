@@ -95,13 +95,32 @@ class NotificacionRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function getCantidadSistemaNoLeidas(){
+	public function getSistemaNoLeidas(Persona $persona){
 
-        $qb = $this->getSistema();
+		$neRepository = $this->getEntityManager()->getRepository('AppBundle:NotificacionEstado');
 
-        $qb->select($qb->expr()->count('notif'));
+		$qb1 = $this->getSistema();
 
-        return $qb->getQuery()->getSingleScalarResult();
+		$qb2 = $neRepository->getIdsNotificacionesLeidasByPersona($persona);
+
+		$qb1->andWhere($qb1->expr()->notIn(
+			'notif.id', $qb2->getQuery()->getDQL()
+		));
+
+		//hack para setear los parametros de qb2 en qb1
+		$qb1->setParameters($qb2->getParameters());
+
+		return $qb1;
+	}
+
+
+	public function getCantidadSistemaNoLeidas(Persona $persona){
+
+		$qb = $this->getSistemaNoLeidas($persona);
+
+		$qb->select($qb->expr()->count('notif'));
+
+		return $qb->getQuery()->getSingleScalarResult();
     }
 
 

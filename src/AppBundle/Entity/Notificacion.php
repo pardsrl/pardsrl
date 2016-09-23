@@ -57,7 +57,7 @@ class Notificacion extends BaseClass
     private $distribucion;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NotificacionEstado", mappedBy="notificacion")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NotificacionEstado", mappedBy="notificacion",cascade={"persist"})
      */
     private $estados;
 
@@ -254,5 +254,71 @@ class Notificacion extends BaseClass
 	    }
 
 	    return $type;
+    }
+
+	/**
+	 * Retorna si una notificacion fue leida por una persona dada.
+	 *
+	 * @param Persona $persona
+	 *
+	 * @return bool
+	 */
+    public function getLeidaPor(Persona $persona)
+    {
+    	foreach ($this->getEstados() as $estado){
+    		if ($estado->getPersona() == $persona){
+    			return $estado->getLeido();
+		    }
+
+	    }
+
+	    return false;
+    }
+
+	/**
+	 * Setea por default una notificacion como leida, en el caso que no exista un estado para esta notificaion crea una
+	 * instancia de NotificacionEstado y lo configura como leido.
+	 *
+	 * @param Persona $persona
+	 * @param bool $leida Se puede marcar como no leida
+	 *
+	 * @return $this
+	 */
+    public function setLeidaPor(Persona $persona,$leida = true)
+    {
+
+    	$nuevoEstado = true;
+
+	    foreach ( $this->getEstados() as $estado){
+
+		    if ($estado->getPersona() == $persona){
+
+			    $estado->setLeido($leida);
+
+			    $nuevoEstado = false;
+
+		    }
+	    }
+
+	    if($nuevoEstado){
+		    $estado = new NotificacionEstado();
+
+		    $estado->setNotificacion($this);
+
+		    $estado->setPersona($persona);
+
+		    $estado->setLeido($leida);
+
+		    $this->addEstado($estado);
+	    }
+
+	    return $this;
+    }
+
+    public function toArray(){
+    	return array(
+    		'id' => $this->getId(),
+		    'notificacion' => $this->getNotificacion()
+	    );
     }
 }
