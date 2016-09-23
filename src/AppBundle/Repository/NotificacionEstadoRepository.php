@@ -25,7 +25,8 @@ class NotificacionEstadoRepository extends \Doctrine\ORM\EntityRepository
 
         $qb = $this->getQb();
 
-        $qb ->select('ne.id')
+        $qb ->select('n.id')
+	        ->innerJoin('ne.notificacion','n')
             ->where('ne.leido = true')
             ->andWhere('ne.persona = :persona');
 

@@ -5,6 +5,44 @@
 
 {% set __descripcion_opcional = '<strong><a href="'~path('notificaciones_timeline',{ 'filtro' :'all'})~'">Ver todo</a></strong>' %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="application/javascript" language="JavaScript">
+
+        $(document).ready(function () {
+
+            var marcar_leido_url_proto = "{{ path('notificaciones_marcar_leido',{"id":"_notificacion_id_"}) }}";
+
+            $('.marcar-como-leida').click(function(){
+
+                var id = $(this).parents('.overlay-wrapper')[0].id;
+
+                var boton = $(this);
+
+                overlayBox('#'+id);
+
+                var marcar_leido_url = marcar_leido_url_proto.replace(/_notificacion_id_/g, id);
+
+                $.ajax({
+                    url: marcar_leido_url,
+                    success:function(response) {
+
+                        console.log(response);
+
+                        if(response.status == "success"){
+                            boton.parents('.item-container').fadeOut(500, function() { $(this).remove(); });
+                        }
+
+                    }
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
 {% block content %}
     <ul class="timeline">
 
@@ -31,13 +69,18 @@
 
                 {% endif %}
                 <!-- timeline item -->
-                <li>
+                <li class="item-container">
                     <i class="fa {{ _class }}"></i>
-                    <div class="timeline-item" id="notif-{{ item.id }}">
+                    <div class="timeline-item overlay-wrapper" id="{{ item.id }}">
                         <span class="time"><i class="fa fa-clock-o"></i> {{ item.fechaCreacion | date('H:i') }}</span>
                         <h3 class="timeline-header"><a href="#">Sistema</a> {{ _msg }}</h3>
                         <div class="timeline-body">
                             {{ item.notificacion }}
+                        </div>
+                        <div class="timeline-footer">
+                            {%  if not item.leidaPor(app.user.persona)%}
+                                <button class="btn btn-default btn-xs marcar-como-leida"><i class="fa fa-check-square-o"></i> Marcar como leída</button>
+                            {% endif %}
                         </div>
                     </div>
                 </li>

@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Notificacion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotificacionesController extends Controller
@@ -29,7 +31,9 @@ class NotificacionesController extends Controller
 
     public function notificacionesSistemaAction()
     {
-        $em = $this->getDoctrine()->getManager();
+	    $user = $this->getUser();
+
+	    $em = $this->getDoctrine()->getManager();
 
         $notificacionRepository = $em->getRepository('AppBundle:Notificacion');
 
@@ -37,7 +41,7 @@ class NotificacionesController extends Controller
 
         $notificaciones = $notificacionRepository->getUltimos($qb,5)->getQuery()->getResult();
 
-        $cantNoLeidas = $notificacionRepository->getCantidadSistemaNoLeidas();
+        $cantNoLeidas = $notificacionRepository->getCantidadSistemaNoLeidas($user->getPersona());
 
         return $this->render('AppBundle:notificaciones:sistema.html.twig', array(
             'ultimas_notificaciones' => $notificaciones,
@@ -87,6 +91,43 @@ class NotificacionesController extends Controller
 	    return $this->render('AppBundle:notificaciones:timeline.html.twig', array(
 			'eventos' => $eventos
 	    ));
+    }
+
+	/**
+	 * Marca como leida una notificacion dada.
+	 *
+	 * @param Request $request
+	 * @param Notificacion $notificacion
+	 *
+	 * @return JsonResponse
+	 */
+    public function marcarComoLeidaAction(Request $request, Notificacion $notificacion, $leida)
+    {
+
+    	$response = array(
+    		'status' => 'success',
+		    'data'   => null
+	    );
+
+    	try{
+		    $persona = $this->getUser()->getPersona();
+
+		    $notificacion->setLeidaPor($persona,$leida);
+
+		    $em = $this->getDoctrine()->getManager();
+
+		    $em->persist($notificacion);
+
+		    $em->flush();
+
+		    $response['data'] = $notificacion->toArray();
+
+	    }catch(\Exception $e){
+		    $response['msg'] = 'error';
+	    	$response['msg'] = $e->getMessage();
+	    }
+
+	    return new JsonResponse($response);
     }
 
 }

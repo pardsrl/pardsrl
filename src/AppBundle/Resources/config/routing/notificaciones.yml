@@ -8,6 +8,11 @@ notificaciones_sistema:
 
 notificaciones_timeline:
     path:     /timeline/{filtro}
-    defaults: { _controller: "AppBundle:Notificaciones:timeline", filtro: all }
+    defaults: { _controller: AppBundle:Notificaciones:timeline, filtro: all }
+    methods:  GET
+
+notificaciones_marcar_leido:
+    path:     /marcar_leido/{id}/{leida}
+    defaults: { _controller: AppBundle:Notificaciones:marcarComoLeida , leida: true}
     methods:  GET
 
