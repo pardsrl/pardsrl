@@ -86,14 +86,18 @@
                             },
                             plotBands: [{
                                 from: 0,
-                                to: 2000,
+                                to: 800,
                                 color: '#55BF3B' // green
                             }, {
-                                from: 2000,
-                                to: 2500,
+                                from: 800,
+                                to: 1850,
                                 color: '#DDDF0D' // yellow
                             }, {
-                                from: 2500,
+                                from: 1850,
+                                to: 2200,
+                                color: '#ff9900' // orange
+                            }, {
+                                from: 2200,
                                 to: 3000,
                                 color: '#DF5353' // red
                             }]
@@ -241,8 +245,8 @@
                 yAxis: {
                     stops: [
                         [0.1, '#55BF3B'], // green
-                        [0.5, '#DDDF0D'], // yellow
-                        [0.9, '#DF5353'] // red
+                        [0.2, '#DDDF0D'], // yellow
+                        [0.25, '#DF5353'] // red
                     ],
                     lineWidth: 0,
                     minorTickInterval: null,
@@ -334,19 +338,32 @@
                             min: 0,
                             max: 180,
                             tickPosition: 'outside',
-                            lineColor: '#933',
+                            lineColor: '#6E6E6E',
                             lineWidth: 2,
                             minorTickPosition: 'outside',
-                            tickColor: '#933',
-                            minorTickColor: '#933',
+                            tickColor: '#6E6E6E',
+                            minorTickColor: '#6E6E6E',
                             tickLength: 5,
                             minorTickLength: 5,
                             labels: {
-                                distance: 12,
+                                distance: -15,
                                 rotation: 'auto'
                             },
-                            offset: -20,
-                            endOnTick: false
+                            offset: -9,
+                            endOnTick: false,
+                            plotBands: [{
+                                from: 0,
+                                to: 75,
+                                color: '#55BF3B' // green
+                            }, {
+                                from: 75,
+                                to: 110,
+                                color: '#DDDF0D' // yellow
+                            }, {
+                                from: 110,
+                                to: 180,
+                                color: '#DF5353' // orange
+                            }]
                         }],
 
                         series: [
@@ -354,10 +371,9 @@
                                 yAxis: 1,
                                 name: 'Peso',
                                 data: [0],
-                                color: '#933',
-
+                                color: '#000000',
                                 dial: {
-                                    backgroundColor: "#933"
+                                    backgroundColor: "#000000"
                                 },
                                 dataLabels: {
                                     x: 0,
@@ -366,7 +382,7 @@
                                     formatter: function () {
                                         var klb = this.y;
 
-                                        return '<span style="color:#933">' + klb + ' klb</span>';
+                                        return '<span style="color:#000000">' + klb + ' klb</span>';
                                     },
                                     backgroundColor: {
                                         linearGradient: {
