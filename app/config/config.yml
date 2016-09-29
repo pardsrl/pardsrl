@@ -39,6 +39,7 @@ twig:
          node_server: "%node_server%"
          mapbox_access_token: "%mapbox_access_token%"
          mapbox_default_style_url: "%mapbox_default_style_url%"
+         theme_color: "%theme_color%"
 
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
