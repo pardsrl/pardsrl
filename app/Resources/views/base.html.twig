@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/app/app.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v3/dist/css/skins/skin-black.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/dist/css/skins/'~theme_color~'.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('dashboard_v3/plugins/pace/pace.min.css') }}">
 
@@ -64,7 +64,7 @@
 </head>
 
 
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition {{ theme_color }} sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -132,9 +132,9 @@
                             {#</li>#}
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>
-                                </div>
+                                {#<div class="pull-left">#}
+                                    {#<a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>#}
+                                {#</div>#}
 
                                 <div class="pull-right">
                                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>

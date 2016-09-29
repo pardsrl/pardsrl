@@ -27,3 +27,6 @@ parameters:
 
     mapbox_access_token: null
     mapbox_default_style_url: null
+
+    produccion: false
+    theme_color: skin-black
