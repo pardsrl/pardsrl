@@ -27,20 +27,22 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/ionicons/css/ionicons.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/dist/css/AdminLTE.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('bundles/app/app.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/dist/css/skins/skin-black.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/dist/css/skins/'~theme_color~'.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('dashboard_v2/plugins/datepicker/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/plugins/pace/pace.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('dashboard_v3/plugins/datepicker/datepicker3.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,14 +54,17 @@
 
     {% block header_javascript %}
         <!-- jQuery 2.1.4 -->
-        <script src="{{ asset('dashboard_v2/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('dashboard_v3/plugins/jQuery/jQuery-2.2.3.min.js') }}"></script>
         <!-- Bootstrap 3.3.5 -->
-        <script src="{{ asset('dashboard_v2/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('dashboard_v3/bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <script src="{{ asset('dashboard_v3/plugins/pace/pace.min.js') }}"></script>
+
     {% endblock %}
 </head>
 
 
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition {{ theme_color }} sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -100,14 +105,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="user-image" alt="User Image">
+                            <img src="{{ asset('dashboard_v3/dist/img/'~avatar) }}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ app.user.persona.nombreCompleto }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
+                                <img src="{{ asset('dashboard_v3/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
                                 <p>
                                     {{ app.user.persona.nombreCompleto }} - {{ app.user.persona.cargo }}
                                     <small>Miembro de {{ app.user.persona.compania }}</small>
@@ -127,9 +132,9 @@
                             {#</li>#}
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>
-                                </div>
+                                {#<div class="pull-left">#}
+                                    {#<a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>#}
+                                {#</div>#}
 
                                 <div class="pull-right">
                                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
@@ -152,7 +157,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ asset('dashboard_v2/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
+                    <img src="{{ asset('dashboard_v3/dist/img/'~avatar) }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{ app.user.persona.nombreCompleto }}</p>
@@ -210,11 +215,12 @@
 {% block javascripts %}
 
     <!-- bootstrap timepicker -->
-    <script src="{{ asset('dashboard_v2/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('dashboard_v2/plugins/datepicker/locales/bootstrap-datepicker.es.js') }}"></script>
+    <script src="{{ asset('dashboard_v3/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+
+    <script src="{{ asset('dashboard_v3/plugins/datepicker/locales/bootstrap-datepicker.es.js') }}"></script>
 
     <!-- AdminLTE App -->
-    <script src="{{ asset('dashboard_v2/dist/js/app.min.js') }}"></script>
+    <script src="{{ asset('dashboard_v3/dist/js/app.min.js') }}"></script>
 
 
     <!-- Se carga socket.io en todo el site, debido a su uso principalmente en las notificaciones -->

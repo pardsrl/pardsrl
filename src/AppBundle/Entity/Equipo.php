@@ -41,7 +41,7 @@ class Equipo extends BaseClass
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Compania")
-     * @ORM\JoinColumn(name="compania_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="compania_id", referencedColumnName="id", nullable=false)
      */
     protected $compania;
 

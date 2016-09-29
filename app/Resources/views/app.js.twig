@@ -101,6 +101,9 @@ $(document).ready(function () {
         language: 'es',
         autoclose: true
     });
+
+
+    $(document).ajaxStart(function() { Pace.restart(); });
 });
 
 /**
