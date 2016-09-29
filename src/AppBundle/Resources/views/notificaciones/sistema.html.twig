@@ -6,9 +6,9 @@
     </a>
     <ul class="dropdown-menu">
         {% if cant_notificaiones == 1 %}
-            {% set texto_notificaciones = 'Notificación sin leer'%}
+            {% set texto_notificaciones = 'Alerta sin leer'%}
         {% else %}
-            {% set texto_notificaciones = 'Notificaciones no leídas'%}
+            {% set texto_notificaciones = 'Alertas no leídas'%}
         {% endif %}
         <li class="header">Tienes {{ cant_notificaiones }} {{ texto_notificaciones }}</li>
         <li>
