@@ -29,4 +29,10 @@ parameters:
     mapbox_default_style_url: null
 
     produccion: false
+
+    #parametro que controla la integracion con apigility.
+    api:
+        #si esta en true, graba el usuario en la tabla oauth_users cuando se da de alta via sistema.
+        user_integration: true
+
     theme_color: skin-black

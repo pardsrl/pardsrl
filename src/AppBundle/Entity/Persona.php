@@ -86,7 +86,7 @@ class Persona extends BaseClass
      */
     private $equipos;
     /**
-     * @ORM\OneToOne(targetEntity="UsuarioBundle\Entity\Usuario" ,  inversedBy="persona" ,cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="UsuarioBundle\Entity\Usuario" ,  inversedBy="persona" ,cascade={"persist","remove"})
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario;

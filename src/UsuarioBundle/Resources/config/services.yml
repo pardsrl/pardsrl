@@ -22,3 +22,9 @@ services:
   security.manager:
       class: UsuarioBundle\Services\SecurityManager
       arguments: [ @doctrine.orm.entity_manager ]
+
+  api.user_integration:
+      class: UsuarioBundle\EventListener\ApiUserIntegrationSubscriber
+      arguments: [ @service_container ]
+      tags:
+          - { name: kernel.event_subscriber }
