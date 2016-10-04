@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class UsuarioType extends AbstractType
 {
@@ -107,7 +108,9 @@ class UsuarioType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'UsuarioBundle\Entity\Usuario',
-            'error_bubbling' => true
+            'error_bubbling' => true,
+            'constraints' => new Valid(),
+	        'validation_groups' => array('Registration')
         ));
     }
 

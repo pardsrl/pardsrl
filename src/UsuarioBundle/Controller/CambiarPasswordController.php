@@ -5,6 +5,7 @@ namespace UsuarioBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use UsuarioBundle\Entity\Usuario;
+use UsuarioBundle\Event\UsuarioPasswordModificadoEvent;
 use UsuarioBundle\Form\CambiarPasswordType;
 
 class CambiarPasswordController extends Controller
@@ -17,6 +18,12 @@ class CambiarPasswordController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager = $this->get('fos_user.user_manager');
+
+	        $dispatcher = $this->get('event_dispatcher');
+
+	        $event = new UsuarioPasswordModificadoEvent($usuario);
+
+	        $dispatcher->dispatch(UsuarioPasswordModificadoEvent::NAME, $event);
 
             $userManager->updateUser($usuario);
 
