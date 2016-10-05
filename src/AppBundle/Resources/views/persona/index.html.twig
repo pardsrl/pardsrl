@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% set __title = 'Listado de personas' %}
+{% import _self as listado %}
+
+{% set __title = 'Listado de Personas' %}
 
 {% block content %}
     <div class="row">
@@ -11,14 +13,15 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Username</th>
+                                <th>Rol</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
-                                <th>Telefonoprincipal</th>
-                                <th>Telefonosecundario</th>
+                                <th>Tel. Principal</th>
                                 <th>Cargo</th>
                                 <th>Habilitado</th>
-                                <th>Fechacreacion</th>
-                                <th>Fechaactualizacion</th>
+                                <th>Creado</th>
+                                <th>Actualizado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -26,14 +29,17 @@
                         {% for persona in personas %}
                             <tr>
                                 <td>{{ persona.id }}</td>
-                                <td><a href="{{ path('persona_show', { 'id': persona.id }) }}">{{ persona.nombre }}</a></td>
+                                <td><a href="{{ path('persona_show', { 'id': persona.id }) }}">{{ persona.usuario.username }}</a></td>
+                                <td> {{ listado.userFriendlyRol(persona.usuario.roles[0],roles) }}</td>
+                                    {#<a href="{{ path('rol_show', { 'id': persona.usuario.roles.[0].id }) }}">{{ persona.usuario.roles.[0] }}</a></td>#}
+                                <td>{{ persona.nombre }}</td>
                                 <td>{{ persona.apellido }}</td>
                                 <td>{{ persona.telefonoPrincipal }}</td>
-                                <td>{{ persona.telefonoSecundario }}</td>
                                 <td>{{ persona.cargo }}</td>
                                 <td>{% if persona.usuario.enabled %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
-                                <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>                                <td>
+                                <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d/m/Y') }}{% endif %}</td>
+                                <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d/m/Y') }}{% endif %}</td>
+                                <td>
                                     <a title="Editar"   class="btn btn-default btn-sm" href="{{ path('persona_edit', { 'id': persona.id }) }}"><i class="glyphicon glyphicon-pencil"></i></a>
                                     <a title="Cambiar Password" class="btn btn-default btn-sm" href="{{ path('cambiar-password', { 'id': persona.usuario.id }) }}"><i class="fa fa-fw fa-key"></i></a>
                                     <a title="Eliminar" class="btn btn-default btn-sm delete-obj" data-id="{{ persona.id }}" data-href="{{ path('persona_delete', { 'id': persona.id }) }}"> <i class="glyphicon glyphicon-remove-circle"></i></a>
@@ -59,3 +65,10 @@
 
 {% endblock %}
 
+{% macro userFriendlyRol(rol_slug,roles) %}
+    {% for  rol in roles %}
+        {% if rol.slug == rol_slug %}
+            {{ rol.nombre }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
