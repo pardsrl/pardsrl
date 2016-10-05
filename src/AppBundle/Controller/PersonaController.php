@@ -25,6 +25,8 @@ class PersonaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+	    $roles = $em->getRepository('UsuarioBundle:Rol')->findAll();
+
         $personas = $em->getRepository('AppBundle:Persona')->findAll();
 
         $paginator = $this->get('knp_paginator');
@@ -38,8 +40,9 @@ class PersonaController extends Controller
         $deleteForm = $this->createDeleteForm();
 
         return $this->render('AppBundle:persona:index.html.twig', array(
-            'personas' => $personas,
-            'delete_form' => $deleteForm->createView()
+            'personas'    => $personas,
+            'delete_form' => $deleteForm->createView(),
+	        'roles'       => $roles
         ));
     }
 
