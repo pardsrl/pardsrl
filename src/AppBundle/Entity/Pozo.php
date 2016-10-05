@@ -360,4 +360,24 @@ class Pozo extends BaseClass
     {
         return $this->getNombre();
     }
+
+	/**
+	 * Retorna la intervencion asociada al equipo en el caso de que esté interviniendo.
+	 * False en el caso de que no esté activo en algun Pozo
+	 *
+	 * @return bool| Intervencion
+	 */
+	public function getIntervencionActual()
+	{
+
+		$intervencion =  $this->getIntervenciones()->last();
+
+
+		if( $intervencion && $intervencion->esApertura()){
+			return $intervencion;
+		}
+
+		return false;
+	}
+
 }
