@@ -326,11 +326,32 @@ class Equipo extends BaseClass
      *
      * @return string
      */
-    public function getNombreCompleto(){
+    public function getNombreCompleto()
+    {
         return $this->getCompania()->getAcronimo().' '.$this->getNombre();
     }
 
-    public function getWebSocketNamespace(){
+    public function getWebSocketNamespace()
+    {
         return strtolower(str_replace(' ','',$this->getNombreCompleto()));
+    }
+
+	/**
+	 * Retorna la intervencion asociada al equipo en el caso de que esté interviniendo.
+	 * False en el caso de que no esté activo en algun Pozo
+	 *
+	 * @return bool| Intervencion
+	 */
+    public function getIntervencionActual()
+    {
+
+    	$intervencion =  $this->getIntervenciones()->last();
+
+
+	    if( $intervencion && $intervencion->esApertura()){
+	    	return $intervencion;
+	    }
+
+	    return false;
     }
 }

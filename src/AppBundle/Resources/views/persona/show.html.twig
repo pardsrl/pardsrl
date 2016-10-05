@@ -10,6 +10,14 @@
                 <table class="table">
                     <tbody>
                         <tr>
+                            <th>Id</th>
+                            <td>{{ persona.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Username:</th>
+                            <td>{{ persona.usuario.username }}</td>
+                        </tr>
+                        <tr>
                             <th>Nombre</th>
                             <td>{{ persona.nombre }}</td>
                         </tr>
@@ -18,32 +26,40 @@
                             <td>{{ persona.apellido }}</td>
                         </tr>
                         <tr>
-                            <th>Telefonoprincipal</th>
-                            <td>{{ persona.telefonoPrincipal }}</td>
-                        </tr>
-                        <tr>
-                            <th>Telefonosecundario</th>
-                            <td>{{ persona.telefonoSecundario }}</td>
-                        </tr>
-                        <tr>
                             <th>Cargo</th>
                             <td>{{ persona.cargo }}</td>
                         </tr>
                         <tr>
-                            <th>Id</th>
-                            <td>{{ persona.id }}</td>
+                            <th>Compañía</th>
+                            <td><a href="{{ path('compania_show', { 'id': persona.compania.id }) }}">{{ persona.compania.nombre }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Tel. Principal</th>
+                            <td>{{ persona.telefonoPrincipal }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tel. Secundario</th>
+                            <td>{{ persona.telefonoSecundario }}</td>
                         </tr>
                         <tr>
                             <th>Habilitado</th>
                             <td>{% if persona.usuario.enabled %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
                         </tr>
                         <tr>
-                            <th>Fechacreacion</th>
-                            <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                            <th>Creado</th>
+                            <td>{% if persona.fechaCreacion %}{{ persona.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                         </tr>
                         <tr>
-                            <th>Fechaactualizacion</th>
-                            <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d-m-Y H:i:s') }}{% endif %}</td>
+                            <th>Actualizado</th>
+                            <td>{% if persona.fechaActualizacion %}{{ persona.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Creado Por</th>
+                            <td>{% if persona.creadoPor %}<a href="{{ path('persona_show', { 'id': persona.creadoPor.persona.id }) }}">{{ persona.creadoPor.persona }}</a>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Actualizado Por</th>
+                            <td>{% if persona.actualizadoPor %}<a href="{{ path('persona_show', { 'id': persona.actualizadoPor.persona.id }) }}">{{ persona.actualizadoPor.persona }}</a>{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -53,6 +69,57 @@
                     <a class="btn btn-default" href="{{ path('persona_index') }}"> Volver al Listado</a>
                 </div>
 
+            </div>
+            <div class="col-md-6">
+
+                    {#{{ equipo }}#}
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="box no-border">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Equipos Asignados</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table no-margin">
+                                    <thead>
+                                    <tr>
+                                        <th>Equipo</th>
+                                        <th>Modelo</th>
+                                        <th>Activo</th>
+                                        <th>Pozo</th>
+                                        <th>Intervenido el</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for equipo in persona.equipos %}
+                                    <tr>
+                                        <td><a href="{{ path('equipo_show', { 'id': equipo.id }) }}">{{ equipo.nombreCompleto | upper }}</td>
+                                        <td>{{ equipo.modelo }}</td>
+                                        <td>{% if equipo.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                                        <td>
+                                            {%  if equipo.intervencionActual %}
+                                                <a href="{{ path('pozo_show', { 'id': equipo.intervencionActual.pozo.id }) }}">{{ equipo.intervencionActual.pozo }}</a>
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {%  if equipo.intervencionActual %}
+                                                {{ equipo.intervencionActual.fecha |date('d/m/Y H:i:s')  }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
             </div>
         </div>
     </div>

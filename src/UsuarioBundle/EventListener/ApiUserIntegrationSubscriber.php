@@ -13,7 +13,6 @@ use AppBundle\Entity\Persona;
 
 use AppBundle\Event\PersonaCreadaEvent;
 use AppBundle\Event\PersonaEliminadaEvent;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
