@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@UsuarioBundle/Resources/config/services.yml" }
+    - { resource: "@OAuth2Bundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -30,6 +31,9 @@ framework:
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
+        #se configura el valor de expiracion de la cookie a un dia (en segundos)
+        cookie_lifetime: 86400
+
     fragments:       ~
     http_method_override: true
 
@@ -40,7 +44,7 @@ twig:
          mapbox_access_token: "%mapbox_access_token%"
          mapbox_default_style_url: "%mapbox_default_style_url%"
          theme_color: "%theme_color%"
-
+         api: "%api%"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:

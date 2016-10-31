@@ -15,8 +15,6 @@
 
         var socket = io(websocket_connection);
 
-        const URL_HISTORICO    = "http://"+server.getBaseWs()+"/historico";
-
         const DESDE_ORIGINAL   = {{ fechaInicioIntervencion | date('U') }} * 1000;
 
         const HASTA_ORIGINAL   = {{ "now" |date("U") }} * 1000;

@@ -41,6 +41,8 @@ function cargarDatosTrPl(event) {
 
 }
 
+var equipoController = new EquipoController();
+
 var paramsHstpl = {
     "equipo"     : "{{ equipo.webSocketNamespace }}",
     "tipo"       : PARAM_PLUMAS,
@@ -70,20 +72,31 @@ function recargarHstpl(min,max){
 
     hstpl.showLoading('Cargando datos del servidor...');
 
-    $.getJSON(URL_HISTORICO, paramsHstpl, function( data ) {
 
+    equipoController.getHistoricoEquipos(
+            {{ equipo.id }},
+            paramsHstpl,
+            function (data) {
+                anemometro_serie.setData(data.datos.anem, false, false, true);
+                aparejo_serie.setData(data.datos.hta, false, false, true);
+                llave_serie.setData(data.datos.llave, false, false, true);
+                boca_pozo_serie.setData(data.datos.bpozo, false, false, true);
 
-        anemometro_serie.setData(data.datos.anem,false,false,true);
-        aparejo_serie.setData(data.datos.hta,false,false,true);
-        llave_serie.setData(data.datos.llave,false,false,true);
-        boca_pozo_serie.setData(data.datos.bpozo,false,false,true);
+                hstpl.redraw();
+                hstpl.hideLoading();
+            },
+            function (jqXHR) {
 
-        hstpl.redraw();
-        hstpl.hideLoading();
+                console.log('entro');
 
-    }).fail(function(jqxhr){
-        //console.log(jqxhr);
-    });
+                var resJson = jqXHR.responseJSON;
+
+                $('#hstpl').html('<div class="callout callout-warning"><p>' + resJson.detail + '</p></div>');
+
+                return false;
+            }
+    );
+
 }
 
 function afterSetExtremesHstpl(e){
@@ -132,169 +145,181 @@ function inicializarHistoricoPlumas(){
 
     overlayBox('#hstpl');
 
-    $.getJSON(URL_HISTORICO, paramsHstpl, function( data ) {
+    equipoController.getHistoricoEquipos(
+            {{ equipo.id }},
+            paramsHstpl,
+            function(data){
 
-        if(data.status == 'error'){
-            removeOverlayBox('#hstpl');
+                removeOverlayBox('#hstpl');
 
-            $('#hstpl').html('<div class="callout callout-warning">' +
-                '<p>'+data.mensaje+'</p>' +
-                '</div>'
-            );
+                if(data.status == 'error'){
 
-            return false;
-        }
+                    $('#hstpl').html('<div class="callout callout-warning"><p>'+data.mensaje+'</p></div>');
 
-        $('#hstpl').highcharts('StockChart', {
-
-            chart: {
-                events: {
-                    load: establecerIntervaloRecargaHstpl
-                },
-            },
-            legend: {
-                enabled: true
-            },
-            plotOptions: {
-                turboThreshold: 10
-            },
-            rangeSelector: {
-                selected: 4,
-                allButtonsEnabled: true,
-                buttons: [
-                    {
-                        type: 'minute',
-                        count: 10,
-                        text: 'min'
-                    }, {
-                        type: 'day',
-                        count: 1,
-                        text: 'día'
-                    }, {
-                        type: 'day',
-                        count: 5,
-                        text: '5d'
-                    },
-                    {
-                        type: 'all',
-                        text: 'completo'
-                    }
-                ],
-                buttonTheme: {
-                    width: null
+                    return false;
                 }
-            },
-            xAxis: {
-                events: {
-                    afterSetExtremes: afterSetExtremesHstpl
-                },
-                minRange: 900 * 1000 //un minuto
-            },
-            yAxis: [
-                { // Primary yAxis
-                    labels: {
-                        format: '{value}',
-                        style: {
-                            color: Highcharts.getOptions().colors[1]
-                        }
-                    },
-                    title: {
-                        text: ' ',
-                        style: {
-                            color: Highcharts.getOptions().colors[1]
-                        }
-                    },
-                    min: 0,
-                    max: 180,
-                    tickInterval: 30,
 
-                }, { // Tertiary yAxis
-                    gridLineWidth: 0,
-                    title: {
-                        text: 'Presión (psi)',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    },
-                    labels: {
-                        format: '{value}',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    },
-                    opposite: true,
-                    min: 0,
-                    max: 3000
-                }
-            ],
-            credits: {
-                enabled: false
-            },
-            scrollbar: {
-                liveRedraw: false
-            },
-            navigator: {
-                adaptToUpdatedData: false,
-                series: {
-                    data: data.datos.anem
-                }
-            },
-            series: [
-                {
-                    name: 'Anemómetro',
-                    type: 'line',
-                    dashStyle: 'Dot',
-                    color: '#D8D8D8',
-                    lineWidth: 1,
-                    yAxis: 0,
-                    data: data.datos.anem,
-                    tooltip: {
-                        valueSuffix: ' km/h',
-                        valueDecimals: 2
-                    }
-                }, {
-                    name: 'Aparejo',
-                    data: data.datos.hta,
-                    type: 'line',
-                    color: Highcharts.getOptions().colors[1],
-                    lineWidth: 1,
-                    yAxis: 0,
-                    tooltip: {
-                        valueSuffix: ' klb',
-                        valueDecimals: 2
-                    }
-                }, {
+                $('#hstpl').highcharts('StockChart', {
 
-                    name: 'Llave',
-                    data: data.datos.llave,
-                    type: 'line',
-                    marker: {
+                    chart: {
+                        events: {
+                            load: establecerIntervaloRecargaHstpl
+                        },
+                    },
+                    legend: {
+                        enabled: true
+                    },
+                    plotOptions: {
+                        turboThreshold: 10
+                    },
+                    rangeSelector: {
+                        selected: 4,
+                        allButtonsEnabled: true,
+                        buttons: [
+                            {
+                                type: 'minute',
+                                count: 10,
+                                text: 'min'
+                            }, {
+                                type: 'day',
+                                count: 1,
+                                text: 'día'
+                            }, {
+                                type: 'day',
+                                count: 5,
+                                text: '5d'
+                            },
+                            {
+                                type: 'all',
+                                text: 'completo'
+                            }
+                        ],
+                        buttonTheme: {
+                            width: null
+                        }
+                    },
+                    xAxis: {
+                        events: {
+                            afterSetExtremes: afterSetExtremesHstpl
+                        },
+                        minRange: 900 * 1000 //un minuto
+                    },
+                    yAxis: [
+                        { // Primary yAxis
+                            labels: {
+                                format: '{value}',
+                                style: {
+                                    color: Highcharts.getOptions().colors[1]
+                                }
+                            },
+                            title: {
+                                text: ' ',
+                                style: {
+                                    color: Highcharts.getOptions().colors[1]
+                                }
+                            },
+                            min: 0,
+                            max: 180,
+                            tickInterval: 30,
+
+                        }, { // Tertiary yAxis
+                            gridLineWidth: 0,
+                            title: {
+                                text: 'Presión (psi)',
+                                style: {
+                                    color: Highcharts.getOptions().colors[0]
+                                }
+                            },
+                            labels: {
+                                format: '{value}',
+                                style: {
+                                    color: Highcharts.getOptions().colors[0]
+                                }
+                            },
+                            opposite: true,
+                            min: 0,
+                            max: 3000
+                        }
+                    ],
+                    credits: {
                         enabled: false
                     },
-                    color: Highcharts.getOptions().colors[2],
-                    lineWidth: 1,
-                    dashStyle: 'spline',
-                    yAxis: 1,
-                    tooltip: {
-                        valueSuffix: ' psi',
-                        valueDecimals: 2
-                    }
+                    scrollbar: {
+                        liveRedraw: false
+                    },
+                    navigator: {
+                        adaptToUpdatedData: false,
+                        series: {
+                            data: data.datos.anem
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Anemómetro',
+                            type: 'line',
+                            dashStyle: 'Dot',
+                            color: '#D8D8D8',
+                            lineWidth: 1,
+                            yAxis: 0,
+                            data: data.datos.anem,
+                            tooltip: {
+                                valueSuffix: ' km/h',
+                                valueDecimals: 2
+                            }
+                        }, {
+                            name: 'Aparejo',
+                            data: data.datos.hta,
+                            type: 'line',
+                            color: Highcharts.getOptions().colors[1],
+                            lineWidth: 1,
+                            yAxis: 0,
+                            tooltip: {
+                                valueSuffix: ' klb',
+                                valueDecimals: 2
+                            }
+                        }, {
 
-                }, {
-                    name: 'Boca Pozo',
-                    data: data.datos.bpozo,
-                    type: 'line',
-                    yAxis: 1,
-                    tooltip: {
-                        valueSuffix: ' psi',
-                        valueDecimals: 2
-                    }
-                }
-            ]
-        });
+                            name: 'Llave',
+                            data: data.datos.llave,
+                            type: 'line',
+                            marker: {
+                                enabled: false
+                            },
+                            color: Highcharts.getOptions().colors[2],
+                            lineWidth: 1,
+                            dashStyle: 'spline',
+                            yAxis: 1,
+                            tooltip: {
+                                valueSuffix: ' psi',
+                                valueDecimals: 2
+                            }
 
-        removeOverlayBox('#hstpl');
-    });
+                        }, {
+                            name: 'Boca Pozo',
+                            data: data.datos.bpozo,
+                            type: 'line',
+                            yAxis: 1,
+                            tooltip: {
+                                valueSuffix: ' psi',
+                                valueDecimals: 2
+                            }
+                        }
+                    ]
+                });
+
+            },
+            function (jqXHR) {
+                removeOverlayBox('#hstpl');
+
+                var resJson = jqXHR.responseJSON;
+
+                $('#hstpl').html('<div class="callout callout-warning"><p>'+ resJson.detail + '</p></div>');
+
+                return false;
+            }
+
+    );
+
 }
 
 $(document).ready(function(){

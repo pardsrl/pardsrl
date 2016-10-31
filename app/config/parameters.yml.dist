@@ -28,11 +28,20 @@ parameters:
     mapbox_access_token: null
     mapbox_default_style_url: null
 
+    #controlar si el servidor es de produccion o no
     produccion: false
 
-    #parametro que controla la integracion con apigility.
+    #configurar los parametros de la api + oauth2
     api:
-        #si esta en true, graba el usuario en la tabla oauth_users cuando se da de alta via sistema.
+        enabled: true
         user_integration: true
+        url: apiurl
+        auth_login_endpoint: /oauth
+        auth_type: password
+        auth_client_id: client_id
+        auth_client_secret: secret
 
+
+    logout.target: /admin
+    #configurar el tema de la aplicacion
     theme_color: skin-black
