@@ -1,3 +1,7 @@
+o_auth2:
+    resource: "@OAuth2Bundle/Resources/config/routing.yml"
+    prefix:   /
+
 # redirecting the root
 root:
     path: /
@@ -18,6 +22,10 @@ app_commands:
 usuario:
     resource: "@UsuarioBundle/Resources/config/routing.yml"
     prefix:   /admin
+
+oauth2:
+    resource: "@OAuth2Bundle/Resources/config/routing.yml"
+    prefix:   /oauth
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

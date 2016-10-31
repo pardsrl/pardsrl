@@ -20,7 +20,15 @@ class NovedadController extends Controller
     public function nuevaAction(Request $request, Equipo $equipo)
     {
 
-        $formView = null;
+	    $personas = $equipo->getPersonas();
+
+	    //si el usuario no tiene asignado el equipo en cuestión
+	    if( !$personas->contains($this->getUser()->getPersona())){
+		    throw $this->createNotFoundException() ;
+	    }
+
+
+	    $formView = null;
 
         $novedades = null;
 

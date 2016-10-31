@@ -13,6 +13,48 @@ $.LiveData.serverConfig = {
     'notifications_namespace' : '{{ node_server.notifications_namespace }}'
 };
 
+{% if api.enabled %}
+
+/**
+ * Objeto para la gestion de oAuth2
+ * @type { {accessToken, getAccesToken: $.LiveData.oauth2.getAccesToken, getError: $.LiveData.oauth2.getError} }
+ */
+$.LiveData.oauth2 = {
+    getOauthToken      :  function(){ return {{ app.session.get('oauth2_token') | raw }} },
+    getAccessToken     :  function(){ return this.getOauthToken().access_token },
+    getError           :  function(){ return this.getAccessToken() == null ? this.getOauthToken().error_message : null},
+    requestData        :  function(url,params,type,successCallback,errorCallback){
+
+        $.ajax({
+            url: url,
+            type: type,
+            data: params,
+            datatype: 'json',
+            success: successCallback ? successCallback : null,
+            error:   function(jqr, textStatus, errorThrown){
+                switch(jqr.status){
+                    case 401:
+                        //location.href = "{ { path('fos_user_security_logout') | raw}}";
+                        window.location.replace("{{ path('fos_user_security_logout') | raw}}");
+                        break;
+
+                    case (500|404):
+                        errorCallback ? errorCallback(jqr,textStatus,errorThrown) : false;
+                        break;
+                }
+            },
+            beforeSend: function(xhr) {
+
+                var oauthToken = $.LiveData.oauth2.getAccessToken();
+
+                xhr.setRequestHeader('Authorization', 'Bearer '+ oauthToken);
+            }
+        });
+    }
+}
+
+{% endif %}
+
 $.LiveData.server = {
     getIp                    : function(){ return $.LiveData.serverConfig.server},
     getPort                  : function(){ return $.LiveData.serverConfig.port},

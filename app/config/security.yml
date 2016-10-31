@@ -23,7 +23,8 @@ security:
                 # csrf_provider: form.csrf_provider
 
             logout:
-                target: /admin
+                target: %logout.target%
+                success_handler: user.logout
             anonymous:    true
 
     access_control:

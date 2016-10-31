@@ -1,0 +1,23 @@
+services:
+#    o_auth2.example:
+#        class: OAuth2Bundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+  api.user_integration:
+      class: OAuth2Bundle\EventListener\ApiUserIntegrationSubscriber
+      arguments: [ @api.oauth2 ]
+      tags:
+          - { name: kernel.event_subscriber }
+
+  api.oauth2:
+      class: OAuth2Bundle\Services\OAuth2Manager
+      arguments: [@service_container]
+
+  user.login:
+      class: OAuth2Bundle\EventListener\LoginSubscriber
+      arguments: [@service_container]
+      tags:
+          - { name: kernel.event_subscriber }
+
+  user.logout:
+        class: OAuth2Bundle\EventListener\LogoutListener
+        arguments: [@api.oauth2 , @security.http_utils, %logout.target% ]
