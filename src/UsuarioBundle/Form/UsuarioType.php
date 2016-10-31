@@ -70,6 +70,7 @@ class UsuarioType extends AbstractType
                     'label' => 'Rol',
                     'expanded' => true,
                     'choices_as_values'=> true,
+	                'required' => true,
                     'mapped' => false
                 ))
                 ->add('enabled', null, array(
@@ -83,12 +84,16 @@ class UsuarioType extends AbstractType
                 // deseteo el ROL por defecto que agrega FOS_USER
                 unset($roles[1]);
 
+	            $form->remove('plainPassword');
+	            $form->remove('password');
+
                 $form->add('roles',ChoiceType::class,array(
                     'choices'  => $aRoles,
                     'data'     => $roles[0],
                     'label'    => 'Rol',
                     'choices_as_values'=> true,
                     'expanded' => true,
+                    'required' => true,
                     'mapped'   => false
                 ))
                 ->add('enabled', null, array(
@@ -110,12 +115,12 @@ class UsuarioType extends AbstractType
             'data_class' => 'UsuarioBundle\Entity\Usuario',
             'error_bubbling' => true,
             'constraints' => new Valid(),
-	        'validation_groups' => array('Registration')
+	        'validation_groups' => array('Registracion')
         ));
     }
 
-//    public function getParent()
-//    {
-//        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-//    }
+    public function getParent()
+    {
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+    }
 }

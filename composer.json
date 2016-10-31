@@ -1,7 +1,7 @@
 {
     "name": "vagrant/live_data",
     "license": "proprietary",
-    "description" : "Proyecto de monitorizacion de equipamiento en vivo.",
+    "description" : "Proyecto de monitorizacion de equipamientos en vivo.",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -25,7 +25,8 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "knplabs/knp-menu-bundle": "^2.0",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "league/oauth2-client": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -61,4 +62,3 @@
         }
     }
 }
-

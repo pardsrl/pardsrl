@@ -1,6 +1,6 @@
 <?php
 
-namespace UsuarioBundle\Entity;
+namespace OAuth2Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,7 +32,6 @@ class OauthUsers
 	/**
 	 * @var string
 	 *
-	 * @ORM\Id
 	 * @ORM\Column(name="first_name", type="string", length=255)
 	 */
 	private $firstName;

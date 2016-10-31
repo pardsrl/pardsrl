@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Equipo;
 use AppBundle\Form\EquipoType;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Equipo controller.
@@ -160,6 +161,7 @@ class EquipoController extends Controller
      */
     public function graficasAction(Request $request, Equipo $equipo){
 
+	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
 
         $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
 
@@ -208,6 +210,8 @@ class EquipoController extends Controller
      */
     public function graficasHistoricasAction(Request $request, Equipo $equipo,$fintervencion,$fdesde,$fhasta){
 
+	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
+
 
         return $this->render('AppBundle:equipo:graficas_historicas.html.twig', array(
             'equipo'        => $equipo,
@@ -226,6 +230,8 @@ class EquipoController extends Controller
      */
     public function instrumentosAction(Request $request, Equipo $equipo)
     {
+	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
+
         return $this->render('AppBundle:equipo:instrumentos.html.twig', array(
             'equipo' => $equipo
         ));
@@ -241,7 +247,9 @@ class EquipoController extends Controller
     public function estadisticasAction(Request $request, Equipo $equipo)
     {
 
-        $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
+	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
+
+	    $intervencionRepository = $this->getDoctrine()->getRepository('AppBundle:Intervencion');
 
         $intervencionQb = $intervencionRepository->getUltimaIntervencionByEquipo($equipo);
 
@@ -333,7 +341,10 @@ class EquipoController extends Controller
      */
     public function estadisticasIndividualesAction(Request $request, Equipo $equipo){
 
-        $desde = new \DateTime('now');
+
+	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
+
+	    $desde = new \DateTime('now');
 
         $desde = $desde->modify('-1 year');
 
@@ -367,5 +378,18 @@ class EquipoController extends Controller
         ));
 
     }
+
+    private function puedeAccederAlEquipo($equipo){
+
+	    $personas = $equipo->getPersonas();
+
+	    //si el usuario no tiene asignado el equipo en cuestión
+	    if( !$personas->contains($this->getUser()->getPersona())){
+		    return false;
+	    }
+
+	    return true;
+    }
+
 
 }

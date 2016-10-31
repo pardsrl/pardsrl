@@ -194,6 +194,9 @@
         <section class="content">
             {%  include 'flash_messages.html.twig' %}
 
+            {#{{ dump(app.session.get('oauth2_token') ) }}#}
+            {#{{ dump(api) }}#}
+
             {% block content %}{% endblock %}
 
         </section><!-- /.content -->
@@ -228,6 +231,8 @@
 
 
     <script type="text/javascript">{% include 'app.js.twig' %} </script>
+
+    <script type="text/javascript">{% include 'controllers.js.twig' %} </script>
 
 {% endblock %}
 </body>

@@ -1,0 +1,37 @@
+/**
+ * Created by santiago on 24/10/16.
+ */
+if (typeof $.LiveData === "undefined") {
+    throw new Error(" Controller Live Data requires app.js");
+}
+
+function EquipoController() {
+
+    this.baseURL = {% if api.enabled %} "{{ api.url | raw  }}" {% else %} "http://"+server.getBaseWs() {% endif %};
+
+}
+
+EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, successCalback, errorCallback) {
+
+
+    {% if api.enabled %}
+
+        var historicoEndPoint = this.baseURL+'/equipos/'+equipoId+'/historico';
+
+        $.LiveData.oauth2.requestData(
+                historicoEndPoint,
+                params,
+                'GET',
+                successCalback,
+                errorCallback
+        );
+
+
+    {% else %}
+
+        var historicoEndPoint = this.baseURL+'/historico';
+
+        $.getJSON(historicoEndPoint, params,successCalback,errorCallback);
+
+    {% endif %}
+};

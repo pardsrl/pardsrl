@@ -10,8 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="UsuarioBundle\Repository\UsuarioRepository")
- * @UniqueEntity("email",errorPath="email",groups={"Registration"})
- * @UniqueEntity("username",errorPath="username",groups={"Registration"})
+ * @UniqueEntity("email",errorPath="email",groups={"Registracion"})
+ * @UniqueEntity("username",errorPath="username",groups={"Registracion"})
  * @ORM\Table(name="fos_user")
  */
 class Usuario extends BaseUser
