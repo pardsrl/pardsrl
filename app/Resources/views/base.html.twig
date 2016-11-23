@@ -132,9 +132,9 @@
                             {#</li>#}
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                {#<div class="pull-left">#}
-                                    {#<a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>#}
-                                {#</div>#}
+                                <div class="pull-left">
+                                    <a href="{{ path('persona_perfil') }}" class="btn btn-default btn-flat">Mi Perfil</a>
+                                </div>
 
                                 <div class="pull-right">
                                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
@@ -194,7 +194,9 @@
         <section class="content">
             {%  include 'flash_messages.html.twig' %}
 
-            {#{{ dump(app.session.get('oauth2_token') ) }}#}
+            {% set _configuracion = config.vars %}
+
+            {# {{ dump(app.session.get('oauth2_token') ) }} #}
             {#{{ dump(api) }}#}
 
             {% block content %}{% endblock %}

@@ -32,7 +32,7 @@ class OauthAccessTokens
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="user_id", type="string", length=255)
+	 * @ORM\Column(name="user_id", type="string", length=255, nullable=true)
 	 */
 	private $user;
 
@@ -46,7 +46,7 @@ class OauthAccessTokens
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="scope", type="string", length=20000)
+	 * @ORM\Column(name="scope", type="string", length=20000, nullable=true)
 	 */
 	private $scope;
 

@@ -23,7 +23,13 @@
                 {% else %}
                     {% for notificacion in ultimas_notificaciones %}
 
-                        <li><!-- start notification -->
+                        {% set notificacion_cls = "" %}
+
+                        {%  if not notificacion.leidaPor(app.user.persona) %}
+                            {% set notificacion_cls = "notificacion-no-leida" %}
+                        {%  endif  %}
+
+                        <li class="{{ notificacion_cls }}"><!-- start notification -->
                             <a href="{{ path('notificaciones_timeline') }}#notif-{{ notificacion.id }}">
                                 <i class="fa fa-warning text-yellow"></i> {{ notificacion.notificacion }}
                             </a>

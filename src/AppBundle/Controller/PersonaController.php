@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Configuracion;
 use AppBundle\Event\PersonaActualizadaEvent;
 use AppBundle\Event\PersonaCreadaEvent;
 use AppBundle\Event\PersonaEliminadaEvent;
+use AppBundle\Form\ConfiguracionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -58,17 +60,28 @@ class PersonaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+	        $rol = $form->get('usuario')->get('roles')->getData();
+
+	        $persona->getUsuario()->setRoles(array());
+	        $persona->getUsuario()->addRole($rol);
+
         	$em = $this->getDoctrine()->getManager();
+
+	        $configuracion = new Configuracion();
+
+	        $configuracion->setPersona($persona);
+
+	        $persona->setConfiguracion($configuracion);
+
+            $em->persist($persona);
+
+	        $em->flush();
 
 	        $dispatcher = $this->get('event_dispatcher');
 
 	        $event = new PersonaCreadaEvent($persona);
 
 	        $dispatcher->dispatch(PersonaCreadaEvent::NAME, $event);
-
-            $em->persist($persona);
-
-	        $em->flush();
 
             // set flash messages
             $this->get('session')->getFlashBag()->add('success', 'El registro se ha guardado satisfactoriamente.');
@@ -187,7 +200,48 @@ class PersonaController extends Controller
     public function perfilAction(Request $request)
     {
 
+    	$persona = $this->getUser()->getPersona();
+
+	    $configuracion = $persona->getConfiguracion();
+
+	    if(!$configuracion){
+
+	    	$configuracion = new Configuracion();
+
+		    $configuracion->setPersona($persona);
+
+	    }
+
+    	$form = $this->createForm(ConfiguracionType::class,$configuracion);
+
+	    $form->handleRequest($request);
+
+	    if ($form->isSubmitted() && $form->isValid()) {
+
+		    $em = $this->getDoctrine()->getManager();
+
+
+		    $config = array();
+
+
+		    foreach ($form->getIterator() as $key => $child) {
+
+			    $config[$key] = $child->getData();
+		    }
+
+	    	$configuracion->setPersona($persona);
+
+		    $configuracion->setConfiguracion($config);
+
+		    $em->persist($configuracion);
+
+		    $em->flush();
+
+	    }
+
         return $this->render('AppBundle:persona:perfil.html.twig', array(
+        	'form'      => $form->createView(),
+	        'persona'   => $persona
         ));
     }
 }

@@ -26,4 +26,4 @@ persona_delete:
 persona_perfil:
     path:     /perfil/
     defaults: { _controller: "AppBundle:Persona:perfil" }
-    methods:  GET
+    methods:  [GET, POST]

@@ -48,6 +48,8 @@ twig:
          mapbox_default_style_url: "%mapbox_default_style_url%"
          theme_color: "%theme_color%"
          api: "%api%"
+         config: "@manager.config"
+
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
@@ -57,13 +59,16 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -73,8 +78,20 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        #auto_mapping: true
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    AppBundle: ~
+                    UsuarioBundle: ~
+            oAuth:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    OAuth2Bundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -103,12 +120,12 @@ knp_menu:
 
 #KNPpaginator
 knp_paginator:
-    page_range: 10                      # default page range used in pagination control
+    page_range:              10                      # default page range used in pagination control
     default_options:
-        page_name: page                # page query parameter name
-        sort_field_name: sort          # sort field query parameter name
-        sort_direction_name: direction # sort direction query parameter name
-        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        page_name:           page                # page query parameter name
+        sort_field_name:     sort         # sort field query parameter name
+        sort_direction_name: direction    # sort direction query parameter name
+        distinct:            true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
         pagination: AppBundle:pager:sliding.html.twig     # sliding pagination controls template
-        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+        sortable:   KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template

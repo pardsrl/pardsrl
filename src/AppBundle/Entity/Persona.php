@@ -85,6 +85,13 @@ class Persona extends BaseClass
      * @ORM\JoinTable(name="persona_equipo")
      */
     private $equipos;
+
+
+	/**
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Configuracion", mappedBy="persona",cascade={"persist","remove"})
+	 */
+	private $configuracion;
+
     /**
      * @ORM\OneToOne(targetEntity="UsuarioBundle\Entity\Usuario" ,  inversedBy="persona" ,cascade={"persist","remove"})
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
@@ -362,5 +369,85 @@ class Persona extends BaseClass
     public function __toString()
     {
         return $this->getNombreCompleto();
+    }
+
+    /**
+     * Set configuracion
+     *
+     * @param \AppBundle\Entity\Configuracion $configuracion
+     *
+     * @return Persona
+     */
+    public function setConfiguracion(\AppBundle\Entity\Configuracion $configuracion = null)
+    {
+        $this->configuracion = $configuracion;
+
+        return $this;
+    }
+
+    /**
+     * Get configuracion
+     *
+     * @return \AppBundle\Entity\Configuracion
+     */
+    public function getConfiguracion()
+    {
+        return $this->configuracion;
+    }
+
+    /**
+     * Set fechaCreacion
+     *
+     * @param \DateTime $fechaCreacion
+     *
+     * @return Persona
+     */
+    public function setFechaCreacion($fechaCreacion)
+    {
+        $this->fechaCreacion = $fechaCreacion;
+
+        return $this;
+    }
+
+    /**
+     * Set fechaActualizacion
+     *
+     * @param \DateTime $fechaActualizacion
+     *
+     * @return Persona
+     */
+    public function setFechaActualizacion($fechaActualizacion)
+    {
+        $this->fechaActualizacion = $fechaActualizacion;
+
+        return $this;
+    }
+
+    /**
+     * Set creadoPor
+     *
+     * @param \UsuarioBundle\Entity\Usuario $creadoPor
+     *
+     * @return Persona
+     */
+    public function setCreadoPor(\UsuarioBundle\Entity\Usuario $creadoPor = null)
+    {
+        $this->creadoPor = $creadoPor;
+
+        return $this;
+    }
+
+    /**
+     * Set actualizadoPor
+     *
+     * @param \UsuarioBundle\Entity\Usuario $actualizadoPor
+     *
+     * @return Persona
+     */
+    public function setActualizadoPor(\UsuarioBundle\Entity\Usuario $actualizadoPor = null)
+    {
+        $this->actualizadoPor = $actualizadoPor;
+
+        return $this;
     }
 }

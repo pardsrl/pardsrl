@@ -324,9 +324,11 @@ function inicializarHistoricoPlumas(){
 
 $(document).ready(function(){
 
-
+    {% if _configuracion.graficas.historicoPozo.enabled %}
     inicializarHistoricoPlumas();
+    {% endif %}
 
+    {% if _configuracion.graficas.tiempoRealPozo.enabled %}
     $('#trpl').highcharts({
         chart: {
             zoomType: 'xy',
@@ -465,4 +467,5 @@ $(document).ready(function(){
             }
         ]
     });
+    {% endif %}
 });
