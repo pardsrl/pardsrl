@@ -195,8 +195,8 @@ class EquipoController extends Controller
         }
 
         return $this->render('AppBundle:equipo:graficas.html.twig', array(
-            'equipo'           => $equipo,
-            'fechaInicioIntervencion' => $fechaInicioIntervencion
+            'equipo'                    => $equipo,
+            'fechaInicioIntervencion'   => $fechaInicioIntervencion
         ));
     }
 

@@ -21,7 +21,7 @@ class OAuth2Manager
     {
         $this->container = $container;
 
-	    $this->em = $this->container->get('doctrine')->getManager();
+	    $this->em = $this->container->get('doctrine')->getManager('oAuth');
 
     }
 
@@ -128,11 +128,10 @@ class OAuth2Manager
 		$oAuthToken = $this->getToken($token);
 
 		if($oAuthToken){
-
 			$this->em->remove($oAuthToken);
-
-			$this->em->flush();
 		}
+
+		$this->em->flush();
 
 	}
 
@@ -164,7 +163,9 @@ class OAuth2Manager
 
 		$this->deleteAccessTokenByUsername($username);
 
-		$this->em->remove( $oauthUser );
+		if($oauthUser){
+			$this->em->remove( $oauthUser );
+		}
 
 		$this->em->flush();
 	}
@@ -192,6 +193,8 @@ class OAuth2Manager
 		$oAuthUser->setPassword( $password_bcrypt );
 
 		$this->em->persist( $oAuthUser );
+
+		$this->em->flush();
 
 		return $oAuthUser;
 
@@ -230,6 +233,8 @@ class OAuth2Manager
 			$oAuthUser->setPassword($password_bcrypt);
 
 			$this->em->persist( $oAuthUser );
+
+			$this->em->flush();
 
 		}else{
 

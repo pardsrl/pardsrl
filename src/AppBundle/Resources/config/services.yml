@@ -7,3 +7,7 @@ services:
         class: Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand
         calls:
             - [setContainer, ["@service_container"] ]
+
+    manager.config:
+        class:        AppBundle\Services\ConfigManager
+        arguments:    [@security.token_storage]

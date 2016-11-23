@@ -80,7 +80,6 @@ class UsuarioType extends AbstractType
             }else{
 
                 $roles = $usuario->getRoles();
-
                 // deseteo el ROL por defecto que agrega FOS_USER
                 unset($roles[1]);
 

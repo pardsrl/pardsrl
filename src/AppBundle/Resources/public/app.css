@@ -21,6 +21,9 @@
     font-size: 12px !important;
 }
 
+li.notificacion-no-leida a{
+    background-color: lightgoldenrodyellow;
+}
 
 /****** css pantalla de login ******/
 .login-box-body{
