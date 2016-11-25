@@ -10,9 +10,23 @@ namespace AppBundle\Repository;
  */
 class EquipoRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function prueba(){
 
-		$this->createQueryBuilder('e');
+	/**
+	 * Busca los equipos pertenecientes a una persona por Id
+	 *
+	 * @param $personaId
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findEquiposByPersona($persona){
+
+		$query = $this->createQueryBuilder('e')
+		->innerJoin('e.personas','p')
+		->where('p.id = :persona');
+
+		$query->setParameter('persona',$persona);
+
+		return $query;
 
 	}
 }
