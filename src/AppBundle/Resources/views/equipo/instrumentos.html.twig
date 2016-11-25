@@ -453,11 +453,31 @@
 
                 var data = JSON.parse(data);
 
-                data.forEach(function(item, index, ar){
+//                data.forEach(function(item, index, ar){
+//
+//                    //var aparejo = item.hta.toString().split(".");
+//
+//                    //console.log(item.hta);
+//
+//                    $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
+//
+//                    $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
+//
+//                    //anemometro
+//                    $('#anemometro').highcharts().series[0].points[0].update(item.anem);
+//
+//                    //lave
+//                    $('#llave').highcharts().series[0].points[0].update(item.llave);
+//
+//                    //boca e pozo
+//                    $('#boca-de-pozo').highcharts().series[0].points[0].update(item.bpozo);
+//
+//                });
 
-                    //var aparejo = item.hta.toString().split(".");
+                //obetngo el ultimo item
+                var item = data.pop();
 
-                    //console.log(item.hta);
+                if(item){
 
                     $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
 
@@ -471,8 +491,7 @@
 
                     //boca e pozo
                     $('#boca-de-pozo').highcharts().series[0].points[0].update(item.bpozo);
-
-                });
+                }
 
             });
 
