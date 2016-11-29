@@ -44,8 +44,9 @@ framework:
 twig:
     globals:
          node_server: "%node_server%"
-         mapbox_access_token: "%mapbox_access_token%"
-         mapbox_default_style_url: "%mapbox_default_style_url%"
+         mapbox_enabled: "%mapbox.enabled%"
+         mapbox_access_token: "%mapbox.access_token%"
+         mapbox_default_style_url: "%mapbox.default_style_url%"
          theme_color: "%theme_color%"
          api: "%api%"
          config: "@manager.config"

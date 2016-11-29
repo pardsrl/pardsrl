@@ -2,7 +2,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+    {% if mapbox_enabled %}
     <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    {% endif %}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -11,13 +15,16 @@
 
     <script src="{{ asset('highcharts.4.2.4/js/highcharts-3d.js') }}"></script>
 
-    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    {% if mapbox_enabled %}
+        <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 
-    <script type="application/javascript">
+        <script type="application/javascript">
 
-        L.mapbox.accessToken = "{{ mapbox_access_token }}";
+            L.mapbox.accessToken = "{{ mapbox_access_token }}";
 
-    </script>
+        </script>
+    {% endif %}
+
 {% endblock %}
 
 {#{%  set __title = 'Mi Dashboard' %}#}

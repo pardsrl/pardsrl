@@ -1,3 +1,4 @@
+{% if mapbox_enabled %}
 <script type="application/javascript">
 
     $(document).ready(function() {
@@ -38,7 +39,7 @@
 
     });
 </script>
-
+{% endif %}
 <div class="col-md-6">
     <div class="box box-info">
         <div class="box-header with-border">
@@ -50,7 +51,9 @@
         </div>
         <div class="box-body">
             <div class="chart">
-                <div id="trazados-pozos-mapa" style="width:100%; height:300px;"></div>
+                <div id="trazados-pozos-mapa" style="width:100%; height:300px;">
+                    {% if not mapbox_enabled %}<div class="callout callout-warning"><p>Sin conexión</p></div> {% endif %}
+                </div>
             </div>
         </div><!-- /.box-body -->
     </div>

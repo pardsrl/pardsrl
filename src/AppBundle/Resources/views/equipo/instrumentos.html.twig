@@ -479,6 +479,8 @@
 
                 if(item){
 
+                    console.log(item);
+
                     $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
 
                     $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
