@@ -2,20 +2,20 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    {% if mapbox_enabled %}<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />{% endif %}
 {% endblock %}
 
 
 {% block javascripts %}
     {{ parent() }}
 
+    {% if mapbox_enabled %}
     <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 
     <script type="application/javascript">
-
         {{ include('AppBundle:pozo:mapa.js.twig') }}
-
     </script>
+    {% endif %}
 
 {% endblock %}
 
