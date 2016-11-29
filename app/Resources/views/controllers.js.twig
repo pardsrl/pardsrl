@@ -11,7 +11,7 @@ function EquipoController() {
 
 }
 
-EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, successCalback, errorCallback) {
+EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, successCallback, errorCallback, timeoutCallback) {
 
 
     {% if api.enabled %}
@@ -22,7 +22,7 @@ EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, succ
                 historicoEndPoint,
                 params,
                 'GET',
-                successCalback,
+                successCallback,
                 errorCallback
         );
 
@@ -31,7 +31,27 @@ EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, succ
 
         var historicoEndPoint = this.baseURL+'/historico';
 
-        $.getJSON(historicoEndPoint, params,successCalback,errorCallback);
+        //$.getJSON(historicoEndPoint, params,successCallback,errorCallback,timeoutCallback);
+
+        $.ajax({
+            dataType: "json",
+            url: historicoEndPoint,
+            data: params,
+            success: successCallback ? successCallback : null,
+            error:   function(jqr, textStatus, errorThrown){
+                console.log(jqr);
+                switch(jqr.status){
+                    case (500|404):
+                        errorCallback ? errorCallback(jqr,textStatus,errorThrown) : false;
+                        break;
+                    default:
+                        timeoutCallback ? timeoutCallback(jqr, textStatus, errorThrown) : false;
+                        break;
+                }
+            },
+            timeout: 60000
+        });
+
 
     {% endif %}
 };
