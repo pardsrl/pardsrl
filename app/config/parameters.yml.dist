@@ -25,8 +25,9 @@ parameters:
        notifications_namespace : 'notificaciones'
 
 
-    mapbox_access_token: null
-    mapbox_default_style_url: null
+    mapbox.enabled: false
+    mapbox.access_token: pk.eyJ1Ijoic2FudGlhZ29zZW1oYW4iLCJhIjoiY2ltNHdkMGV6MDFld3RrbTN6NDRoeWtydCJ9.7dHWtBY1WPJeuXuYslS6jA
+    mapbox.default_style_url: 'mapbox://styles/mapbox/outdoors-v9'
 
     #controlar si el servidor es de produccion o no
     produccion: false
