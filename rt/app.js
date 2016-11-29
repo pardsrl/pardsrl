@@ -49,6 +49,9 @@ app.get('/historico', function (req, res) {
 
         res.end();
       }else{
+
+        error = error ? error : "Error interno del servidor de datos.";
+
         res.status(500).send('{ "status": "error" , "detail" : "'+ error + '" }');
       }
   });
