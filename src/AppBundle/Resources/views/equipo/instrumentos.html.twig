@@ -449,54 +449,41 @@
 
             //var socket = io('64.37.55.176:5140/tr-sai280');
 
-            socket.on('trpl', function (data){
 
-                var data = JSON.parse(data);
+            setTimeout(function() {
 
-//                data.forEach(function(item, index, ar){
-//
-//                    //var aparejo = item.hta.toString().split(".");
-//
-//                    //console.log(item.hta);
-//
-//                    $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
-//
-//                    $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
-//
-//                    //anemometro
-//                    $('#anemometro').highcharts().series[0].points[0].update(item.anem);
-//
-//                    //lave
-//                    $('#llave').highcharts().series[0].points[0].update(item.llave);
-//
-//                    //boca e pozo
-//                    $('#boca-de-pozo').highcharts().series[0].points[0].update(item.bpozo);
-//
-//                });
+                    socket.on('trpl', function (data) {
 
-                //obetngo el ultimo item
-                var item = data.pop();
+                        var data = JSON.parse(data);
 
-                if(item){
+                        if (data != null) {
 
-                    console.log(item);
+                            //obtengo el ultimo item
+                            var item = data.pop();
 
-                    $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
 
-                    $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
+                            if (item) {
 
-                    //anemometro
-                    $('#anemometro').highcharts().series[0].points[0].update(item.anem);
+                                //console.log(item);
 
-                    //lave
-                    $('#llave').highcharts().series[0].points[0].update(item.llave);
+                                $('#aparejo').highcharts().series[0].points[0].update(parseInt(item.hta));
 
-                    //boca e pozo
-                    $('#boca-de-pozo').highcharts().series[0].points[0].update(item.bpozo);
-                }
+                                $('#aparejo').highcharts().series[1].points[0].update(parseInt((item.hta - parseInt(item.hta)) * 100));
 
-            });
+                                //anemometro
+                                $('#anemometro').highcharts().series[0].points[0].update(item.anem);
 
+                                //lave
+                                $('#llave').highcharts().series[0].points[0].update(item.llave);
+
+                                //boca e pozo
+                                $('#boca-de-pozo').highcharts().series[0].points[0].update(item.bpozo);
+                            }
+                        }
+                    })
+                },
+                15000
+            );
 
         });
     </script>
