@@ -49,7 +49,7 @@ app.get('/historico', function (req, res) {
 
         res.end();
       }else{
-        res.status(500).send('{ "status": "error" , "error" : "'+ error + '" }');
+        res.status(500).send('{ "status": "error" , "detail" : "'+ error + '" }');
       }
   });
 
