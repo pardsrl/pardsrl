@@ -30,16 +30,13 @@ EquipoController.prototype.getHistoricoEquipos = function(equipoId, params, succ
     {% else %}
 
         var historicoEndPoint = this.baseURL+'/historico';
-
-        //$.getJSON(historicoEndPoint, params,successCallback,errorCallback,timeoutCallback);
-
+    
         $.ajax({
             dataType: "json",
             url: historicoEndPoint,
             data: params,
             success: successCallback ? successCallback : null,
             error:   function(jqr, textStatus, errorThrown){
-                console.log(jqr);
                 switch(jqr.status){
                     case (500|404):
                         errorCallback ? errorCallback(jqr,textStatus,errorThrown) : false;
