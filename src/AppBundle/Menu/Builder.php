@@ -108,10 +108,10 @@ class Builder implements ContainerAwareInterface
 
 				    	$lng = $intervencionActual->getPozo()->getLongitud();
 
-				    	$uri = "http//maps.google.com?q=$lat,$lng";
+				    	$uri = "http://maps.google.com?q=$lat,$lng";
 
 				    	if($this->isMobile($this->container->get('request'))){
-						    $uri = "geo:$lat,$lng";
+						    $uri = "google.navigation:q=$lat,$lng";
 					    }
 
 					    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
