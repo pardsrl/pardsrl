@@ -108,15 +108,15 @@ class Builder implements ContainerAwareInterface
 
 				    	$lng = $intervencionActual->getPozo()->getLongitud();
 
-				    	$protocol = 'http';
+				    	$uri = "http//maps.google.com?q=$lat,$lng";
 
 				    	if($this->isMobile($this->container->get('request'))){
-						    $protocol = 'map';
+						    $uri = "geo:$lat,$lng";
 					    }
 
 					    $menu[ strtoupper( $equipo->getNombreCompleto() ) ]->addChild(
 						    'Ver en Google Maps',
-						    array( 'uri' => "$protocol://maps.google.com?q=$lat,$lng" )
+						    array( 'uri' => $uri )
 					    )->setExtra( 'icon', 'fa  fa-map-pin' )
 					     ->setLinkAttributes(array('target'=>'_blank'));
 				    }
