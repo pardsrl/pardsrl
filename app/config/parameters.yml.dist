@@ -25,12 +25,17 @@ parameters:
        notifications_namespace : 'notificaciones'
 
 
+    #configuracion de mapbox
     mapbox.enabled: false
     mapbox.access_token: pk.eyJ1Ijoic2FudGlhZ29zZW1oYW4iLCJhIjoiY2ltNHdkMGV6MDFld3RrbTN6NDRoeWtydCJ9.7dHWtBY1WPJeuXuYslS6jA
     mapbox.default_style_url: 'mapbox://styles/mapbox/outdoors-v9'
 
     #controlar si el servidor es de produccion o no
     produccion: false
+
+    #tiempo de session
+    session_time: 21600
+
 
     #configurar los parametros de la api + oauth2
     api:
@@ -44,5 +49,6 @@ parameters:
 
 
     logout.target: /admin
+
     #configurar el tema de la aplicacion
     theme_color: skin-black
