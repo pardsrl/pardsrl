@@ -33,9 +33,9 @@ framework:
         # handler_id:  ~
         handler_id:  session.handler.pdo
         #se configura el valor de expiracion de la cookie a un dia (en segundos)
-        cookie_lifetime: 21600
+        cookie_lifetime: "%session_time%"
         #se configura el tiempo máximo de inactividad
-        gc_maxlifetime:  21600
+        gc_maxlifetime:  "%session_time%"
 
     fragments:       ~
     http_method_override: true
