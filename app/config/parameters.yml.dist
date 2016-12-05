@@ -36,6 +36,9 @@ parameters:
     #tiempo de session
     session_time: 21600
 
+    #resolucion de los historicos
+    historicos.maniobas.resolucion: 200
+    historicos.plumas.resolucion: 1500
 
     #configurar los parametros de la api + oauth2
     api:

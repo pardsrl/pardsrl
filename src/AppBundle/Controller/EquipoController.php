@@ -194,9 +194,16 @@ class EquipoController extends Controller
 
         }
 
+        $resolucionPlumas     = $this->getParameter('historicos.plumas.resolucion');
+
+        $resolucionManiobras  = $this->getParameter('historicos.maniobras.resolucion');
+
         return $this->render('AppBundle:equipo:graficas.html.twig', array(
             'equipo'                    => $equipo,
-            'fechaInicioIntervencion'   => $fechaInicioIntervencion
+            'fechaInicioIntervencion'   => $fechaInicioIntervencion,
+	        'resolucionPlumas'          => $resolucionPlumas,
+	        'resolucionManiobras'       => $resolucionManiobras
+
         ));
     }
 
