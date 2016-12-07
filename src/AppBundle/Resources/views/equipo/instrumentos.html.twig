@@ -218,15 +218,13 @@
                     type: 'solidgauge'
                 },
 
-                title: null,
-
                 credits: {
                     enabled: false
                 },
 
                 pane: {
                     center: ['50%', '85%'],
-                    size: '140%',
+                    size: '100%',
                     startAngle: -90,
                     endAngle: 90,
                     background: {
@@ -274,12 +272,11 @@
             $('#anemometro').highcharts(Highcharts.merge(gaugeOptions, {
                 yAxis: {
                     min: 0,
-                    max: 200,
-                    title: {
-                        text: 'Viento'
-                    }
+                    max: 20
                 },
-
+                title: {
+                    text: 'Viento'
+                },
                 credits: {
                     enabled: false
                 },
