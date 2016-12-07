@@ -101,11 +101,21 @@ function recargarHstpl(min,max){
 
 function afterSetExtremesHstpl(e){
 
+    var extremo = null;
+
     if (e.trigger){
         pausadoHstpl = true;
         //si la seleccion se originó desde un boton
-        if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
-            pausadoHstpl = false;
+        if (e.trigger == "rangeSelectorButton"){
+            if(e.rangeSelectorButton.type == 'all'){
+                pausadoHstpl = false;
+            }
+
+            extremo = new Date().getTime();
+
+        }else if(e.trigger == "navigator"){
+
+            extremo = Math.round(e.max);
         }
     }else{
         //en el caso de que se lance sin ningun evento permitido (boton,navigator, etc)
@@ -115,9 +125,10 @@ function afterSetExtremesHstpl(e){
 
     //console.log(pausadoHstpl);
 
+
     var desde = Math.round(e.min);
 
-    var hasta = Math.round(e.max);
+    var hasta = extremo;
 
     recargarHstpl(desde,hasta);
 }
