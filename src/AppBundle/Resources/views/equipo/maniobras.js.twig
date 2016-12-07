@@ -119,23 +119,34 @@ function recargarHstman(min,max){
 
 function afterSetExtremesHstman(e){
 
+    var extremo = null;
 
     if (e.trigger){
         pausadoHstman = true;
         //si la seleccion se originó desde un boton
-        if (e.trigger == "rangeSelectorButton" && e.rangeSelectorButton.type == 'all'){
-            pausadoHstman = false;
+        if (e.trigger == "rangeSelectorButton"){
+            if(e.rangeSelectorButton.type == 'all'){
+                pausadoHstman = false;
+            }
+
+            extremo = new Date().getTime();
+
+        }else if(e.trigger == "navigator"){
+
+            extremo = Math.round(e.max);
         }
     }else{
         //en el caso de que se lance sin ningun evento permitido (boton,navigator, etc)
         return false;
     }
 
-    //console.log(pausadoHstman);
+
+    //console.log(pausadoHstpl);
+
 
     var desde = Math.round(e.min);
 
-    var hasta = Math.round(e.max);
+    var hasta = extremo;
 
     recargarHstman(desde,hasta);
 }
