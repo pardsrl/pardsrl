@@ -49,7 +49,6 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('equipos',$equipos)
             ->setParameter('desde',$desde)
             ->setParameter('hasta',$hasta);
-
         return $qb;
 
     }
@@ -68,7 +67,6 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('equipos', $equipos)
             ->setParameter('desde', $desde)
             ->setParameter('hasta', $hasta);
-
         return $qb;
     }
 
@@ -87,7 +85,6 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('equipos', $equipos)
             ->setParameter('desde', $desde)
             ->setParameter('hasta', $hasta);
-
         return $qb;
     }
 
@@ -105,7 +102,6 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('equipos', $equipos)
             ->setParameter('desde', $desde)
             ->setParameter('hasta', $hasta);
-
         return $qb;
     }
 
@@ -141,7 +137,8 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
             ->setParameter('equipo', $equipo)
             ->setParameter('desde', $desde)
-            ->setParameter('hasta', $hasta);
+            ->setParameter('hasta', $hasta)
+	        ->orderBy('interv.fecha');
 
         return $qb;
     }
@@ -158,7 +155,8 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
             ->setParameter('equipo', $equipo)
             ->setParameter('desde', $desde)
-            ->setParameter('hasta', $hasta);
+            ->setParameter('hasta', $hasta)
+	        ->orderBy('interv.fecha');
 
         return $qb;
     }
@@ -175,7 +173,8 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('interv.fecha BETWEEN :desde AND :hasta')
             ->setParameter('equipo', $equipo)
             ->setParameter('desde', $desde)
-            ->setParameter('hasta', $hasta);
+            ->setParameter('hasta', $hasta)
+	        ->orderBy('interv.fecha');
 
         return $qb;
     }
