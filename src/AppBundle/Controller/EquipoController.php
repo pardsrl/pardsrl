@@ -219,12 +219,17 @@ class EquipoController extends Controller
 
 	    if( ! $this->puedeAccederAlEquipo($equipo)) throw $this->createNotFoundException() ;
 
+	    $resolucionPlumas     = $this->getParameter('historicos.plumas.resolucion');
+
+	    $resolucionManiobras  = $this->getParameter('historicos.maniobras.resolucion');
 
         return $this->render('AppBundle:equipo:graficas_historicas.html.twig', array(
             'equipo'        => $equipo,
             'fdesde'        => $fdesde,
             'fhasta'        => $fhasta,
-            'fintervencion' => $fintervencion
+            'fintervencion' => $fintervencion,
+	        'resolucionPlumas'          => $resolucionPlumas,
+	        'resolucionManiobras'       => $resolucionManiobras
         ));
     }
 
