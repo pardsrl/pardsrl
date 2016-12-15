@@ -143,7 +143,7 @@ class IntervencionController extends Controller
         $intervenciones = $paginator->paginate(
             $intervenciones,
             $page  /* page number */,
-            5/* limit per page */
+            10/* limit per page */
         );
 
         return $intervenciones;

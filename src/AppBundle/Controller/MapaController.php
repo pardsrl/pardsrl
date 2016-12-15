@@ -89,6 +89,8 @@ class MapaController extends Controller
 
                 if( in_array($traza['pozo_acr'],$pozos[$i-1])){
                     $pozos[$i-1]["intervenciones"][] =  $traza['interv_fecha']->format('d-m-Y H:i:s');
+                    //decremento $i porque no es un nuevo pozo
+                    $i--;
                 }else{
                     $pozos[] = array(
                         'acronimo'        => $traza['pozo_acr'],
