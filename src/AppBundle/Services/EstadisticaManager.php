@@ -41,7 +41,9 @@ class EstadisticaManager
             foreach ($distribucionPorEquipo as $distribucion){
                 $data[] =  array(
                     'name' => $distribucion['acronimo'].' '.$distribucion['nombre'],
-                    'y'    =>($distribucion['cant'] / $total));
+                    'y'    =>($distribucion['cant'] / $total),
+                    'distribucion' => $distribucion['cant']
+                );
             }
 
         }
@@ -73,7 +75,8 @@ class EstadisticaManager
             foreach ($distribucionPorYacimiento as $distribucion) {
                 $data[] = array(
                     'name' => $distribucion['nombre'],
-                    'y' => ($distribucion['cant'] / $total)
+                    'y' => ($distribucion['cant'] / $total),
+                    'distribucion' => $distribucion['cant']
                 );
             }
 
@@ -184,7 +187,8 @@ class EstadisticaManager
             foreach ($distribucionPorYacimiento as $distribucion) {
                 $data[] = array(
                     'name' => $distribucion['nombre'],
-                    'y' => ($distribucion['cant'] / $total)
+                    'y' => ($distribucion['cant'] / $total),
+	                'distribucion' => $distribucion['cant']
                 );
             }
 
