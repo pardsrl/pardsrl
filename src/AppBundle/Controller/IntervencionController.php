@@ -51,7 +51,8 @@ class IntervencionController extends Controller
 
         return $this->render('AppBundle:intervencion:index.html.twig', array(
             'form' => $form->createView(),
-            'intervenciones' => $intervenciones
+            'intervenciones' => $intervenciones,
+	        'pozo' => $pozo
         ));
     }
 
