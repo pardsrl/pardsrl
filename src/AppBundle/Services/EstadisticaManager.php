@@ -212,7 +212,7 @@ class EstadisticaManager
 
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
-                    'name' => $promedio['fecha']->format('m-Y'),
+                    'name' => $promedio['fecha']->format('d-m'),
                     'desc' => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['acronimo'],
 	                'fintervencion' => $promedio['fecha']->format('YmdHi'),
                     'y'    => floatval($promedio['promTbg'])
@@ -239,7 +239,7 @@ class EstadisticaManager
 
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
-	                'name' => $promedio['fecha']->format('m-Y'),
+	                'name' => $promedio['fecha']->format('d-m'),
 	                'desc' => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['acronimo'],
                     'fintervencion' => $promedio['fecha']->format('YmdHi'),
                     'y'    => floatval($promedio['promVb'])
@@ -268,7 +268,7 @@ class EstadisticaManager
             foreach ($promediosCanosHora as $promedio) {
                 $data[] = array(
                     'y'             => floatval($promedio['ftu']),
-	                'name'          => $promedio['fecha']->format('m-Y'),
+	                'name'          => $promedio['fecha']->format('d-m'),
 	                'desc'          => $promedio['fecha']->format('d-m-Y H:i:s') . ' ' . $promedio['acronimo'],
                     'fintervencion' => $promedio['fecha']->format('YmdHi')
                 );
