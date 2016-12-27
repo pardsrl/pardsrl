@@ -113,7 +113,20 @@ function afterSetExtremesHstpl(e){
 
             extremo = new Date().getTime();
 
-        }else if(e.trigger == "navigator"){
+        }else if(e.trigger == "navigator" || e.trigger == "rangeSelectorInput" ){
+
+            var min = new Date(e.min);
+
+            var max = new Date(e.max);
+
+            //console.log("seleccionado",e.min,e.max);
+
+            //console.log("Fechas",min,max);
+
+            if(e.min == e.max){
+                alert("Debe existir al menos un segundo de diferencia entre las fechas de inicio y fin.");
+                return false;
+            }
 
             extremo = Math.round(e.max);
         }
@@ -184,8 +197,36 @@ function inicializarHistoricoPlumas(){
                         turboThreshold: 10
                     },
                     rangeSelector: {
+                        beyondExtremes: true,
                         selected: 4,
                         allButtonsEnabled: true,
+                        inputDateFormat:     '%d-%m-%Y %H:%M',
+                        inputEditDateFormat: '%d-%m-%Y %H:%M',
+                        inputDateParser: function (value) {
+
+                            value = value.split(/[ ]/);
+
+                            var fecha = value[0];
+
+                            var horario = value[1];
+
+                            fecha = fecha.split(/[-]/);
+
+                            horario = horario.split(/[:]/);
+
+                            var date = new Date(fecha[2], fecha[1]-1, fecha[0], horario[0],horario[1].substring(0, 2),0,0);
+
+                            var offset = 0;
+
+                            if (!Highcharts.getOptions().global.useUTC) {
+                                offset = new Date().getTimezoneOffset()*60*1000;
+                            }
+
+
+                            return date.getTime() - offset;
+
+                        },
+                        inputBoxWidth: 120,
                         buttons: [
                             {
                                 type: 'minute',
@@ -217,7 +258,9 @@ function inicializarHistoricoPlumas(){
                         events: {
                             afterSetExtremes: afterSetExtremesHstpl
                         },
-                        minRange: 900 * 1000 //un minuto
+                        //minRange: 10 * 1000, //un minuto
+                        minRange: 125, //
+                        minTickInterval:125
                     },
                     yAxis: [
                         { // Primary yAxis
