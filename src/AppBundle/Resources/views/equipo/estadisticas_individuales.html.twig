@@ -11,9 +11,11 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>
+    {#<script src="{{ asset('highcharts.4.2.4/js/highcharts.js') }}"></script>#}
+    {#<script src="{{ asset('highcharts.4.2.4/js/highcharts-3d.js') }}"></script>#}
 
-    <script src="{{ asset('highcharts.4.2.4/js/highcharts-3d.js') }}"></script>
+    <script src="{{ asset('highcharts-5.0.6/code/highcharts.js') }}"></script>
+    <script src="{{ asset('highcharts-5.0.6/code/highcharts-3d.js') }}"></script>
 
     {% if mapbox_enabled %}
         <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>

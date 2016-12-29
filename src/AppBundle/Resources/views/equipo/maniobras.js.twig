@@ -204,6 +204,33 @@ function inicializarHistoricoManiobras(){
                     rangeSelector: {
                         selected: 4,
                         allButtonsEnabled: true,
+                        inputDateFormat:     '%d-%m-%Y %H:%M',
+                        inputEditDateFormat: '%d-%m-%Y %H:%M',
+                        inputDateParser: function (value) {
+
+                            value = value.split(/[ ]/);
+
+                            var fecha = value[0];
+
+                            var horario = value[1];
+
+                            fecha = fecha.split(/[-]/);
+
+                            horario = horario.split(/[:]/);
+
+                            var date = new Date(fecha[2], fecha[1]-1, fecha[0], horario[0],horario[1].substring(0, 2),0,0);
+
+                            var offset = 0;
+
+                            {#if (!Highcharts.getOptions().global.useUTC) {#}
+                            {#offset = new Date().getTimezoneOffset()*60*1000;#}
+                            {#}#}
+
+
+                            return date.getTime() - offset;
+
+                        },
+                        inputBoxWidth: 120,
                         buttons: [
                             {
                                 type: 'minute',
