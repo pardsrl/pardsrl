@@ -197,7 +197,6 @@ function inicializarHistoricoPlumas(){
                         turboThreshold: 10
                     },
                     rangeSelector: {
-                        beyondExtremes: true,
                         selected: 4,
                         allButtonsEnabled: true,
                         inputDateFormat:     '%d-%m-%Y %H:%M',
@@ -218,9 +217,9 @@ function inicializarHistoricoPlumas(){
 
                             var offset = 0;
 
-                            if (!Highcharts.getOptions().global.useUTC) {
-                                offset = new Date().getTimezoneOffset()*60*1000;
-                            }
+                            {#if (!Highcharts.getOptions().global.useUTC) {#}
+                                {#offset = new Date().getTimezoneOffset()*60*1000;#}
+                            {#}#}
 
 
                             return date.getTime() - offset;
