@@ -54,6 +54,10 @@ app_notificaciones:
     resource: "@AppBundle/Resources/config/routing/notificaciones.yml"
     prefix:   /notificaciones
 
+app_reportes:
+    resource: "@AppBundle/Resources/config/routing/reportes.yml"
+    prefix:   /reportes
+
 dashboard:
     path: /
     defaults: { _controller: AppBundle:Default:index}
