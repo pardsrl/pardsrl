@@ -8,27 +8,7 @@
     <script src="{{ asset('highstock-5.0.6/code/highstock.js') }}"></script>
 
     <script type="application/javascript" language="JavaScript">
-
-        var server = $.LiveData.server;
-
-        var websocket_connection = server.getBaseWs()+'/{{ equipo.webSocketNamespace }}';
-
-        var socket = io(websocket_connection);
-
-        const DESDE_ORIGINAL   = {{ fechaInicioIntervencion | date('U') }} * 1000;
-
-        const HASTA_ORIGINAL   = {{ "now" |date("U") }} * 1000;
-
-        const PARAM_FECHA_POZO = {{ fechaInicioIntervencion | date('Ymdhi') }}
-
-        const PARAM_CONDICION  = 1;
-
-        const PARAM_PLUMAS     = 0;
-
-        const PARAM_MANIOBRAS  = 1;
-
-        $(document).ready(function () {
-
+        if(!(typeof Highcharts === undefined)){
 
             Highcharts.setOptions({
                 global: {
@@ -53,6 +33,31 @@
                     decimalPoint: '.'
                 }
             });
+        }
+    </script>
+
+    <script type="application/javascript" language="JavaScript">
+
+        var server = $.LiveData.server;
+
+        var websocket_connection = server.getBaseWs()+'/{{ equipo.webSocketNamespace }}';
+
+        var socket = io(websocket_connection);
+
+        const DESDE_ORIGINAL   = {{ fechaInicioIntervencion | date('U') }} * 1000;
+
+        const HASTA_ORIGINAL   = {{ "now" |date("U") }} * 1000;
+
+        const PARAM_FECHA_POZO = {{ fechaInicioIntervencion | date('Ymdhi') }}
+
+        const PARAM_CONDICION  = 1;
+
+        const PARAM_PLUMAS     = 0;
+
+        const PARAM_MANIOBRAS  = 1;
+
+        $(document).ready(function () {
+
         });
 
 

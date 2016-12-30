@@ -15,6 +15,35 @@
     <script src="{{ asset('highcharts-5.0.6/code/highcharts.js') }}"></script>
     <script src="{{ asset('highcharts-5.0.6/code/highcharts-3d.js') }}"></script>
 
+    <script type="application/javascript" language="JavaScript">
+        if(!(typeof Highcharts === undefined)){
+
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                },
+                lang: {
+                    loading: 'Cargando...',
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'],
+                    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    exportButtonTitle: "Exportar",
+                    printButtonTitle: "Importar",
+                    rangeSelectorFrom: "De",
+                    rangeSelectorTo: "A",
+                    rangeSelectorZoom: "Periodo",
+                    downloadPNG: 'Descargar gráfica PNG',
+                    downloadJPEG: 'Descargar gráfica JPEG',
+                    downloadPDF: 'Descargar gráfica PDF',
+                    downloadSVG: 'Descargar gráfica SVG',
+                    printChart: 'Imprimir Gráfica',
+                    thousandsSep: ",",
+                    decimalPoint: '.'
+                }
+            });
+        }
+    </script>
+
     {% if mapbox_enabled %}
 
         <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>

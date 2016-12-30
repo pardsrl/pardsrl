@@ -16,7 +16,11 @@
                 text: ' '
             },
             xAxis: {
-                type: 'category',
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%b - %Y'
+                },
+                tickWidth: 1,
                 labels: {
                     rotation: -90
                 }
@@ -34,6 +38,7 @@
             },
             plotOptions: {
                 series: {
+                    pointWidth: 5,
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
