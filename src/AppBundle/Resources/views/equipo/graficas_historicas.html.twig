@@ -8,22 +8,7 @@
     <script src="{{ asset('highstock-5.0.6/code/highstock.js') }}"></script>
 
     <script type="application/javascript" language="JavaScript">
-
-        var server = $.LiveData.server;
-
-        const DESDE_ORIGINAL   = {{ fdesde }};
-
-        const HASTA_ORIGINAL   = {{ fhasta }};
-
-        const PARAM_FECHA_POZO = {{ fintervencion }};
-
-        const PARAM_PLUMAS     = 0;
-
-        const PARAM_MANIOBRAS  = 1;
-
-        const PARAM_CONDICION  = 0;
-
-        $(document).ready(function () {
+        if(!(typeof Highcharts === undefined)){
 
             Highcharts.setOptions({
                 global: {
@@ -48,6 +33,28 @@
                     decimalPoint: '.'
                 }
             });
+        }
+    </script>
+
+
+    <script type="application/javascript" language="JavaScript">
+
+        var server = $.LiveData.server;
+
+        const DESDE_ORIGINAL   = {{ fdesde }};
+
+        const HASTA_ORIGINAL   = {{ fhasta }};
+
+        const PARAM_FECHA_POZO = {{ fintervencion }};
+
+        const PARAM_PLUMAS     = 0;
+
+        const PARAM_MANIOBRAS  = 1;
+
+        const PARAM_CONDICION  = 0;
+
+        $(document).ready(function () {
+
         });
 
 

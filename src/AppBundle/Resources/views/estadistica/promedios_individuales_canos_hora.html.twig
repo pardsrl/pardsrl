@@ -16,7 +16,11 @@
                 text: ' '
             },
             xAxis: {
-                type: 'category',
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%b - %Y'
+                },
+                tickWidth: 1,
                 labels: {
                     rotation: -90
                 }
@@ -39,7 +43,7 @@
                         enabled: true,
                         format: '{point.y:.1f}'
                     },
-                    data: data,
+                    pointWidth: 5,
                     point: {
                         events: {
                             click: function () {
