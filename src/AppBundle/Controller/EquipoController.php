@@ -174,7 +174,9 @@ class EquipoController extends Controller
 
         $fechaInicioIntervencion = null;
 
-        if(!$intervenciones->isEmpty()){
+	    $descripcion = null;
+
+	    if(!$intervenciones->isEmpty()){
 
             $intervencionActual = $intervenciones->first();
 
@@ -182,17 +184,25 @@ class EquipoController extends Controller
 
                 $fechaInicioIntervencion = $intervencionActual->getFecha();
 
+                $pozo = $intervencionActual->getPozo()->getAcronimo();
+
             }else{
                 //si está cerrado busco la intervencion de apertura
                 $intervencion = $intervenciones->get(1);
 
                 if($intervencion){
                     $fechaInicioIntervencion = $intervencion->getFecha();
+
+	                $pozo = $intervencion->getPozo()->getAcronimo();
+
                 }
 
             }
 
-        }
+		    $descripcion = sprintf("Intervención iniciada el día <strong>%s</strong> sobre el pozo <strong>%s</strong>",$fechaInicioIntervencion->format('d-m-Y H:i'),$pozo);
+
+	    }
+
 
         $resolucionPlumas     = $this->getParameter('historicos.plumas.resolucion');
 
@@ -202,7 +212,8 @@ class EquipoController extends Controller
             'equipo'                    => $equipo,
             'fechaInicioIntervencion'   => $fechaInicioIntervencion,
 	        'resolucionPlumas'          => $resolucionPlumas,
-	        'resolucionManiobras'       => $resolucionManiobras
+	        'resolucionManiobras'       => $resolucionManiobras,
+	        'descripcion'               => $descripcion
 
         ));
     }
@@ -223,13 +234,27 @@ class EquipoController extends Controller
 
 	    $resolucionManiobras  = $this->getParameter('historicos.maniobras.resolucion');
 
+
+	    $intervRepository = $this->getDoctrine()->getRepository("AppBundle:Intervencion");
+
+	    $fecha = \DateTime::createFromFormat('YmdHi', $fintervencion);
+
+	    $intervencion = $intervRepository->getIntervencionByEquipoyFecha($equipo,$fecha)->getQuery()->getOneOrNullResult();
+
+		$fecha = $intervencion->getFecha()->format("d-m-Y H:i");
+
+		$pozo = $intervencion->getPozo()->getAcronimo();
+
+	    $descripcion = sprintf("Intervención iniciada el día <strong>%s</strong> sobre el pozo <strong>%s</strong>",$fecha,$pozo);
+
         return $this->render('AppBundle:equipo:graficas_historicas.html.twig', array(
             'equipo'        => $equipo,
             'fdesde'        => $fdesde,
             'fhasta'        => $fhasta,
             'fintervencion' => $fintervencion,
 	        'resolucionPlumas'          => $resolucionPlumas,
-	        'resolucionManiobras'       => $resolucionManiobras
+	        'resolucionManiobras'       => $resolucionManiobras,
+	        'descripcion'               => $descripcion
         ));
     }
 
