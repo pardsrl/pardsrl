@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% set __title = 'Gráficas Históricas del equipo' %}
+{% set __title = 'Gráficas Históricas del equipo '~ equipo.nombreCompleto| upper  %}
+
+{% set __descripcion_opcional = descripcion  %}
 
 {% block javascripts %}
     {{ parent() }}

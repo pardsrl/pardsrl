@@ -46,13 +46,11 @@
                     pointWidth: 5,
                     point: {
                         events: {
-                            click: function () {
-
-                                url = url.replace(/__fintervencion__/g, this.fintervencion);
+                            click: function (e) {
 
                                 window.open(
-                                        url,
-                                        '_blank'
+                                    url.replace(/__fintervencion__/g, e.point.fintervencion),
+                                    '_blank'
                                 );
 
                             }
