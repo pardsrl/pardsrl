@@ -239,7 +239,7 @@ class EquipoController extends Controller
 
 	    $fecha = \DateTime::createFromFormat('YmdHi', $fintervencion);
 
-	    $intervencion = $intervRepository->getIntervencionByEquipoyFecha($equipo,$fecha)->getQuery()->getOneOrNullResult();
+	    $intervencion = $intervRepository->getUltimaIntervencionAperturaByEquipoyFecha($equipo,$fecha)->getQuery()->getOneOrNullResult();
 
 		$fecha = $intervencion->getFecha()->format("d-m-Y H:i");
 
