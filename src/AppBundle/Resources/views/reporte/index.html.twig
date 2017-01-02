@@ -7,7 +7,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Responsive Hover Table</h3>
+                    <h3 class="box-title">Listado</h3>
 
                     <div class="box-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -24,39 +24,30 @@
                     <table class="table table-hover">
                         <tr>
                             <th>ID</th>
-                            <th>User</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Reason</th>
+                            <th>Recurso</th>
+                            <th>Id de Recurso</th>
+                            <th>Fecha creación</th>
+                            <th>Observación</th>
+                            <th>Activo</th>
+                            <th>Creado Por</th>
+                            <th>Acción</th>
                         </tr>
+
+                        {% for reporte in reportes %}
                         <tr>
-                            <td>183</td>
-                            <td>John Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="label label-success">Approved</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                            <td>{{ reporte.id }}</td>
+                            <td>{{ reporte.recurso }}</td>
+                            <td>{{ reporte.recursoId }}</td>
+                            <td>{% if reporte.fechaCreacion %}{{ reporte.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                            <td>{{ reporte.observaciones }}</td>
+                            <td>{% if reporte.activo %}<span class="label label-success">Si</span{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                            <td>{{ reporte.creadoPor }}</td>
+                            <td>
+                                <a title="Descargar PDF"   class="btn btn-default btn-sm" href="{{ path('reporte_ver_pdf', { 'id': reporte.id }) }}" target="_blank"><i class="fa fa-fw fa-file-pdf-o"></i></a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>219</td>
-                            <td>Alexander Pierce</td>
-                            <td>11-7-2014</td>
-                            <td><span class="label label-warning">Pending</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                        </tr>
-                        <tr>
-                            <td>657</td>
-                            <td>Bob Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="label label-primary">Approved</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                        </tr>
-                        <tr>
-                            <td>175</td>
-                            <td>Mike Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="label label-danger">Denied</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                        </tr>
+                        {% endfor %}
+
                     </table>
                 </div>
                 <!-- /.box-body -->

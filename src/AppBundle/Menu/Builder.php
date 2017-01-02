@@ -50,6 +50,12 @@ class Builder implements ContainerAwareInterface
 			    $menu->addChild( 'Dashboard', array( 'route' => 'dashboard' ) )->setExtra( 'icon', 'fa fa-area-chart' );
 		    }
 
+		    if ( $this->securityManager->isGranted( $this->rol,
+				    'reporte_index' ) || $this->usuario->hasRole( 'ROLE_SUPER_ADMIN' )
+		    ) {
+			    $menu->addChild( 'Reportes', array( 'route' => 'reporte_index' ) )->setExtra( 'icon', 'fa fa-file-text-o' );
+		    }
+
 		    //TODO siempre se están generando estas rutas si el usuario tiene asignado equipos
 
 		    if ( $misEquipos->count() ) {

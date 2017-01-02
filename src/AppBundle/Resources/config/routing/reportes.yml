@@ -2,3 +2,8 @@ reporte_index:
     path:     /
     defaults: { _controller: "AppBundle:Reporte:index" }
     methods:  GET
+
+reporte_ver_pdf:
+    path:     /{id}/ver_pdf
+    defaults: { _controller: "AppBundle:Reporte:verPdf" }
+    methods:  GET

@@ -43,6 +43,20 @@ class Reporte extends BaseClass
      */
     private $reporte;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="nombre_archivo", type="string", length=255)
+	 */
+	private $nombreArchivo;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="observaciones", type="string", nullable=true, length=500)
+	 */
+	private $observaciones;
+
 
     /**
      * Get id
@@ -124,6 +138,50 @@ class Reporte extends BaseClass
     public function getReporte()
     {
         return $this->reporte;
+    }
+
+	/**
+	 * Get nombreArchivo
+	 *
+	 * @return string
+	 */
+	public function getNombreArchivo() {
+		return $this->nombreArchivo;
+	}
+
+	/**
+	 * Set nombreArchivo
+	 *
+	 * @param string $nombreArchivo
+	 *
+	 * @return Reporte
+	 */
+	public function setNombreArchivo( $nombreArchivo ) {
+		$this->nombreArchivo = $nombreArchivo;
+	}
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return Reporte
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
     }
 }
 
