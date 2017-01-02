@@ -74,4 +74,17 @@ class IntervencionRepository extends \Doctrine\ORM\EntityRepository
         return $qb;
     }
 
+    public function getIntervencionByEquipoyFecha($equipo,$fecha){
+
+    	$qb = $this->getIntervencionesByEquipos($equipo);
+
+    	$qb->andWhere('interv.fecha = :fecha');
+
+    	$qb->setMaxResults(1);
+
+    	$qb->setParameter('fecha',$fecha);
+
+    	return $qb;
+    }
+
 }
