@@ -80,9 +80,18 @@ class IntervencionRepository extends \Doctrine\ORM\EntityRepository
 
     	$qb->andWhere('interv.fecha = :fecha');
 
-    	$qb->setMaxResults(1);
-
     	$qb->setParameter('fecha',$fecha);
+
+    	return $qb;
+    }
+
+    public function getUltimaIntervencionAperturaByEquipoyFecha($equipo,$fecha){
+
+    	$qb = $this->getIntervencionByEquipoyFecha($equipo,$fecha);
+
+    	$qb->andWhere('interv.accion = 0');
+
+    	$qb->setMaxResults(1);
 
     	return $qb;
     }
