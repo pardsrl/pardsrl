@@ -38,7 +38,7 @@ class EstadisticaFinalRepository extends \Doctrine\ORM\EntityRepository
     public function getDistribucionOperacionesPorYacimiento($equipos,$desde,$hasta){
 
         $qb = $this->getQb()
-            ->select('equipo.id','yacimiento.nombre','count(interv.id) cant')
+            ->select('yacimiento.nombre','count(interv.id) cant')
             ->innerJoin('ef.intervencion','interv')
             ->innerJoin('interv.pozo','pozo')
             ->innerJoin('interv.equipo','equipo')
