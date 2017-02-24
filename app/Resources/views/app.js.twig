@@ -38,7 +38,8 @@ $.LiveData.oauth2 = {
                         window.location.replace("{{ path('fos_user_security_logout') | raw}}");
                         break;
 
-                    case (500|404):
+                    case 404:
+                    case 500:
                         errorCallback ? errorCallback(jqr,textStatus,errorThrown) : false;
                         break;
                 }

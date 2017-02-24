@@ -86,12 +86,19 @@ function recargarHstpl(min,max){
                 hstpl.hideLoading();
             },
             function (jqXHR) {
+                removeOverlayBox('#hstpl');
 
-                console.log('entro');
 
-                var resJson = jqXHR.responseJSON;
+                var resJson = (jqXHR.status != 404 )? jqXHR.responseJSON.detail : "No se ha encontrado el servidor especificado";
 
-                $('#hstpl').html('<div class="callout callout-warning"><p>' + resJson.detail + '</p></div>');
+                $('#hstpl').html('<div class="callout callout-warning"><p>'+ resJson + '</p></div>');
+
+                return false;
+            },
+            function () {
+                removeOverlayBox('#hstpl');
+
+                $('#hstpl').html('<div class="callout callout-warning"><p> Error de conexión. El servidor no responde</p></div>');
 
                 return false;
             }
@@ -368,9 +375,10 @@ function inicializarHistoricoPlumas(){
             function (jqXHR) {
                 removeOverlayBox('#hstpl');
 
-                var resJson = jqXHR.responseJSON;
 
-                $('#hstpl').html('<div class="callout callout-warning"><p>'+ resJson.detail + '</p></div>');
+                var resJson = (jqXHR.status != 404 )? jqXHR.responseJSON.detail : "No se ha encontrado el servidor especificado";
+
+                $('#hstpl').html('<div class="callout callout-warning"><p>'+ resJson + '</p></div>');
 
                 return false;
             },

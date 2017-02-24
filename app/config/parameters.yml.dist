@@ -45,6 +45,8 @@ parameters:
         enabled: true
         user_integration: true
         url: apiurl
+
+        auth_url: authurl
         auth_login_endpoint: /oauth
         auth_type: password
         auth_client_id: client_id
