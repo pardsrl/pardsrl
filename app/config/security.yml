@@ -24,7 +24,7 @@ security:
 
             logout:
                 target: %logout.target%
-                success_handler: user.logout
+                #success_handler: user.logout
             anonymous:    true
 
     access_control:
