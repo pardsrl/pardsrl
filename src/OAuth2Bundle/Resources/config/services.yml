@@ -18,6 +18,6 @@ services:
       tags:
           - { name: kernel.event_subscriber }
 
-  user.logout:
-        class: OAuth2Bundle\EventListener\LogoutListener
-        arguments: [@api.oauth2 , @security.http_utils, %logout.target% ]
+#  user.logout:
+#        class: OAuth2Bundle\EventListener\LogoutListener
+#        arguments: [@api.oauth2 , @security.http_utils, %logout.target% ]

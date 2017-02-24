@@ -106,10 +106,19 @@ function recargarHstman(min,max){
                 hstman.hideLoading();
             },
             function (jqXHR) {
+                removeOverlayBox('#hstman');
 
-                var resJson = jqXHR.responseJSON;
 
-                $('#hstman').html('<div class="callout callout-warning"><p>' + resJson.detail + '</p></div>');
+                var resJson = (jqXHR.status != 404 )? jqXHR.responseJSON.detail : "No se ha encontrado el servidor especificado";
+
+                $('#hstman').html('<div class="callout callout-warning"><p>'+ resJson + '</p></div>');
+
+                return false;
+            },
+            function () {
+                removeOverlayBox('#hstman');
+
+                $('#hstman').html('<div class="callout callout-warning"><p> Error de conexión. El servidor no responde</p></div>');
 
                 return false;
             }
@@ -387,14 +396,15 @@ function inicializarHistoricoManiobras(){
             function (jqXHR) {
                 removeOverlayBox('#hstman');
 
-                var resJson = jqXHR.responseJSON;
 
-                $('#hstman').html('<div class="callout callout-warning"><p>'+ resJson.detail + '</p></div>');
+                var resJson = (jqXHR.status != 404 )? jqXHR.responseJSON.detail : "No se ha encontrado el servidor especificado";
+
+                $('#hstman').html('<div class="callout callout-warning"><p>'+ resJson + '</p></div>');
 
                 return false;
             },
             function () {
-                removeOverlayBox('#hstpl');
+                removeOverlayBox('#hstman');
 
                 $('#hstman').html('<div class="callout callout-warning"><p> Error de conexión. El servidor no responde</p></div>');
 

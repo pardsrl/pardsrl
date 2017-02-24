@@ -85,7 +85,7 @@ class OAuth2Manager
 
 		$accessToken = null;
 
-		$access_token_url = $api['url'].$api['auth_login_endpoint'];
+		$access_token_url = $api['auth_url'].$api['auth_login_endpoint'];
 
 		$provider = new GenericProvider([
 			'clientId'                => $api['auth_client_id'],    // The client ID assigned to you by the provider
