@@ -58,12 +58,14 @@ class IntervencionType extends AbstractType
                         'label'    => 'Equipo',
                         'disabled' => true,
                         'mapped'   => false,
+	                    'required' => true,
                         'data'     => $equipoUltimaIntervencion->getNombreCompleto()
                     ));
             }else{
                 $form->add('equipo',EntityType::class,array(
                     'class'    => 'AppBundle\Entity\Equipo',
 	                'required' => true,
+                    'placeholder' => 'Elija un equipo',
                     'choices'  => $options['equipos_elegibles']
                 ));
             }
