@@ -62,8 +62,9 @@ class IntervencionType extends AbstractType
                     ));
             }else{
                 $form->add('equipo',EntityType::class,array(
-                    'class' => 'AppBundle\Entity\Equipo',
-                    'choices' => $options['equipos_elegibles']
+                    'class'    => 'AppBundle\Entity\Equipo',
+	                'required' => true,
+                    'choices'  => $options['equipos_elegibles']
                 ));
             }
 
