@@ -27,7 +27,8 @@
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
         "league/oauth2-client": "^1.4",
-        "suncat/mobile-detect-bundle": "^1.0"
+        "suncat/mobile-detect-bundle": "^1.0",
+        "twig/twig": "1.32.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
